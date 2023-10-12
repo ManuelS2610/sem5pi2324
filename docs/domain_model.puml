@@ -1,0 +1,116 @@
+@startuml
+
+hide methods
+hide circles
+frame CAMPUS{
+class Campus<<Entity>><<root>>{
+-campusId
+}
+
+frame BUILDING{
+class Building<<Entity>><<root>>{
+-buildingId
+-description
+
+}
+class Floor<<Entity>>{
+-floorId
+-description
+}
+class Stairways<<Entity>>{
+-stairwaysId
+-stairsLocation
+}
+class Room<<Entity>>{
+-roomsId
+-category
+-description
+}
+class Bridge<<Entity>>{
+-bridgeId
+-bridgeLocation
+}
+class Elevator<<Entity>>{
+}
+}
+}
+
+frame USER{
+class User<<Entity>><<root>>{
+-firstName
+-lastName
+}
+class Role<<Entity>>{
+-roleId
+-roleName
+}
+'class email<<value object>>
+'class password<<value object>>
+}
+frame GESTORFROTA{
+class GestorFrota<<Entity>>{
+-idGestorFrota
+}
+}
+frame GESTORCAMPUS{
+class GestorCampus<<Entity>>{
+-idGestorCampus
+}
+}
+
+
+
+frame FROTA{
+class Frota<<Entity>><<root>>{
+-robotName
+-state
+-serialNumber
+}
+
+class RobotIsep<<Entity>><<root>>{
+-robotId
+}
+
+
+class DroneIsep<<Entity>><<root>>{
+-droneId
+}
+
+}
+
+
+frame TASKS{
+class Tasks<<Entity>><<root>>{
+-services
+}
+}
+
+
+'ligaçoes campus
+Building "*"<-- "1" Campus
+Floor "*" <-- "1" Building
+Room "*" <-- "1" Floor
+'falta bridge , elevator, stairways
+
+'ligaçoes users
+User "*" --> "1" Role
+User "1" --> "*" Tasks
+
+User "1" --|> "1" GestorFrota
+GestorFrota "1" --> "*" Frota
+
+User "1" --|> "1" GestorCampus
+GestorCampus "1" --> "*" Campus
+
+'ligações tasks
+Tasks "1" --> "1" DroneIsep
+DroneIsep "*" <|-- "1" Frota
+RobotIsep "*" <|-- "1" Frota
+Frota "1" <-- "1" Campus
+Tasks "1" --> "1" RobotIsep
+
+
+
+
+@enduml
+
