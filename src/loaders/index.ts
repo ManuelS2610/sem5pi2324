@@ -28,6 +28,11 @@ export default async ({ expressApp }) => {
     name: 'buildingSchema',
     schema: '../persistence/schemas/buildingSchema',
   };
+  const floorSchema = {
+    // compare with the approach followed in repos and services
+    name: 'floorSchema',
+    schema: '../persistence/schemas/floorSchema',
+  };
 
     // CONTROLLERS
   const roleController = {
@@ -38,6 +43,11 @@ export default async ({ expressApp }) => {
   const buildingController = {
     name: config.controllers.building.name,
     path: config.controllers.building.path
+  }
+
+  const floorController = {
+    name: config.controllers.floor.name,
+    path: config.controllers.floor.path
   }
   // REPOS
   const roleRepo = {
@@ -54,6 +64,10 @@ export default async ({ expressApp }) => {
     name: config.repos.building.name,
     path: config.repos.building.path
   }
+  const floorRepo = {
+    name: config.repos.floor.name,
+    path: config.repos.floor.path
+  }
   // SERVICES
   const roleService = {
     name: config.services.role.name,
@@ -65,25 +79,34 @@ export default async ({ expressApp }) => {
     path: config.services.building.path
   }
 
+  const floorService = {
+    name: config.services.floor.name,
+    path: config.services.floor.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
       roleSchema,
-      buildingSchema
+      buildingSchema,
+      floorSchema
     ],
     controllers: [
       roleController,
-      buildingController
+      buildingController,
+      floorController
     ],
     repos: [
       roleRepo,
       userRepo,
-      buildingRepo
+      buildingRepo,
+      floorRepo
     ],
     services: [
       roleService,
-      buildingService
+      buildingService,
+      floorService
 
     ]
   });
