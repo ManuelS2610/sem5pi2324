@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant passageRoute
+participant IPassageController
+participant passageController
+participant IPassageService
+participant passageService
+participant IPassageRepo
+participant passageRepo
+participant PassageMap
+participant IPassagePersistence
+participant passageSchema
+participant passage
+participant IPassageDTO
+
+User -> passageRoute: update passage
+activate passageRoute
+passageRoute -> IPassageController : updatePassage()
+activate IPassageController
+IPassageController -> passageController :  updatePassage()
+deactivate IPassageController
+activate passageController
+passageController -> IPassageService : updatePassage()
+activate IPassageService
+IPassageService -> passageService : updatePassage()
+deactivate IPassageService
+activate passageService
+passageService -> passage : create()
+activate passage
+passage -> passageService : passage
+deactivate passage
+passageService -> IPassageRepo: save()
+activate IPassageRepo
+IPassageRepo -> passageRepo : save()
+deactivate IPassageRepo
+activate passageRepo
+passageRepo -> passageSchema : findOne()
+passageRepo -> PassageMap : toPersistence()
+activate PassageMap
+PassageMap -> passageRepo : passage
+deactivate PassageMap
+passageRepo -> passageSchema: create()
+deactivate passageRepo
+passageService -> PassageMap : toDTO()
+activate PassageMap
+PassageMap -> IPassageDTO
+PassageMap -> passageService : passageDTO
+deactivate PassageMap
+passageService -> passageController : passageDTO
+deactivate passageService
+passageController -> passageRoute : res.json(passageDTO).status()
+deactivate passageController
+passageRoute -> User
+deactivate passageRoute
+@enduml
