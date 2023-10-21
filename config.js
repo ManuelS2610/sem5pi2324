@@ -52,6 +52,10 @@ export default {
     floor: {
       name: "FloorController",
       path: "../controllers/floorController"
+    },
+    passage: {
+      name: "PassageController",
+      path: "../controllers/passageController"
     }
   },
 
@@ -71,6 +75,10 @@ export default {
     floor: {
       name: "FloorRepo",
       path: "../repos/floorRepo"
+    },
+    passage: {
+      name: "PassageRepo",
+      path: "../repos/passageRepo"
     }
 
   },
@@ -87,6 +95,10 @@ export default {
     floor: {
       name: "FloorService",
       path: "../services/floorService"
+    },
+    passage: {
+      name: "PassageService",
+      path: "../services/passageService"
     }
   },
 };

@@ -33,6 +33,11 @@ export default async ({ expressApp }) => {
     name: 'floorSchema',
     schema: '../persistence/schemas/floorSchema',
   };
+  const passageSchema = {
+    // compare with the approach followed in repos and services
+    name: 'passageSchema',
+    schema: '../persistence/schemas/passageSchema',
+  };
 
     // CONTROLLERS
   const roleController = {
@@ -48,6 +53,10 @@ export default async ({ expressApp }) => {
   const floorController = {
     name: config.controllers.floor.name,
     path: config.controllers.floor.path
+  }
+  const passageController = {
+    name: config.controllers.passage.name,
+    path: config.controllers.passage.path
   }
   // REPOS
   const roleRepo = {
@@ -68,6 +77,10 @@ export default async ({ expressApp }) => {
     name: config.repos.floor.name,
     path: config.repos.floor.path
   }
+  const passageRepo = {
+    name: config.repos.passage.name,
+    path: config.repos.passage.path
+  }
   // SERVICES
   const roleService = {
     name: config.services.role.name,
@@ -83,6 +96,10 @@ export default async ({ expressApp }) => {
     name: config.services.floor.name,
     path: config.services.floor.path
   }
+  const passageService = {
+    name: config.services.passage.name,
+    path: config.services.passage.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -90,23 +107,27 @@ export default async ({ expressApp }) => {
       userSchema,
       roleSchema,
       buildingSchema,
-      floorSchema
+      floorSchema,
+      passageSchema
     ],
     controllers: [
       roleController,
       buildingController,
-      floorController
+      floorController,
+      passageController
     ],
     repos: [
       roleRepo,
       userRepo,
       buildingRepo,
-      floorRepo
+      floorRepo,
+      passageRepo
     ],
     services: [
       roleService,
       buildingService,
-      floorService
+      floorService,
+      passageService
 
     ]
   });
