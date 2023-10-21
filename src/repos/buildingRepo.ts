@@ -7,6 +7,7 @@ import { Document, FilterQuery, Model } from 'mongoose';
 import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
 
 import IBuildingRepo from "../services/IRepos/IBuildingRepo";
+import { BuildingId } from '../domain/buildingId';
 
 @Service()
 export default class BuildingRepo implements IBuildingRepo {
@@ -24,7 +25,7 @@ export default class BuildingRepo implements IBuildingRepo {
 
   public async exists(building: Building): Promise<boolean> {
     
-    const idX = building.id instanceof Building ? (<Building>building.id).buildingId : building.id;
+    const idX = building.id instanceof BuildingId ? (<BuildingId>building.id).toValue() : building.id;
 
     const query = { domainId: idX}; 
     const buildingDocument = await this.buildingSchema.findOne( query as FilterQuery<IBuildingPersistence & Document>);
@@ -47,6 +48,8 @@ export default class BuildingRepo implements IBuildingRepo {
       } else {
         buildingDocument.name = building.name;
         buildingDocument.description = building.description;
+        buildingDocument.depth = building.depth;
+        buildingDocument.width = building.width;
         await buildingDocument.save();
 
         return building;

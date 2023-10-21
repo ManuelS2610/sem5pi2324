@@ -1,6 +1,7 @@
 export interface IBuildingPersistence {
-  _id: string;
+  domainId: string;
   name: string;
-  buildingId: string;
   description: string;
+  depth: number;
+  width: number;
 }

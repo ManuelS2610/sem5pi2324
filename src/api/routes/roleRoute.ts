@@ -29,4 +29,7 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateRole(req, res, next) );
+
+   
+
 };

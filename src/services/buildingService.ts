@@ -1,69 +1,62 @@
-import { Container, Service, Inject } from 'typedi';
-
-import jwt from 'jsonwebtoken';
+import {Service, Inject } from 'typedi';
 import config from '../../config';
-import argon2 from 'argon2';
-import { randomBytes } from 'crypto';
-
-//import MailerService from './mailer.ts.bak';
-
 import IBuildingService from './IServices/IBuildingService';
 import { BuildingMap } from "../mappers/BuildingMap";
-import {IBuildingDTO} from '../dto/IBuildingDTO';
-
+import IBuildingDTO from '../dto/IBuildingDTO';
 import IBuildingRepo from './IRepos/IBuildingRepo';
-
 import { Building } from '../domain/building';
-
 import { Result } from "../core/logic/Result";
 
 @Service()
 export default class BuildingService implements IBuildingService{
   constructor(
       @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo
-  
   ) {}
 
-
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
-    try {
-      const buildingOrError = Building.create(buildingDTO);
-      if (buildingOrError.isFailure) {
+    try{
+      const buildingOrError = await Building.create(buildingDTO);
+      
+      if(buildingOrError.isFailure){
         return Result.fail<IBuildingDTO>(buildingOrError.errorValue());
       }
 
       const buildingResult = buildingOrError.getValue();
+
       await this.buildingRepo.save(buildingResult);
 
-      const buildingDTOX = BuildingMap.toDTO(buildingResult) as IBuildingDTO;
-
-      return Result.ok<IBuildingDTO>(buildingDTOX);
-    } catch (e) {
-      throw e
-    }
+      const buildingDTOresult = BuildingMap.toDTO(buildingResult) as IBuildingDTO;
+      return Result.ok<IBuildingDTO>(buildingDTOresult);
+    }catch(e){
+      throw e;
+    } 
   }
 
   public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
-      const buildingOrError = Building.create(buildingDTO);
-      if (buildingOrError.isFailure) {
-        return Result.fail<IBuildingDTO>(buildingOrError.error.toString());
+      const building = await this.buildingRepo.findByDomainId(buildingDTO.id);
+
+      if (building === null){
+        return Result.fail<IBuildingDTO>("Building not found");
+      }else{
+        building.name = buildingDTO.name;
+        building.description = buildingDTO.description;
+        building.depth = buildingDTO.depth;
+        building.width = buildingDTO.width;
+
+        await this.buildingRepo.save(building);
+
+        const buildingDTOResult = BuildingMap.toDTO(building) as IBuildingDTO;
+        return Result.ok<IBuildingDTO>(buildingDTOResult);
       }
-
-      const buildingResult = buildingOrError.getValue();
-      await this.buildingRepo.save(buildingResult);
-
-      const buildingDTOX = BuildingMap.toDTO(buildingResult);
-
-      return Result.ok<IBuildingDTO>(buildingDTOX);
     } catch (e) {
-      return Result.fail<IBuildingDTO>(e);
+      throw e;
     }
   }
 
   public async getBuilding(buildingId: string): Promise<Result<IBuildingDTO>> {
     try {
-      const building = await this.buildingRepo.findByBuildingId(buildingId);
+      const building = await this.buildingRepo.findByDomainId(buildingId);
       if (!building) {
         return Result.fail<IBuildingDTO>("Building not found");
       }

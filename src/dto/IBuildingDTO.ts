@@ -1,7 +1,8 @@
 
-export interface IBuildingDTO {
+export default interface IBuildingDTO {
   id: string;
   name: string;
-  buildingId: string;
   description: string;
+  depth: number;
+  width: number;
 }

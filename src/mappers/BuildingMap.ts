@@ -1,4 +1,6 @@
 import { Container } from 'typedi';
+import { Document, Model } from 'mongoose';
+
 
 import { Mapper } from "../core/infra/Mapper";
 
@@ -8,6 +10,7 @@ import { Building } from "../domain/building";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import BuildingRepo from "../repos/buildingRepo";
+import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
 
 
 export class BuildingMap extends Mapper<Building> {
@@ -16,13 +19,16 @@ export class BuildingMap extends Mapper<Building> {
       id: building.id.toString(),
       name: building.name,
       description: building.description,
+      depth: building.depth,
+      width: building.width,
     } as IBuildingDTO;
   }
 
-  public static async toDomain (raw: any): Promise<Building> {
-    const  buildingOrError = Building.create({buildingId: raw.buildingId, name: raw.name, description: raw.description},
-       new UniqueEntityID(raw.domainId))
-      const repo = Container.get(BuildingRepo);
+  public static  toDomain (building: any | Model<IBuildingPersistence & Document>): Building {
+    const  buildingOrError = Building.create(
+      building,
+       new UniqueEntityID(building.domainId)
+       );
       
       
       buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
@@ -32,9 +38,10 @@ export class BuildingMap extends Mapper<Building> {
   public static toPersistence (building: Building): any {
     const a = {
       domainId: building.id.toString(),
-      buildingId: building.buildingId,
       name: building.name,
       description: building.description,
+      depth: building.depth,
+      width: building.width
     }
     return a;
   }
