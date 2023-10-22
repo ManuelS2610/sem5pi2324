@@ -7,7 +7,7 @@ import config from '../../config';
 import IBuildingRepo from '../services/IRepos/IBuildingRepo';
 import IBuildingService from '../services/IServices/IBuildingService';
 import { BuildingMap } from "../mappers/BuildingMap";
-import { IBuildingDTO } from '../dto/IBuildingDTO';
+import  IBuildingDTO  from '../dto/IBuildingDTO';
 
 import { Result } from "../core/logic/Result";
 import IBuildingController from './IControllers/IBuildingController';
@@ -48,5 +48,20 @@ public async updateBuilding(req:Request, res:Response , next: NextFunction){
     
 
 }
+
+public async getallBuildings(req:Request, res:Response , next: NextFunction){
+    try{
+        const buildingsOrError = await this.buildingServiceInstance.getallBuildings() as Result<Array<IBuildingDTO>>;
+        if(buildingsOrError.isFailure){
+            return res.status(404).send();
+        }
+        const buildingsDTO = buildingsOrError.getValue();
+        return res.json(buildingsDTO).status(201);
+    }
+    catch(e){
+        return next(e);
+    }
+}
+
 }
 

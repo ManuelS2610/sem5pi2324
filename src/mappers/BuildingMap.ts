@@ -4,7 +4,7 @@ import { Document, Model } from 'mongoose';
 
 import { Mapper } from "../core/infra/Mapper";
 
-import {IBuildingDTO} from '../dto/IBuildingDTO';
+import IBuildingDTO from '../dto/IBuildingDTO';
 
 import { Building } from "../domain/building";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";

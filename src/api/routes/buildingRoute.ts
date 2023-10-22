@@ -40,5 +40,5 @@ export default (app: Router) => {
 
   // Define other routes for building operations here
 //method to list all buildings
-  route.get('', (req, res, next) => ctrl.getBuilding(req, res, next));
+  route.get('', (req, res, next) => ctrl.getallBuildings(req, res, next));
 };
