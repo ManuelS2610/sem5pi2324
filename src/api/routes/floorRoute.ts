@@ -19,8 +19,9 @@ export default (app: Router) => {
     '/create',
     celebrate({
       body: Joi.object({
-        floorId: Joi.string().required(),
-        buildingId: Joi.string().required(),
+
+        name: Joi.string().required(),
+        buildingName: Joi.string().required(),
         description: Joi.string().required()
       }),
     }),
@@ -29,9 +30,10 @@ export default (app: Router) => {
   route.put('/update',
   celebrate({
     body: Joi.object({
-        floorId: Joi.string().required(),
-        buildingId: Joi.string().required(),
-        description: Joi.string().required()
+      id: Joi.string().required(),
+      name: Joi.string().required(),
+      buildingName: Joi.string().required(),
+      description: Joi.string().required()
     }),
   }),
     (req, res, next) => ctrl.updateFloor(req, res, next));

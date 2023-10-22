@@ -1,18 +1,25 @@
 import { IFloorPersistence } from '../../dataschema/IFloorPersistence';
 import mongoose from 'mongoose';
 
-const floor = new mongoose.Schema(
+const floorSchema = new mongoose.Schema(
   {
-    floorId: {
+
+    domainId: { 
       type: String,
+      unique: true
+    },
+
+    name: {
+      type: String,
+      required: [true, 'Floor name:'],
       maxlength: 5,
       match: /^[a-zA-Z0-9\s]*$/,
       index: true,
     },
 
-    buildingId: {
+    buildingName: {
       type: String,
-      required: [true, 'Please enter the building id which this floor belongs to'],
+      required: [true, 'Which building does this floor belong to?'],
       maxlength: 5,
       match: /^[a-zA-Z0-9\s]*$/,
       index: true,
@@ -28,6 +35,4 @@ const floor = new mongoose.Schema(
   { timestamps: true },
 );
 
-const FloorModel = mongoose.model<IFloorPersistence>('Floor', floor);
-
-export default FloorModel;
+export default mongoose.model<IFloorPersistence & mongoose.Document>('Floor', floorSchema);

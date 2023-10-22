@@ -3,10 +3,14 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { Result } from "../core/logic/Result";
 import { Guard } from "../core/logic/Guard";
 import { Interface } from "readline";
+import BuildingRepo from "../repos/buildingRepo";
+import { Building } from "./building";
+import { FloorId } from "./floorId";
+import { IFloorDTO } from "../dto/IFloorDTO";
 
 interface FloorProps {
-  floorId: string;
-  buildingId: string;
+  name: string;
+  buildingName: string;
   description: string;
   
 }
@@ -16,40 +20,55 @@ export class Floor extends AggregateRoot<FloorProps> {
     return this._id;
   }
 
-  get floorId (): string {
-    return this.props.floorId;
+  get floorId (): FloorId {
+    return new FloorId(this.floorId.toValue());
   }
 
-  get buildingId (): string {
-    return this.props. buildingId;
+  get name (): string {
+    return this.props.name;
   }
 
+
+  get buildingName (): string {
+    return this.props.name;
+  }
   get description (): string {
     return this.props.description;
   }
+
+  set name ( value: string) {
+    this.props.name = value;
+  }
+
+  set description ( value: string) {
+    this.props.description = value;
+  }
+
+  set buildingName ( value: string) {
+    this.props.buildingName = value;
+  }
+
 
   private constructor (props: FloorProps, id?: UniqueEntityID) {
     super(props, id);
   }
 
-  public static create (props: FloorProps, id?: UniqueEntityID): Result<Floor> {
+  public static create (floorDTO:IFloorDTO, id?: UniqueEntityID): Result<Floor> {
+    const name = floorDTO.name;
+    const description = floorDTO.description;
+    const buildingName = floorDTO.buildingName;
 
-    const guardedProps = [
-      { argument: props.floorId, argumentName: 'floorId' },
-      { argument: props.buildingId, argumentName: 'buildingId' },
-      { argument: props.description, argumentName: 'description' }
-    ];
-
-    const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
-
-    if (!guardResult.succeeded) {
-      return Result.fail<Floor>(guardResult.message)
+    if (!!name === false || name.length === 0 ) {
+      return Result.fail<Floor>('Must provide a Floor name')
     } else {
-      const building = new Floor({
-        ...props
-      }, id);
-
-      return Result.ok<Floor>(building);
+      const floor = new Floor({ 
+      name : name,
+      buildingName: buildingName,
+      description: description,
+      } , id);
+      return Result.ok<Floor>( floor )
     }
+
+      
   }
 }
