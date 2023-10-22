@@ -36,14 +36,14 @@ export class BuildingMap extends Mapper<Building> {
   }
 
   public static toPersistence (building: Building): any {
-    const a = {
+    return {
       domainId: building.id.toString(),
       name: building.name,
       description: building.description,
       depth: building.depth,
       width: building.width
     }
-    return a;
+    
   }
       
 }

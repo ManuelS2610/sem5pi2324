@@ -22,7 +22,7 @@ export default (app: Router) => {
         description: Joi.string().required(),
         depth: Joi.number().required(),
         width: Joi.number().required()
-      }),
+      })
     }),
      (req, res, next) => ctrl.createBuilding(req, res, next));
 
