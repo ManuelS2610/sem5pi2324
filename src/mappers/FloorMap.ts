@@ -2,6 +2,7 @@
 import { Container } from 'typedi';
 
 import { Mapper } from "../core/infra/Mapper";
+import { Document, Model } from 'mongoose';
 
 import {IFloorDTO} from '../dto/IFloorDTO';
 
@@ -9,32 +10,37 @@ import { Floor } from "../domain/floor";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import FloorRepo from "../repos/floorRepo";
+import BuildingRepo from "../repos/buildingRepo";
+import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 
 export class FloorMap extends Mapper<Floor> {
     public static toDTO( floor: Floor): IFloorDTO {
         return {
-            floorId: floor.floorId,
-            buildingId: floor.buildingId,
+            id: floor.id.toString(),
+            name: floor.name,
+            buildingName: floor.buildingName,
             description: floor.description,
           } as IFloorDTO;
         }
       
-        public static async toDomain (raw: any): Promise<Floor> {
-          const  buildingOrError = Floor.create({floorId: raw.floorId,buildingId: raw.buildingId,description: raw.description},
-             new UniqueEntityID(raw.domainId))
-            const repo = Container.get(FloorRepo);
+        public static  toDomain (floor: any | Model<IFloorPersistence & Document>): Floor {
+          const  floorOrError = Floor.create(
+            floor,
+             new UniqueEntityID(floor.domainId)
+             );
             
             
-            buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
-            return buildingOrError.isSuccess ? buildingOrError.getValue() : null;
+            floorOrError.isFailure ? console.log(floorOrError.error) : '';
+            return floorOrError.isSuccess ? floorOrError.getValue() : null;
         }
       
         public static toPersistence (floor: Floor): any {
           const a = {
             domainId: floor.id.toString(),
-            floorId: floor.floorId,
-            buildingId: floor.buildingId,
+            name: floor.name,
+            buildingName: floor.buildingName,
             description: floor.description,
+            
           }
           return a;
         }

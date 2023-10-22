@@ -7,6 +7,7 @@ import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 
 import IFloorRepo from "../services/IRepos/IFloorRepo";
+import { FloorId } from '../domain/floorId';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -24,7 +25,7 @@ export default class FloorRepo implements IFloorRepo {
 
   public async exists(floor: Floor): Promise<boolean> {
     
-    const idX = floor.id instanceof Floor ? (<Floor>floor.id).buildingId : floor.id;
+    const idX = floor.id instanceof FloorId ? (<FloorId>floor.id).toValue() : floor.id;
 
     const query = { domainId: idX}; 
     const floorDocument = await this.floorSchema.findOne( query as FilterQuery<IFloorPersistence & Document>);
@@ -33,7 +34,7 @@ export default class FloorRepo implements IFloorRepo {
   }
 
   public async save (floor: Floor): Promise<Floor> {
-    const query = { domainId: floor.floorId}; 
+    const query = { domainId: floor.id.toString()}; 
 
     const floorDocument = await this.floorSchema.findOne( query );
 
@@ -45,7 +46,8 @@ export default class FloorRepo implements IFloorRepo {
 
         return FloorMap.toDomain(floorCreated);
       } else {
-        floorDocument.name = floor.floorId;
+        floorDocument.name = floor.name;
+        floorDocument.buildingName = floor.buildingName;
         floorDocument.description = floor.description;
         await floorDocument.save();
 
@@ -66,7 +68,7 @@ export default class FloorRepo implements IFloorRepo {
     return null;
   }
 
-  public async findByBuildingId (floorId: string): Promise<Floor> {
+  public async findByFloorId (floorId: string): Promise<Floor> {
     const query = { floorId: floorId};
     const floorRecord = await this.floorSchema.findOne( query as FilterQuery<IFloorPersistence & Document> );
 
