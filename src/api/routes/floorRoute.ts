@@ -6,7 +6,7 @@ import winston = require('winston');
 import IFloorController from '../../controllers/IControllers/IFloorController';
 
 import FloorService from '../../services/floorService';
-import { IFloorDTO } from '../../dto/IFloorDTO';
+import  IFloorDTO  from '../../dto/IFloorDTO';
 import middlewares from '../middlewares';
 
 const route = Router();
@@ -16,7 +16,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.floor.name) as IFloorController;
   route.post(
-    '/create',
+    '',
     celebrate({
       body: Joi.object({
 
@@ -27,7 +27,7 @@ export default (app: Router) => {
     }),
      (req, res, next) => ctrl.createFloor(req, res, next));
 
-  route.put('/update',
+  route.put('',
   celebrate({
     body: Joi.object({
       id: Joi.string().required(),
@@ -39,5 +39,6 @@ export default (app: Router) => {
     (req, res, next) => ctrl.updateFloor(req, res, next));
 
   // Define other routes for building operations here
+  route.get('', (req, res, next) => ctrl.getallFloors(req, res, next));
 
 };

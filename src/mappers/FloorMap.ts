@@ -4,7 +4,7 @@ import { Container } from 'typedi';
 import { Mapper } from "../core/infra/Mapper";
 import { Document, Model } from 'mongoose';
 
-import {IFloorDTO} from '../dto/IFloorDTO';
+import IFloorDTO from '../dto/IFloorDTO';
 
 import { Floor } from "../domain/floor";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";

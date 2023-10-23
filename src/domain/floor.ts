@@ -6,7 +6,8 @@ import { Interface } from "readline";
 import BuildingRepo from "../repos/buildingRepo";
 import { Building } from "./building";
 import { FloorId } from "./floorId";
-import { IFloorDTO } from "../dto/IFloorDTO";
+import  IFloorDTO  from "../dto/IFloorDTO";
+import { floor } from "lodash";
 
 interface FloorProps {
   name: string;
@@ -29,8 +30,8 @@ export class Floor extends AggregateRoot<FloorProps> {
   }
 
 
-  get buildingName (): string {
-    return this.props.name;
+  get buildingName (): string{
+    return this.props.buildingName;
   }
   get description (): string {
     return this.props.description;
@@ -53,10 +54,11 @@ export class Floor extends AggregateRoot<FloorProps> {
     super(props, id);
   }
 
-  public static create (floorDTO:IFloorDTO, id?: UniqueEntityID): Result<Floor> {
+  public static create (floorDTO: IFloorDTO, id?: UniqueEntityID): Result<Floor> {
+
     const name = floorDTO.name;
-    const description = floorDTO.description;
     const buildingName = floorDTO.buildingName;
+    const description = floorDTO.description;
 
     if (!!name === false || name.length === 0 ) {
       return Result.fail<Floor>('Must provide a Floor name')
@@ -65,6 +67,7 @@ export class Floor extends AggregateRoot<FloorProps> {
       name : name,
       buildingName: buildingName,
       description: description,
+
       } , id);
       return Result.ok<Floor>( floor )
     }

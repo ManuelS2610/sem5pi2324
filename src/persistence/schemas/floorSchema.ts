@@ -19,10 +19,7 @@ const floorSchema = new mongoose.Schema(
 
     buildingName: {
       type: String,
-      required: [true, 'Which building does this floor belong to?'],
-      maxlength: 5,
-      match: /^[a-zA-Z0-9\s]*$/,
-      index: true,
+      default: 'No Building',
     },
 
     description: {
