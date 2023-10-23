@@ -4,6 +4,7 @@ import user from './routes/userRoute';
 import role from './routes/roleRoute';
 import building from './routes/buildingRoute';
 import floor from './routes/floorRoute';
+import elevator from './routes/elevatorRoute';
 import passage from './routes/passageRoute';
 
 export default () => {
@@ -14,6 +15,7 @@ export default () => {
 	role(app);
 	building(app);
 	floor(app);
+	elevator(app);
 	passage(app);
 	
 	return app

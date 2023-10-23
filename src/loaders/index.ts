@@ -4,6 +4,7 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 
 import config from '../../config';
+import UserService from '../services/userService';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -33,6 +34,11 @@ export default async ({ expressApp }) => {
     name: 'floorSchema',
     schema: '../persistence/schemas/floorSchema',
   };
+  const elevatorSchema = {
+    // compare with the approach followed in repos and services
+    name: 'elevatorSchema',
+    schema: '../persistence/schemas/elevatorSchema',
+  };
   const passageSchema = {
     // compare with the approach followed in repos and services
     name: 'passageSchema',
@@ -53,6 +59,10 @@ export default async ({ expressApp }) => {
   const floorController = {
     name: config.controllers.floor.name,
     path: config.controllers.floor.path
+  }
+  const elevatorController = {
+    name: config.controllers.elevator.name,
+    path: config.controllers.elevator.path
   }
   const passageController = {
     name: config.controllers.passage.name,
@@ -77,6 +87,10 @@ export default async ({ expressApp }) => {
     name: config.repos.floor.name,
     path: config.repos.floor.path
   }
+  const elevatorRepo = {
+    name: config.repos.elevator.name,
+    path: config.repos.elevator.path
+  }
   const passageRepo = {
     name: config.repos.passage.name,
     path: config.repos.passage.path
@@ -96,6 +110,10 @@ export default async ({ expressApp }) => {
     name: config.services.floor.name,
     path: config.services.floor.path
   }
+  const elevatorService = {
+    name: config.services.elevator.name,
+    path: config.services.elevator.path
+  }
   const passageService = {
     name: config.services.passage.name,
     path: config.services.passage.path
@@ -108,12 +126,14 @@ export default async ({ expressApp }) => {
       roleSchema,
       buildingSchema,
       floorSchema,
+      elevatorSchema,
       passageSchema
     ],
     controllers: [
       roleController,
       buildingController,
       floorController,
+      elevatorController,
       passageController
     ],
     repos: [
@@ -121,12 +141,14 @@ export default async ({ expressApp }) => {
       userRepo,
       buildingRepo,
       floorRepo,
+      elevatorRepo,
       passageRepo
     ],
     services: [
       roleService,
       buildingService,
       floorService,
+      elevatorService,
       passageService
 
     ]
