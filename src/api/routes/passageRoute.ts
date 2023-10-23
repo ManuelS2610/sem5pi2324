@@ -39,6 +39,6 @@ export default (app: Router) => {
   }),
     (req, res, next) => ctrl.updatePassage(req, res, next));
 
-  
+  route.get('', (req, res, next) => ctrl.getPassagesBetween2Buildings(req, res, next));
 
 };

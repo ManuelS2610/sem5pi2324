@@ -80,6 +80,26 @@ export default class PassageRepo implements IPassageRepo {
     }
     return null;
   }
+  public async findByPisos (pisobuilding1: string, pisobuilding2: string): Promise<Passage[]> {
+    const query = { pisobuilding1: pisobuilding1, pisobuilding2: pisobuilding2};
+    const passageRecord = await this.passageSchema.find( query as FilterQuery<IPassagePersistence & Document> );
 
- 
+    if (passageRecord != null) {
+      return passageRecord.map((item) => {
+        return PassageMap.toDomain(item);
+      });
+    }
+    return null;
+  }
+  public async findByBuildings (building1: string, building2: string): Promise<Passage[]> {
+    const query = { building1: building1, building2: building2};
+    const passageRecord = await this.passageSchema.find( query as FilterQuery<IPassagePersistence & Document> );
+
+    if (passageRecord != null) {
+      return passageRecord.map((item) => {
+        return PassageMap.toDomain(item);
+      });
+    }
+    return null;
+  }
 }

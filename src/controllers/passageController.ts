@@ -47,7 +47,18 @@ public async updatePassage(req:Request, res:Response , next: NextFunction){
     catch(e){
         return next(e);
     }
-    
-
 }
+public async getPassagesBetween2Buildings(req:Request, res:Response , next: NextFunction){
+    try{
+        const passagesOrError = await this.passageServiceInstance.getPassagesBetween2Buildings(req.body.building1,req.body.building2) as Result<Array<IPassageDTO>>;
+        if(passagesOrError.isFailure){
+            return res.status(404).send();
+        }
+        const passagesDTO = passagesOrError.getValue();
+        return res.json(passagesDTO).status(201);
+    }catch(e){
+        return next(e);
+    }   
+}
+
 }

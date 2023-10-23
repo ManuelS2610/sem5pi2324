@@ -7,33 +7,53 @@ import IPassageRepo from './IRepos/IPassageRepo';
 import IBuildingRepo from './IRepos/IBuildingRepo';
 import { Passage } from '../domain/passage';
 import { Result } from "../core/logic/Result";
+import IFloorRepo from './IRepos/IFloorRepo';
 
 @Service()
 export default class PassageService implements IPassageService {
   constructor(
     @Inject(config.repos.passage.name) private passageRepo: IPassageRepo,
     @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
+    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
   ) { }
 
 
   public async createPassage(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>> {
     try {
-      /*const building1 = await this.buildingRepo(passageDTO.building1);
+      const building1 = await this.buildingRepo.findByName(passageDTO.building1);
       const found1 = !!building1;
       if (!found1) {
         return Result.fail<IPassageDTO>("Building1 not found");
-      }*/
-      /*const building2 = await this.buildingRepo.findByBuildingId(passageDTO.building2);
+      }
+      const building2 = await this.buildingRepo.findByName(passageDTO.building2);
       const found2 = !!building2;
       if (!found2) {
         return Result.fail<IPassageDTO>("Building2 not found");
+      }
+      const floor1 = await this.floorRepo.findByName(passageDTO.pisobuilding1);
+      const found3 = !!floor1;
+      if (!found3) {
+        return Result.fail<IPassageDTO>("Floor1 not found");
+      }
+      const floor2 = await this.floorRepo.findByName(passageDTO.pisobuilding2);
+      const found4 = !!floor2;
+      if (!found4) {
+        return Result.fail<IPassageDTO>("Floor2 not found");
+      }
+      /*const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      if (exists) {
+        return Result.fail<IPassageDTO>("Passage already exists");
+      }*/
+      /*const exists2 = await this.passageRepo.findByPisosReverse(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      if (exists2 === false) {
+        return Result.fail<IPassageDTO>("Passage already exists");
       }*/
       const passageOrError = await Passage.create(passageDTO);
 
       if (passageOrError.isFailure) {
         return Result.fail<IPassageDTO>(passageOrError.errorValue());
       }
-
+      
       const passageResult = passageOrError.getValue();
 
       await this.passageRepo.save(passageResult);
@@ -48,6 +68,26 @@ export default class PassageService implements IPassageService {
 
   public async updatePassage(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>> {
     try {
+      const building1 = await this.buildingRepo.findByName(passageDTO.building1);
+      const found1 = !!building1;
+      if (!found1) {
+        return Result.fail<IPassageDTO>("Building1 not found");
+      }
+      const building2 = await this.buildingRepo.findByName(passageDTO.building2);
+      const found2 = !!building2;
+      if (!found2) {
+        return Result.fail<IPassageDTO>("Building2 not found");
+      }
+      const floor1 = await this.floorRepo.findByName(passageDTO.pisobuilding1);
+      const found3 = !!floor1;
+      if (!found3) {
+        return Result.fail<IPassageDTO>("Floor1 not found");
+      }
+      const floor2 = await this.floorRepo.findByName(passageDTO.pisobuilding2);
+      const found4 = !!floor2;
+      if (!found4) {
+        return Result.fail<IPassageDTO>("Floor2 not found");
+      }
       const passage = await this.passageRepo.findByDomainId(passageDTO.id);
       if(passage === null){
         return Result.fail<IPassageDTO>("Passage not found");
@@ -64,6 +104,21 @@ export default class PassageService implements IPassageService {
       }
     } catch (e) {
       return Result.fail<IPassageDTO>(e);
+    }
+  }
+  public async getPassagesBetween2Buildings(building1: string, building2: string): Promise<Result<Array<IPassageDTO>>> {
+    try {
+      const passages = await this.passageRepo.findByBuildings(building1, building2);
+
+      if (passages === null) {
+        return Result.fail<Array<IPassageDTO>>("Passages not found");
+      } else {
+        const passagesDTO = passages.map((passage) => PassageMap.toDTO(passage) as IPassageDTO);
+        return Result.ok<Array<IPassageDTO>>(passagesDTO);
+      }
+
+    } catch (e) {
+      throw e;
     }
   }
 }
