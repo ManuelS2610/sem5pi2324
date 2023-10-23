@@ -80,16 +80,23 @@ export default class PassageRepo implements IPassageRepo {
     }
     return null;
   }
-  public async findByPisos (pisobuilding1: string, pisobuilding2: string): Promise<Passage[]> {
+  public async findByPisos (pisobuilding1: string, pisobuilding2: string): Promise<boolean> {
     const query = { pisobuilding1: pisobuilding1, pisobuilding2: pisobuilding2};
-    const passageRecord = await this.passageSchema.find( query as FilterQuery<IPassagePersistence & Document> );
-
+    const passageRecord = await this.passageSchema.findOne( query as FilterQuery<IPassagePersistence & Document> );
+    console.log(passageRecord);
     if (passageRecord != null) {
-      return passageRecord.map((item) => {
-        return PassageMap.toDomain(item);
-      });
+      return true;
     }
-    return null;
+    return false;
+  }
+  public async findByPisosReverse (pisobuilding1: string, pisobuilding2: string): Promise<boolean> {
+    const query = { pisobuilding1: pisobuilding2, pisobuilding2: pisobuilding1};
+    const passageRecord = await this.passageSchema.findOne( query as FilterQuery<IPassagePersistence & Document> );
+    console.log(passageRecord);
+    if (passageRecord != null) {
+      return true;
+    }
+    return false;
   }
   public async findByBuildings (building1: string, building2: string): Promise<Passage[]> {
     const query = { building1: building1, building2: building2};

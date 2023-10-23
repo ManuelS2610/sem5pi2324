@@ -40,14 +40,15 @@ export default class PassageService implements IPassageService {
       if (!found4) {
         return Result.fail<IPassageDTO>("Floor2 not found");
       }
-      /*const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      console.log(exists);
       if (exists) {
         return Result.fail<IPassageDTO>("Passage already exists");
-      }*/
-      /*const exists2 = await this.passageRepo.findByPisosReverse(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
-      if (exists2 === false) {
+      }
+      const exists2 = await this.passageRepo.findByPisosReverse(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      if (exists2) {
         return Result.fail<IPassageDTO>("Passage already exists");
-      }*/
+      }
       const passageOrError = await Passage.create(passageDTO);
 
       if (passageOrError.isFailure) {
@@ -87,6 +88,15 @@ export default class PassageService implements IPassageService {
       const found4 = !!floor2;
       if (!found4) {
         return Result.fail<IPassageDTO>("Floor2 not found");
+      }
+      const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      console.log(exists);
+      if (exists) {
+        return Result.fail<IPassageDTO>("Passage already exists");
+      }
+      const exists2 = await this.passageRepo.findByPisosReverse(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      if (exists2) {
+        return Result.fail<IPassageDTO>("Passage already exists");
       }
       const passage = await this.passageRepo.findByDomainId(passageDTO.id);
       if(passage === null){
