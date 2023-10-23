@@ -44,6 +44,11 @@ export default async ({ expressApp }) => {
     name: 'passageSchema',
     schema: '../persistence/schemas/passageSchema',
   };
+  const robotTypeSchema = {
+    // compare with the approach followed in repos and services
+    name: 'robotTypeSchema',
+    schema: '../persistence/schemas/robotTypeSchema',
+  };
 
     // CONTROLLERS
   const roleController = {
@@ -68,6 +73,11 @@ export default async ({ expressApp }) => {
     name: config.controllers.passage.name,
     path: config.controllers.passage.path
   }
+  const robotTypeController = {
+    name: config.controllers.robotType.name,
+    path: config.controllers.robotType.path
+  }
+
   // REPOS
   const roleRepo = {
     name: config.repos.role.name,
@@ -95,6 +105,10 @@ export default async ({ expressApp }) => {
     name: config.repos.passage.name,
     path: config.repos.passage.path
   }
+  const robotTypeRepo = {
+    name: config.repos.robotType.name,
+    path: config.repos.robotType.path
+  }
   // SERVICES
   const roleService = {
     name: config.services.role.name,
@@ -118,6 +132,10 @@ export default async ({ expressApp }) => {
     name: config.services.passage.name,
     path: config.services.passage.path
   }
+  const robotTypeService = {
+    name: config.services.robotType.name,
+    path: config.services.robotType.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -127,14 +145,16 @@ export default async ({ expressApp }) => {
       buildingSchema,
       floorSchema,
       elevatorSchema,
-      passageSchema
+      passageSchema,
+      robotTypeSchema
     ],
     controllers: [
       roleController,
       buildingController,
       floorController,
       elevatorController,
-      passageController
+      passageController,
+      robotTypeController
     ],
     repos: [
       roleRepo,
@@ -142,14 +162,16 @@ export default async ({ expressApp }) => {
       buildingRepo,
       floorRepo,
       elevatorRepo,
-      passageRepo
+      passageRepo,
+      robotTypeRepo
     ],
     services: [
       roleService,
       buildingService,
       floorService,
       elevatorService,
-      passageService
+      passageService,
+      robotTypeService
 
     ]
   });
