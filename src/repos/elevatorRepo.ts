@@ -90,5 +90,18 @@ export default class ElevatorRepo implements IElevatorRepo {
       throw error;
     }
   }
- 
+
+  public async listByBuildingName(buildingName: string): Promise<Array<Elevator>> {
+    const query = { buildingName: buildingName };
+    const elevators = await this.elevatorSchema.find(query).exec();
+  
+    if (elevators && elevators.length > 0) {
+      return elevators.map((elevator) => ElevatorMap.toDomain(elevator));
+    } else {
+      return [];
+    }
+  }
+
+  
+
 }
