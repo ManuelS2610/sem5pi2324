@@ -9,7 +9,7 @@ import { randomBytes } from 'crypto';
 
 import IFloorService from './IServices/IFloorService';
 import { FloorMap } from "../mappers/FloorMap";
-import  IFloorDTO  from '../dto/IFloorDTO';
+import  IFloorDTO  from '../dto/iFloorDTO';
 
 import IFloorRepo from './IRepos/IFloorRepo';
 import IBuildingRepo from './IRepos/IBuildingRepo';
@@ -58,18 +58,27 @@ export default class FloorService implements IFloorService{
 
   public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
-      const floor = await this.floorRepo.findByDomainId(floorDTO.id);
 
+      let building: Building;
+      const floor = await this.floorRepo.findByDomainId(floorDTO.id);
       if (floor === null){
         return Result.fail<IFloorDTO>("Floor not found");
       }else{
-    
-        floor.name = floorDTO.name;
-        floor.buildingName = floorDTO.buildingName;
-        floor.description = floorDTO.description;
-   
+        
+     
+      
+        const buildingOrError = await this.getBuildingName(floorDTO.buildingName);
+        if (buildingOrError.isFailure) {
+          return Result.fail<IFloorDTO>(buildingOrError.errorValue());
+        } else {
+          
+          floor.name = floorDTO.name;
+          floor.buildingName = floorDTO.buildingName;
+          floor.description = floorDTO.description;
+          await this.floorRepo.save(floor);
+        }
 
-        await this.floorRepo.save(floor);
+       
 
         const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
         return Result.ok<IFloorDTO>(floorDTOResult);
