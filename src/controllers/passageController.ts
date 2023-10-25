@@ -50,7 +50,11 @@ public async updatePassage(req:Request, res:Response , next: NextFunction){
 }
 public async getPassagesBetween2Buildings(req:Request, res:Response , next: NextFunction){
     try{
-        const passagesOrError = await this.passageServiceInstance.getPassagesBetween2Buildings(req.body.building1,req.body.building2) as Result<Array<IPassageDTO>>;
+        let aux = req.url.substring(1,2);
+        console.log(aux);
+        let aux2 = req.url.substring(3,4);
+        console.log(aux2);
+        const passagesOrError = await this.passageServiceInstance.getPassagesBetween2Buildings(aux,aux2) as Result<Array<IPassageDTO>>;
         if(passagesOrError.isFailure){
             return res.status(404).send();
         }

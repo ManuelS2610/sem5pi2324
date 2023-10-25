@@ -139,7 +139,6 @@ export default class PassageService implements IPassageService {
       }
       const floor1= await this.floorRepo.findByName(passage.pisobuilding1);
       const floor2= await this.floorRepo.findByName(passage.pisobuilding2);
-      console.log(floor1.id.toString());
 ;      if(floor1.id.toString()!=id && floor2.id.toString()!=id){
         return Result.fail<IPassageDTO>("Floor1 not found");
       }
