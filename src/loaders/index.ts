@@ -49,6 +49,11 @@ export default async ({ expressApp }) => {
     name: 'robotTypeSchema',
     schema: '../persistence/schemas/robotTypeSchema',
   };
+  const roomSchema = {
+    // compare with the approach followed in repos and services
+    name: 'roomSchema',
+    schema: '../persistence/schemas/roomSchema',
+  };
 
     // CONTROLLERS
   const roleController = {
@@ -76,6 +81,10 @@ export default async ({ expressApp }) => {
   const robotTypeController = {
     name: config.controllers.robotType.name,
     path: config.controllers.robotType.path
+  }
+  const roomController = {
+    name: config.controllers.room.name,
+    path: config.controllers.room.path
   }
 
   // REPOS
@@ -109,6 +118,10 @@ export default async ({ expressApp }) => {
     name: config.repos.robotType.name,
     path: config.repos.robotType.path
   }
+  const roomRepo = {
+    name: config.repos.room.name,
+    path: config.repos.room.path
+  }
   // SERVICES
   const roleService = {
     name: config.services.role.name,
@@ -136,6 +149,10 @@ export default async ({ expressApp }) => {
     name: config.services.robotType.name,
     path: config.services.robotType.path
   }
+  const roomService = {
+    name: config.services.room.name,
+    path: config.services.room.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -146,7 +163,8 @@ export default async ({ expressApp }) => {
       floorSchema,
       elevatorSchema,
       passageSchema,
-      robotTypeSchema
+      robotTypeSchema,
+      roomSchema
     ],
     controllers: [
       roleController,
@@ -154,7 +172,8 @@ export default async ({ expressApp }) => {
       floorController,
       elevatorController,
       passageController,
-      robotTypeController
+      robotTypeController,
+      roomController
     ],
     repos: [
       roleRepo,
@@ -163,7 +182,8 @@ export default async ({ expressApp }) => {
       floorRepo,
       elevatorRepo,
       passageRepo,
-      robotTypeRepo
+      robotTypeRepo,
+      roomRepo
     ],
     services: [
       roleService,
@@ -171,7 +191,8 @@ export default async ({ expressApp }) => {
       floorService,
       elevatorService,
       passageService,
-      robotTypeService
+      robotTypeService,
+      roomService
 
     ]
   });
