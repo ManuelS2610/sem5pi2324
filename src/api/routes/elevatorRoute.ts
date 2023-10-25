@@ -19,7 +19,6 @@ export default (app: Router) => {
     '',
     celebrate({
       body: Joi.object({
-        name: Joi.string().required(),
         buildingName: Joi.string().required(),
         floors: Joi.array().items(
           Joi.string().required(),
@@ -32,7 +31,6 @@ export default (app: Router) => {
   celebrate({
     body: Joi.object({
       id: Joi.string().required(),
-      name: Joi.string().required(),
       buildingName: Joi.string().required(),
       floors: Joi.array().items(
           Joi.string().required(),

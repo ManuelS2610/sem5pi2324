@@ -13,9 +13,8 @@ import { floor } from "lodash";
 import elevatorSchema from "../persistence/schemas/elevatorSchema";
 
 interface ElevatorProps {
-  name: string;
   buildingName: string;
-  floors: Floor[];
+  floors:string[];
 }
 
 export class Elevator extends AggregateRoot<ElevatorProps> {
@@ -31,16 +30,12 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
     return new ElevatorId(this.elevatorId.toValue());
   }
 
-  get floors(): Floor[] {
+  get floors(): string[] {
     return this.props.floors;
   }
   
-  set floors(value: Floor[]) {
+  set floors(value: string[]) {
     this.props.floors = value;
-  }
-  
-  set name ( value: string) {
-    this.props.name = value;
   }
 
   set buildingName ( value: string) {
@@ -51,18 +46,17 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
     super(props, id);
   }
 
-  public static create(elevatorDTO: IElevatorDTO, floors: Floor[], id?: UniqueEntityID): Result<Elevator> {
-    const name = elevatorDTO.name;
+  public static create(elevatorDTO: IElevatorDTO, id?: UniqueEntityID): Result<Elevator> {
     const buildingName = elevatorDTO.buildingName;
-    const elevatorRepo = new ElevatorRepo(elevatorSchema);
-    if(elevatorRepo.checkIfBuildingHasElevator(buildingName)){
-      return Result.fail<Elevator>('The elevator already exists in this building');
-    }
-    if (!!name === false || name.length === 0) {
+    const floors = elevatorDTO.floors;
+   // const elevatorRepo = new ElevatorRepo(elevatorSchema);
+    //if(elevatorRepo.checkIfBuildingHasElevator(buildingName)){
+     // return Result.fail<Elevator>('The elevator already exists in this building');
+    //}
+    if (!!buildingName === false || buildingName.length === 0) {
       return Result.fail<Elevator>('Must provide an Elevator name');
     } else {
       const elevator = new Elevator({
-        name: name,
         buildingName: buildingName,
         floors: floors,
       }, id);

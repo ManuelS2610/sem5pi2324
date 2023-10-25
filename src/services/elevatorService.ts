@@ -21,9 +21,7 @@ import { Floor } from '../domain/floor';
 @Service()
 export default class ElevatorService implements IElevatorService{
   constructor(
-    @Inject(config.repos.elevator.name) private elevatorRepo : IElevatorRepo,
-      @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo
-
+    @Inject(config.repos.elevator.name) private elevatorRepo : IElevatorRepo
   ) {}
 
 
@@ -31,9 +29,14 @@ export default class ElevatorService implements IElevatorService{
   public async createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
     try{
 
-      const floors: Floor[]= elevatorDTO.floors;
-      const elevatorOrError = await Elevator.create(elevatorDTO, floors);
-      
+      const elevator1 = await this.elevatorRepo.checkIfBuildingHasElevator(elevatorDTO.buildingName);
+      const found1 = !!elevator1;
+      if(!found1) {
+        return Result.fail<IElevatorDTO>("The elevator already exists in this building");
+      }
+
+
+      const elevatorOrError = await Elevator.create(elevatorDTO);
       if(elevatorOrError.isFailure){
         return Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
       }
@@ -56,9 +59,9 @@ export default class ElevatorService implements IElevatorService{
       if (elevator === null){
         return Result.fail<IElevatorDTO>("Elevator not found");
       }else{
-    
-        elevator.name= elevatorDTO.name;
+        
         elevator.buildingName = elevatorDTO.buildingName;
+        elevator.floors = elevatorDTO.floors;
    
 
         await this.elevatorRepo.save(elevator);
