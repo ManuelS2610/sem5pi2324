@@ -7,4 +7,5 @@ export default interface IBuildingService  {
   //metodo que lista todos os edificios
   getallBuildings(): Promise<Result<Array<IBuildingDTO>>>;
   //getBuildingMaxMinFloor (buildingId: string): Promise<Result<IBuildingDTO>>;
+  getBuildingsWithMinMaxFloors(minFloors: number, maxFloors: number): Promise<Result<Array<IBuildingDTO>>>;
 }

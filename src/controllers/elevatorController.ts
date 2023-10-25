@@ -49,7 +49,8 @@ public async updateElevator(req:Request, res:Response , next: NextFunction){
 
 public async getElevatorsInBuilding(req:Request, res:Response , next: NextFunction){
     try{
-        const elevatorsOrError = await this.elevatorServiceInstance.getElevatorsInBuilding(req.body.buildingName) as Result<Array<IElevatorDTO>>;
+        let aux = req.url.substring(1,req.url.length);
+        const elevatorsOrError = await this.elevatorServiceInstance.getElevatorsInBuilding(aux) as Result<Array<IElevatorDTO>>;
         if(elevatorsOrError.isFailure){
             return res.status(404).send();
         }
@@ -62,7 +63,8 @@ public async getElevatorsInBuilding(req:Request, res:Response , next: NextFuncti
 
 public async getFloorsServedByElevatorsInBuilding(req: Request, res: Response, next: NextFunction) {
     try {
-      const floorsOrError = await this.elevatorServiceInstance.getFloorsServedByElevatorsInBuilding(req.body.buildingName);
+        let aux = req.url.substring(1,req.url.length);
+      const floorsOrError = await this.elevatorServiceInstance.getFloorsServedByElevatorsInBuilding(aux);
   
       if (floorsOrError.isFailure) {
         return res.status(404).send();

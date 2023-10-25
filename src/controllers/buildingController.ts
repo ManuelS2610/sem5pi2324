@@ -63,5 +63,23 @@ public async getallBuildings(req:Request, res:Response , next: NextFunction){
     }
 }
 
+public async getBuildingsWithMinMaxFloors(req:Request, res:Response , next: NextFunction){
+    try{
+        let aux = req.url.substring(1,req.url.length);
+        let aux2 = req.url.substring(1,req.url.length);
+        const minFloorsparam = parseInt(aux, 10);
+        const maxFloorsparam = parseInt(aux2, 10);
+        const buildingsOrError = await this.buildingServiceInstance.getBuildingsWithMinMaxFloors(minFloorsparam, maxFloorsparam) as Result<Array<IBuildingDTO>>;
+        if(buildingsOrError.isFailure){
+            return res.status(404).send();
+        }
+        const buildingsDTO = buildingsOrError.getValue();
+        return res.json(buildingsDTO).status(201);
+    }
+    catch(e){
+        return next(e);
+    }
+}
+
 }
 

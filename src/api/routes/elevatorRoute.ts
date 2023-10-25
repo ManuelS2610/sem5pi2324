@@ -40,15 +40,17 @@ export default (app: Router) => {
     (req, res, next) => ctrl.updateElevator(req, res, next));
 
   // Define other routes for elevator operations here
-  route.get('',   celebrate({
+/*   route.get('',   celebrate({
     body: Joi.object({    
       buildingName: Joi.string().required(),   
     }),
-  }), (req, res, next) => ctrl.getElevatorsInBuilding(req, res, next));
-  route.get('/list',   celebrate({
+  }), (req, res, next) => ctrl.getElevatorsInBuilding(req, res, next)); */
+/*   route.get('/list',   celebrate({
     body: Joi.object({    
       buildingName: Joi.string().required(),   
     }),
-  }), (req, res, next) => ctrl.getFloorsServedByElevatorsInBuilding(req, res, next));
+  }), (req, res, next) => ctrl.getFloorsServedByElevatorsInBuilding(req, res, next)); */
+  route.get('/:buildingName', (req, res, next) => { ctrl.getElevatorsInBuilding(req, res, next); req.params.buildingName; } );
+  route.get('/:buildingName', (req, res, next) => { ctrl.getFloorsServedByElevatorsInBuilding(req, res, next); req.params.buildingName; } );
 
 };

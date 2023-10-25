@@ -41,4 +41,13 @@ export default (app: Router) => {
   // Define other routes for building operations here
 //method to list all buildings
   route.get('', (req, res, next) => ctrl.getallBuildings(req, res, next));
+
+/*   route.get('/list',   celebrate({
+    body: Joi.object({    
+      minFloors: Joi.number().required(),  
+      maxFloors: Joi.number().required()
+    }),
+  }), (req, res, next) => ctrl.getBuildingsWithMinMaxFloors(req, res, next)); */
+
+  route.get('/:minFloors/:maxFloors', (req, res, next) => {  ctrl.getBuildingsWithMinMaxFloors(req, res, next); req.params.minFloors, req.params.maxFloors; } );
 };
