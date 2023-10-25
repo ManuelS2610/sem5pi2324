@@ -41,13 +41,7 @@ export default (app: Router) => {
   // Define other routes for building operations here
   route.get('', (req, res, next) => ctrl.getallFloors(req, res, next));
 
-  route.get('/buildingName',celebrate({
-    body: Joi.object({
-  
-      buildingName: Joi.string().required()
-  
-    }),
-  }), (req, res, next) => ctrl.findFloorsByBuildingName(req, res, next));
+  route.get('/:buildingName', (req, res, next) => { ctrl.findFloorsByBuildingName(req, res, next); req.params.buildingName; } );
 
   route.patch('',
   celebrate({

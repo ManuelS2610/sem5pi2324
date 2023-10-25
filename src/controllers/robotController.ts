@@ -60,6 +60,39 @@ public async getallRobots(req:Request, res:Response , next: NextFunction){
         return next(e);
     }
 
-
 }
+
+public async findByTask(req:Request, res:Response , next: NextFunction){
+    try{
+        let aux = req.url.substring(1,req.url.length);
+        const robotOrError = await this.robotServiceInstance.findByTask(aux) as Result<Array<IRobotDTO>>;
+        if(robotOrError.isFailure){
+            return res.status(404).send();
+        }
+        const robotDTO = robotOrError.getValue();
+        return res.json(robotDTO).status(201);
+    }
+
+    catch(e){
+        return next(e);
+    }
+}
+
+ public async findByDesignation(req:Request, res:Response , next: NextFunction){
+    try{
+        let aux = req.url.substring(1,req.url.length);
+        const robotOrError = await this.robotServiceInstance.findByDesignation(aux) as Result<Array<IRobotDTO>>;
+        if(robotOrError.isFailure){
+            return res.status(404).send();
+        }
+        const robotDTO = robotOrError.getValue();
+        return res.json(robotDTO).status(201);
+    }
+
+    catch(e){
+        return next(e);
+    }
+}
+
+
 }

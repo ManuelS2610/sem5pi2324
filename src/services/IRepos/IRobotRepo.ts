@@ -10,4 +10,6 @@ export default interface IRobotRepo extends Repo<Robot> {
   findBySerialNumber (serialNumber: string): Promise<Robot>;
 
   //findByName (robotName: string): Promise<Robot>;
+  findByTask(type: string): Promise<Robot[]>;
+  findByDesignation(designation: string): Promise<Robot[]>;
 }

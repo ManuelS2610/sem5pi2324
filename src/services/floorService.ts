@@ -9,7 +9,7 @@ import { randomBytes } from 'crypto';
 
 import IFloorService from './IServices/IFloorService';
 import { FloorMap } from "../mappers/FloorMap";
-import  IFloorDTO  from '../dto/iFloorDTO';
+import  IFloorDTO  from '../dto/IFloorDTO';
 
 import IFloorRepo from './IRepos/IFloorRepo';
 import IBuildingRepo from './IRepos/IBuildingRepo';

@@ -116,4 +116,34 @@ export default class RobotService implements IRobotService{
       return Result.ok<RobotType>(robotType);
     }
   }
+
+
+
+  public async findByTask(type: string): Promise<Result<IRobotDTO[]>> {
+    try{
+      const robots = await this.robotRepo.findByTask(type);
+      if (robots === null){
+        return Result.fail<Array<IRobotDTO>>("Robot not found");
+      } else {
+        const robotDTOresult = robots.map(robot => RobotMap.toDTO(robot) as IRobotDTO);
+        return Result.ok<Array<IRobotDTO>>(robotDTOresult);
+      }
+    }catch(e){
+      throw e;
+    }
+  }
+
+  public async findByDesignation(designation: string): Promise<Result<IRobotDTO[]>> {
+    try{
+      const robots = await this.robotRepo.findByDesignation(designation);
+      if (robots === null){
+        return Result.fail<Array<IRobotDTO>>("Robot not found");
+      } else {
+        const robotDTOresult = robots.map(robot => RobotMap.toDTO(robot) as IRobotDTO);
+        return Result.ok<Array<IRobotDTO>>(robotDTOresult);
+      }
+    }catch(e){
+      throw e;
+    }
+  }
 }

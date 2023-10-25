@@ -71,7 +71,8 @@ export default class FloorController implements IFloorController {
 
     public async findFloorsByBuildingName(req:Request, res:Response , next: NextFunction){
         try{
-            const floorsOrError = await this.floorServiceInstance.findFloorsByBuildingName(req.body.buildingName) as Result<Array<IFloorDTO>>;
+            let aux = req.url.substring(1,req.url.length);
+            const floorsOrError = await this.floorServiceInstance.findFloorsByBuildingName(aux) as Result<Array<IFloorDTO>>;
             if(floorsOrError.isFailure){
                 return res.status(404).send();
             }

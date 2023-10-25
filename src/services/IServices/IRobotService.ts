@@ -7,5 +7,7 @@ export default interface IRobotService  {
 
   getRobot (robotId: string): Promise<Result<IRobotDTO>>;
   getallRobots(): Promise<Result<Array<IRobotDTO>>>;
+  findByTask(type: string): Promise<Result<Array<IRobotDTO>>>;
+  findByDesignation(designation: string): Promise<Result<Array<IRobotDTO>>>;
 
 }
