@@ -28,6 +28,9 @@ const floorSchema = new mongoose.Schema(
       required: [true, 'Please enter the floor description'],
       index: true,
     },
+    map:{
+      type: [[Number]],
+    }
   },
   { timestamps: true },
 );

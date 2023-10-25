@@ -16,6 +16,8 @@ export class PassageMap extends Mapper<Passage> {
             building2: passage.building2,
             pisobuilding1: passage.pisobuilding1,
             pisobuilding2: passage.pisobuilding2,
+            positionBuilding1: passage.positionBuilding1,
+            positionBuilding2: passage.positionBuilding2,
         } as IPassageDTO;
     }
 
@@ -36,6 +38,8 @@ export class PassageMap extends Mapper<Passage> {
             building2: passage.building2,
             pisobuilding1: passage.pisobuilding1,
             pisobuilding2: passage.pisobuilding2,
+            positionBuilding1: passage.positionBuilding1,
+            positionBuilding2: passage.positionBuilding2,
         }
         return a;
     }

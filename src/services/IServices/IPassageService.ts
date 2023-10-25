@@ -5,4 +5,5 @@ export default interface IBPassageService  {
   createPassage(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>>;
   updatePassage(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>>;
   getPassagesBetween2Buildings(building1: string, building2: string): Promise<Result<Array<IPassageDTO>>>;
+  updatePassagePosition(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>>
 }

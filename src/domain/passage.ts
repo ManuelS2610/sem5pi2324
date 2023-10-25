@@ -9,7 +9,8 @@ interface PassageProps {
     building2: string;
     pisobuilding1: string;
     pisobuilding2: string;
-
+    positionBuilding1: number[];
+    positionBuilding2: number[];
 }
 
 export class Passage extends AggregateRoot<PassageProps>{
@@ -37,6 +38,14 @@ export class Passage extends AggregateRoot<PassageProps>{
         return this.props.pisobuilding2;
     }
 
+    get positionBuilding1(): number[] {
+        return this.props.positionBuilding1;
+    }
+
+    get positionBuilding2(): number[] {
+        return this.props.positionBuilding2;
+    }
+
     set building1(value: string) {
         this.props.building1 = value;
     }
@@ -52,6 +61,14 @@ export class Passage extends AggregateRoot<PassageProps>{
     set pisobuilding2(value: string) {
         this.props.pisobuilding2 = value;
     }
+    
+    set positionBuilding1(value: number[]) {
+        this.props.positionBuilding1 = value;
+    }
+
+    set positionBuilding2(value: number[]) {
+        this.props.positionBuilding2 = value;
+    }
 
     private constructor(props: PassageProps, id?: UniqueEntityID) {
         super(props, id);
@@ -62,7 +79,8 @@ export class Passage extends AggregateRoot<PassageProps>{
         const building2 = passageDTO.building2;
         const pisobuilding1 = passageDTO.pisobuilding1;
         const pisobuilding2 = passageDTO.pisobuilding2;
-
+        const positionBuilding1 = passageDTO.positionBuilding1;
+        const positionBuilding2 = passageDTO.positionBuilding2;
         if (!!building1 === false || building1.length === 0 ) {
             return Result.fail<Passage>('Must provide a Building name')
           } else {
@@ -70,7 +88,9 @@ export class Passage extends AggregateRoot<PassageProps>{
             building1 : building1,
             building2: building2,
             pisobuilding1:pisobuilding1,
-            pisobuilding2:pisobuilding2 
+            pisobuilding2:pisobuilding2,
+            positionBuilding1:positionBuilding1,
+            positionBuilding2:positionBuilding2
             } , id);
             return Result.ok<Passage>( passage )
           }

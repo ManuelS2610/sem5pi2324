@@ -15,6 +15,7 @@ import elevatorSchema from "../persistence/schemas/elevatorSchema";
 interface ElevatorProps {
   buildingName: string;
   floors:string[];
+  position: number[];
 }
 
 export class Elevator extends AggregateRoot<ElevatorProps> {
@@ -33,6 +34,10 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
   get floors(): string[] {
     return this.props.floors;
   }
+
+  get position(): number[]{
+    return this.props.position;
+  }
   
   set floors(value: string[]) {
     this.props.floors = value;
@@ -42,6 +47,10 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
     this.props.buildingName = value;
   }
 
+  set position(value : number[]){
+    this.props.position= value
+  }
+
   private constructor (props: ElevatorProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -49,6 +58,7 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
   public static create(elevatorDTO: IElevatorDTO, id?: UniqueEntityID): Result<Elevator> {
     const buildingName = elevatorDTO.buildingName;
     const floors = elevatorDTO.floors;
+    const position = elevatorDTO.position;
    // const elevatorRepo = new ElevatorRepo(elevatorSchema);
     //if(elevatorRepo.checkIfBuildingHasElevator(buildingName)){
      // return Result.fail<Elevator>('The elevator already exists in this building');
@@ -59,6 +69,7 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
       const elevator = new Elevator({
         buildingName: buildingName,
         floors: floors,
+        position: position
       }, id);
       return Result.ok<Elevator>(elevator);
     }

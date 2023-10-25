@@ -52,6 +52,8 @@ export default class PassageRepo implements IPassageRepo {
         passageDocument.building2=passage.building2;
         passageDocument.pisobuilding1=passage.pisobuilding1;
         passageDocument.pisobuilding2=passage.pisobuilding2;
+        passageDocument.positionBuilding1=passage.positionBuilding1;
+        passageDocument.positionBuilding2=passage.positionBuilding2;
         await passageDocument.save();
 
         return passage;

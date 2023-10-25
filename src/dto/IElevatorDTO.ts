@@ -4,4 +4,5 @@ export interface IElevatorDTO {
     id: string;
     buildingName: string;
     floors: string[];
+    position: number[];
   }

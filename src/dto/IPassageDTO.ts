@@ -4,5 +4,6 @@ export interface IPassageDTO {
     building2: string;
     pisobuilding1: string;
     pisobuilding2: string;
-
+    positionBuilding1: number[];
+    positionBuilding2: number[];
 }

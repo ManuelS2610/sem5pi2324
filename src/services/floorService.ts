@@ -124,7 +124,28 @@ export default class FloorService implements IFloorService{
       throw e;
     }
   }
+  public async loadMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>{
+    try {
+      const floor = await this.floorRepo.findByDomainId(floorDTO.id);
+      const rows = floorDTO.map.length;
+      const cols = floorDTO.map[0].length;
+      const building = await this.buildingRepo.findByName(floor.buildingName);
+      if(rows!=building.depth || cols!=building.width || rows==0 || cols==0){
+        return Result.fail<IFloorDTO>("Map size does not match building size");
+      }
+      if (floor === null){
+        return Result.fail<IFloorDTO>("Floor not found");
+      }else{
+        floor.map=floorDTO.map;
+        await this.floorRepo.save(floor);
 
+        const floorDTOResult = FloorMap.toDTO(floor) as IFloorDTO;
+        return Result.ok<IFloorDTO>(floorDTOResult);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
   
 
 }

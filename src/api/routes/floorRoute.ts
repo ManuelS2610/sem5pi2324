@@ -41,4 +41,48 @@ export default (app: Router) => {
   // Define other routes for building operations here
   route.get('', (req, res, next) => ctrl.getallFloors(req, res, next));
 
+  route.patch('',
+  celebrate({
+    body: Joi.object({
+      id: Joi.string().required(),
+      map: Joi.array().items(
+        Joi.array().items(Joi.number())
+      ).required(),
+      passages: Joi.array().items(
+        Joi.object({
+          id: Joi.string().required(),
+          positionBuilding1: Joi.array().items(
+            Joi.number().required()
+          ).required(),
+          positionBuilding2: Joi.array().items(
+            Joi.number().required()
+          ).required()
+        })
+      ).required(),
+      elevators: Joi.array().items(
+        Joi.object(
+          {
+            id: Joi.string().required(),
+            position: Joi.array().items(
+              Joi.number().required()
+            ).required()
+          }
+        )
+      ).required(),
+      rooms: Joi.array().items(
+        Joi.object(
+          {
+            id: Joi.string().required(),
+            position: Joi.array().items(
+              Joi.number().required()
+            ).required(),
+            distX: Joi.number().required(),
+            distY: Joi.number().required(),
+          }
+        )
+      ).required()
+    })
+  }),
+    (req, res, next) => ctrl.loadMap(req, res, next),
+    );
 };

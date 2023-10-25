@@ -13,7 +13,7 @@ interface FloorProps {
   name: string;
   buildingName: string;
   description: string;
-  
+  map: number[][];
 }
 
 export class Floor extends AggregateRoot<FloorProps> {
@@ -36,6 +36,10 @@ export class Floor extends AggregateRoot<FloorProps> {
   get description (): string {
     return this.props.description;
   }
+  get map (): number[][] {
+    return this.props.map;
+  }
+
 
   set name ( value: string) {
     this.props.name = value;
@@ -49,6 +53,9 @@ export class Floor extends AggregateRoot<FloorProps> {
     this.props.buildingName = value;
   }
 
+  set map ( value: number[][] ) {
+    this.props.map = value;
+  }
 
   private constructor (props: FloorProps, id?: UniqueEntityID) {
     super(props, id);
@@ -67,7 +74,7 @@ export class Floor extends AggregateRoot<FloorProps> {
       name : name,
       buildingName: buildingName,
       description: description,
-
+      map: floorDTO.map,
       } , id);
       return Result.ok<Floor>( floor )
     }

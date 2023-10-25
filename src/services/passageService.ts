@@ -54,7 +54,7 @@ export default class PassageService implements IPassageService {
       if (passageOrError.isFailure) {
         return Result.fail<IPassageDTO>(passageOrError.errorValue());
       }
-      
+
       const passageResult = passageOrError.getValue();
 
       await this.passageRepo.save(passageResult);
@@ -99,9 +99,9 @@ export default class PassageService implements IPassageService {
         return Result.fail<IPassageDTO>("Passage already exists");
       }
       const passage = await this.passageRepo.findByDomainId(passageDTO.id);
-      if(passage === null){
+      if (passage === null) {
         return Result.fail<IPassageDTO>("Passage not found");
-      }else{
+      } else {
         passage.building1 = passageDTO.building1;
         passage.building2 = passageDTO.building2;
         passage.pisobuilding1 = passageDTO.pisobuilding1;
@@ -131,6 +131,29 @@ export default class PassageService implements IPassageService {
       throw e;
     }
   }
+  public async updatePassagePosition(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>> {
+    try {
+      const passage = await this.passageRepo.findByDomainId(passageDTO.id);
+      if (passage === null) {
+        return Result.fail<IPassageDTO>("Passage not found");
+      }
+      const building1 = await this.buildingRepo.findByName(passage.building1);
+      if (building1.depth < passage.positionBuilding1[0] || building1.width < passage.positionBuilding1[1]) {
+        return Result.fail<IPassageDTO>("Position out of bounds");
+      }
+      const building2 = await this.buildingRepo.findByName(passage.building2);
+      if (building2.depth < passage.positionBuilding2[0] || building2.width < passage.positionBuilding2[1]) {
+        return Result.fail<IPassageDTO>("Position out of bounds");
+      }else{
+      passage.positionBuilding1 = passageDTO.positionBuilding1;
+      passage.positionBuilding2 = passageDTO.positionBuilding2;
+      await this.passageRepo.save(passage);
+      const passageDTOResult = PassageMap.toDTO(passage) as IPassageDTO;
+      return Result.ok<IPassageDTO>(passageDTOResult);}
+    }
+    catch (e) {
+      return Result.fail<IPassageDTO>(e);
+    }
+
+  }
 }
-
-

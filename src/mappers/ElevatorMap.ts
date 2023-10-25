@@ -20,6 +20,7 @@ export class ElevatorMap extends Mapper<Elevator> {
             id: elevator.id.toString(),
             buildingName: elevator.buildingName,
             floors: elevator.floors,
+            position: elevator.position
           } as IElevatorDTO;
         }
       
@@ -39,6 +40,7 @@ export class ElevatorMap extends Mapper<Elevator> {
             domainId: elevator.id.toString(),
             buildingName: elevator.buildingName,
             floors: elevator.floors,
+            position: elevator.position
           }
           return a;
         }

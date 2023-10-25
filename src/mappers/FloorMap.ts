@@ -12,6 +12,7 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import FloorRepo from "../repos/floorRepo";
 import BuildingRepo from "../repos/buildingRepo";
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
+import { map } from 'lodash';
 
 export class FloorMap extends Mapper<Floor> {
     public static toDTO( floor: Floor): IFloorDTO {
@@ -20,6 +21,7 @@ export class FloorMap extends Mapper<Floor> {
             name: floor.name,
             buildingName: floor.buildingName,
             description: floor.description,
+            map: floor.map,
           } as IFloorDTO;
         }
       
@@ -40,7 +42,7 @@ export class FloorMap extends Mapper<Floor> {
             name: floor.name,
             buildingName: floor.buildingName,
             description: floor.description,
-            
+            map: floor.map,
           }
           return a;
         }
