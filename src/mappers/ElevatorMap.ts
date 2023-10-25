@@ -12,6 +12,7 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import ElevatorRepo from "../repos/elevatorRepo";
 import BuildingRepo from "../repos/buildingRepo";
 import { IElevatorPersistence } from '../dataschema/IElevatorPersistence';
+import { floor, flowRight } from 'lodash';
 
 export class ElevatorMap extends Mapper<Elevator> {
     public static toDTO( elevator: Elevator): IElevatorDTO {
@@ -19,13 +20,15 @@ export class ElevatorMap extends Mapper<Elevator> {
             id: elevator.id.toString(),
             name: elevator.name,
             buildingName: elevator.buildingName,
+            floors: elevator.floors,
           } as IElevatorDTO;
         }
       
         public static  toDomain (elevator: any | Model<IElevatorPersistence & Document>): Elevator {
           const  elevatorOrError = Elevator.create(
             elevator,
-             new UniqueEntityID(elevator.domainId)
+            [],
+             new UniqueEntityID(elevator.domainId),
              );
             
             
@@ -38,7 +41,7 @@ export class ElevatorMap extends Mapper<Elevator> {
             domainId: elevator.id.toString(),
             name: elevator.name,
             buildingName: elevator.buildingName,
-            
+            floors: elevator.floors,
           }
           return a;
         }

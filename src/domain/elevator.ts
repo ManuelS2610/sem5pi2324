@@ -7,10 +7,15 @@ import BuildingRepo from "../repos/buildingRepo";
 import { Building } from "./building";
 import { ElevatorId } from "./elevatorId";
 import { IElevatorDTO } from "../dto/IElevatorDTO";
+import ElevatorRepo from "../repos/elevatorRepo";
+import {Floor} from "./floor";
+import { floor } from "lodash";
+import elevatorSchema from "../persistence/schemas/elevatorSchema";
 
 interface ElevatorProps {
   name: string;
   buildingName: string;
+  floors: Floor[];
 }
 
 export class Elevator extends AggregateRoot<ElevatorProps> {
@@ -25,6 +30,14 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
   get elevatorId (): ElevatorId {
     return new ElevatorId(this.elevatorId.toValue());
   }
+
+  get floors(): Floor[] {
+    return this.props.floors;
+  }
+  
+  set floors(value: Floor[]) {
+    this.props.floors = value;
+  }
   
   set name ( value: string) {
     this.props.name = value;
@@ -38,20 +51,22 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
     super(props, id);
   }
 
-  public static create (elevatorDTO:IElevatorDTO, id?: UniqueEntityID): Result<Elevator> {
+  public static create(elevatorDTO: IElevatorDTO, floors: Floor[], id?: UniqueEntityID): Result<Elevator> {
     const name = elevatorDTO.name;
     const buildingName = elevatorDTO.buildingName;
-
-    if (!!name === false || name.length === 0 ) {
-      return Result.fail<Elevator>('Must provide a Elevator name')
-    } else {
-      const elevator = new Elevator({ 
-      name : name,
-      buildingName: buildingName,
-      } , id);
-      return Result.ok<Elevator>( elevator )
+    const elevatorRepo = new ElevatorRepo(elevatorSchema);
+    if(elevatorRepo.checkIfBuildingHasElevator(buildingName)){
+      return Result.fail<Elevator>('The elevator already exists in this building');
     }
-
-      
+    if (!!name === false || name.length === 0) {
+      return Result.fail<Elevator>('Must provide an Elevator name');
+    } else {
+      const elevator = new Elevator({
+        name: name,
+        buildingName: buildingName,
+        floors: floors,
+      }, id);
+      return Result.ok<Elevator>(elevator);
+    }
   }
 }

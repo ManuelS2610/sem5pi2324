@@ -20,7 +20,8 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         name: Joi.string().required(),
-        buildingName: Joi.string().required()
+        buildingName: Joi.string().required(),
+        floors: Joi.array().required(),
       }),
     }),
      (req, res, next) => ctrl.createElevator(req, res, next));
@@ -28,9 +29,10 @@ export default (app: Router) => {
   route.put('',
   celebrate({
     body: Joi.object({
-      
+      id: Joi.string().required(),
       name: Joi.string().required(),
-      buildingName: Joi.string().required()
+      buildingName: Joi.string().required(),
+      floors: Joi.array().required(),
     }),
   }),
     (req, res, next) => ctrl.updateElevator(req, res, next));

@@ -48,6 +48,7 @@ export default class ElevatorRepo implements IElevatorRepo {
       } else {
         elevatorDocument.name = elevator.name;
         elevatorDocument.buildingName = elevator.buildingName;
+        elevatorDocument.floor = elevator.floors;
         await elevatorDocument.save();
 
         return elevator;
@@ -77,5 +78,18 @@ export default class ElevatorRepo implements IElevatorRepo {
     return null;
   }
 
+  public async checkIfBuildingHasElevator(buildingName: string): Promise<boolean> {
+    try {
+      // Verifique se há algum elevador associado a este edifício
+      const query = { buildingName: buildingName };
+      const elevatorsInBuilding = await this.elevatorSchema.find(query as FilterQuery<IElevatorPersistence & Document>);
+  
+      // Se a consulta retornar pelo menos um elevador, o edifício possui elevadores
+      return elevatorsInBuilding.length > 0;
+    } catch (error) {
+      // Lide com erros de consulta, se necessário
+      throw error;
+    }
+  }
  
 }

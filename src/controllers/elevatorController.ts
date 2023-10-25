@@ -45,8 +45,8 @@ public async updateElevator(req:Request, res:Response , next: NextFunction){
     catch(e){
         return next(e);
     }
-    
-
-}
 }
 
+  
+
+}

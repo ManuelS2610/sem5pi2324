@@ -16,6 +16,7 @@ import IBuildingRepo from './IRepos/IBuildingRepo';
 import { Elevator } from '../domain/elevator';
 
 import { Result } from "../core/logic/Result";
+import { Floor } from '../domain/floor';
 
 @Service()
 export default class ElevatorService implements IElevatorService{
@@ -29,7 +30,9 @@ export default class ElevatorService implements IElevatorService{
  
   public async createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
     try{
-      const elevatorOrError = await Elevator.create(elevatorDTO);
+      
+      const floors: Floor[] = elevatorDTO.floors;
+      const elevatorOrError = await Elevator.create(elevatorDTO, floors);
       
       if(elevatorOrError.isFailure){
         return Result.fail<IElevatorDTO>(elevatorOrError.errorValue());

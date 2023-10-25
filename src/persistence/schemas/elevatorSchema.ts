@@ -1,6 +1,22 @@
 import { IElevatorPersistence } from '../../dataschema/IElevatorPersistence';
 import mongoose from 'mongoose';
 
+const floorSchema = new mongoose.Schema(
+  {
+    number: {
+      type: Number,
+      required: true,
+      min: 1, // Define o valor mínimo do número do andar
+    },
+    name: {
+      type: String,
+      required: true,
+      maxlength: 100, // Define o tamanho máximo do nome do andar
+    },
+  },
+  { _id: false } // Isso evita que o Mongoose crie um ID para os andares
+);
+
 const elevatorSchema = new mongoose.Schema(
   {
 
@@ -8,7 +24,7 @@ const elevatorSchema = new mongoose.Schema(
       type: String,
       unique: true
     },
-    
+  
     name: {
       type: String,
       maxlength: 5,
@@ -24,7 +40,9 @@ const elevatorSchema = new mongoose.Schema(
       index: true,
     },
 
+    floors: [floorSchema], // Adicione a verificação para o campo floors aqui
   },
+
   { timestamps: true },
 );
 
