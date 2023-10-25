@@ -30,8 +30,8 @@ export default class ElevatorService implements IElevatorService{
  
   public async createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>> {
     try{
-      
-      const floors: Floor[] = elevatorDTO.floors;
+
+      const floors: Floor[]= elevatorDTO.floors;
       const elevatorOrError = await Elevator.create(elevatorDTO, floors);
       
       if(elevatorOrError.isFailure){

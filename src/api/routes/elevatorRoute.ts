@@ -21,7 +21,9 @@ export default (app: Router) => {
       body: Joi.object({
         name: Joi.string().required(),
         buildingName: Joi.string().required(),
-        floors: Joi.array().required(),
+        floors: Joi.array().items(
+          Joi.string().required(),
+        ),
       }),
     }),
      (req, res, next) => ctrl.createElevator(req, res, next));
@@ -32,7 +34,9 @@ export default (app: Router) => {
       id: Joi.string().required(),
       name: Joi.string().required(),
       buildingName: Joi.string().required(),
-      floors: Joi.array().required(),
+      floors: Joi.array().items(
+          Joi.string().required(),
+      ),
     }),
   }),
     (req, res, next) => ctrl.updateElevator(req, res, next));

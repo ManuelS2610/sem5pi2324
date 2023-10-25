@@ -3,11 +3,6 @@ import mongoose from 'mongoose';
 
 const floorSchema = new mongoose.Schema(
   {
-    number: {
-      type: Number,
-      required: true,
-      min: 1, // Define o valor mínimo do número do andar
-    },
     name: {
       type: String,
       required: true,
@@ -40,7 +35,7 @@ const elevatorSchema = new mongoose.Schema(
       index: true,
     },
 
-    floors: [floorSchema], // Adicione a verificação para o campo floors aqui
+    floors: [floorSchema],
   },
 
   { timestamps: true },
