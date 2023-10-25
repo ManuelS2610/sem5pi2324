@@ -7,6 +7,7 @@ export default interface IFloorService  {
 
   getFloor (floorId: string): Promise<Result<IFloorDTO>>;
   getallFloors(): Promise<Result<Array<IFloorDTO>>>;
+  findFloorsByBuildingName(buildingName: string): Promise<Result<Array<IFloorDTO>>>;
   loadMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>
 
 }

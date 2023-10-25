@@ -11,6 +11,7 @@ const floorSchema = new mongoose.Schema(
 
     name: {
       type: String,
+      unique: true,
       required: [true, 'Floor name:'],
       maxlength: 5,
       match: /^[a-zA-Z0-9\s]*$/,

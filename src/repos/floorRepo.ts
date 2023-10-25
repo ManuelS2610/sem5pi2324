@@ -5,9 +5,11 @@ import { FloorMap } from '../mappers/FloorMap';
 
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
+import IBuildingRepo from '../services/IRepos/IBuildingRepo';
 
 import IFloorRepo from "../services/IRepos/IFloorRepo";
 import { FloorId } from '../domain/floorId';
+import config from '../../config';
 
 @Service()
 export default class FloorRepo implements IFloorRepo {
@@ -15,6 +17,7 @@ export default class FloorRepo implements IFloorRepo {
 
   constructor(
     @Inject('floorSchema') private floorSchema : Model<IFloorPersistence & Document>,
+    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo
   ) {}
 
   private createBaseQuery (): any {
@@ -98,5 +101,28 @@ export default class FloorRepo implements IFloorRepo {
     return null;
   }
 
+  public async findAllByBuildingName(buildingName: string): Promise<Floor[]> {
+
+    const building = await this.buildingRepo.findByName(buildingName);
+    if (building) {
+      const floorRecords = await this.floorSchema.find({ buildingId: building.id.toString() });
+  
+      if (floorRecords) {
+        return floorRecords.map((item) => FloorMap.toDomain(item));
+      }
+    }
+  
+    return null;
+  }
+
+  public async findFloorsByBuildingName(buildingName: string): Promise<Floor[]> {
+    const floorRecords = await this.floorSchema.find({ buildingName });
+  
+    if (floorRecords.length > 0) {
+      return floorRecords.map((item) => FloorMap.toDomain(item));
+    }
+  
+    return [];
+  }
  
 }
