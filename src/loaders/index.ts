@@ -54,6 +54,11 @@ export default async ({ expressApp }) => {
     name: 'roomSchema',
     schema: '../persistence/schemas/roomSchema',
   };
+  const robotSchema = {
+    // compare with the approach followed in repos and services
+    name: 'robotSchema',
+    schema: '../persistence/schemas/robotSchema',
+  };
 
     // CONTROLLERS
   const roleController = {
@@ -85,6 +90,10 @@ export default async ({ expressApp }) => {
   const roomController = {
     name: config.controllers.room.name,
     path: config.controllers.room.path
+  }
+  const robotController = {
+    name: config.controllers.robot.name,
+    path: config.controllers.robot.path
   }
 
   // REPOS
@@ -122,6 +131,10 @@ export default async ({ expressApp }) => {
     name: config.repos.room.name,
     path: config.repos.room.path
   }
+  const robotRepo = {
+    name: config.repos.robot.name,
+    path: config.repos.robot.path
+  }
   // SERVICES
   const roleService = {
     name: config.services.role.name,
@@ -153,6 +166,10 @@ export default async ({ expressApp }) => {
     name: config.services.room.name,
     path: config.services.room.path
   }
+  const robotService = {
+    name: config.services.robot.name,
+    path: config.services.robot.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -164,7 +181,8 @@ export default async ({ expressApp }) => {
       elevatorSchema,
       passageSchema,
       robotTypeSchema,
-      roomSchema
+      roomSchema,
+      robotSchema
     ],
     controllers: [
       roleController,
@@ -173,7 +191,8 @@ export default async ({ expressApp }) => {
       elevatorController,
       passageController,
       robotTypeController,
-      roomController
+      roomController,
+      robotController
     ],
     repos: [
       roleRepo,
@@ -183,7 +202,8 @@ export default async ({ expressApp }) => {
       elevatorRepo,
       passageRepo,
       robotTypeRepo,
-      roomRepo
+      roomRepo,
+      robotRepo
     ],
     services: [
       roleService,
@@ -192,8 +212,8 @@ export default async ({ expressApp }) => {
       elevatorService,
       passageService,
       robotTypeService,
-      roomService
-
+      roomService,
+      robotService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

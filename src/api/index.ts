@@ -8,6 +8,7 @@ import elevator from './routes/elevatorRoute';
 import passage from './routes/passageRoute';
 import robotType from './routes/robotTypeRoute';
 import room from './routes/roomRoute';
+import robot from './routes/robotRoute';
 
 export default () => {
 	const app = Router();
@@ -21,6 +22,7 @@ export default () => {
 	passage(app);
 	robotType(app);
 	room(app);
+	robot(app);
 	
 	return app
 }
