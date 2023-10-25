@@ -3,4 +3,7 @@ export interface IRoomPersistence {
   category: string;
   description: string;
   floor: string;
+  position: number[];
+  distX: number;
+  distY: number;
 }

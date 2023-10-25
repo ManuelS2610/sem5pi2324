@@ -9,6 +9,9 @@ interface RoomProps {
   category: string;
   description: string;
   floor: string;
+  position:number[];
+  distX: number;
+  distY: number;
 }
 
 export class Room extends AggregateRoot<RoomProps> {
@@ -32,6 +35,19 @@ export class Room extends AggregateRoot<RoomProps> {
     return this.props.floor;
   }
 
+  get position(): number[]{
+    return this.props.position;
+  }
+
+  get distX(): number{
+    return this.props.distX;
+  }
+
+  get distY(): number{
+    return this.props.distY;
+  }
+
+
   set category ( value: string) {
     this.props.category = value;
   }
@@ -44,7 +60,17 @@ export class Room extends AggregateRoot<RoomProps> {
     this.props.floor = value;
   }
   
+  set position(value : number[]){
+    this.props.position= value
+  }
 
+  set distX(value : number){
+    this.props.distX= value
+  }
+
+  set distY(value : number){
+    this.props.distY= value
+  }
   
 
   private constructor (props: RoomProps, id?: UniqueEntityID) {
@@ -56,11 +82,17 @@ export class Room extends AggregateRoot<RoomProps> {
     const category = roomDTO.category;
     const description = roomDTO.description;
     const floor = roomDTO.floor;
+    const position = roomDTO.position;
+    const distX = roomDTO.distX;
+    const distY = roomDTO.distY;
 
     const room = new Room({
        category: category,
        description: description, 
-       floor:floor
+       floor:floor,
+        position:roomDTO.position,
+        distX:roomDTO.distX,
+        distY:roomDTO.distY
     }, id);
     return Result.ok<Room>(room);
   }

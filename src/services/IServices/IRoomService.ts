@@ -7,5 +7,6 @@ export default interface IRoomService  {
 
   getRoom (roomId: string): Promise<Result<IRoomDTO>>;
   getallRooms(): Promise<Result<Array<IRoomDTO>>>;
+  updatePosition(roomDTO: IRoomDTO, id: string): Promise<Result<IRoomDTO>>
 
 }

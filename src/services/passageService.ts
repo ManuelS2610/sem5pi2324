@@ -131,18 +131,24 @@ export default class PassageService implements IPassageService {
       throw e;
     }
   }
-  public async updatePassagePosition(passageDTO: IPassageDTO): Promise<Result<IPassageDTO>> {
+  public async updatePassagePosition(passageDTO: IPassageDTO, id: string): Promise<Result<IPassageDTO>> {
     try {
       const passage = await this.passageRepo.findByDomainId(passageDTO.id);
       if (passage === null) {
         return Result.fail<IPassageDTO>("Passage not found");
       }
+      const floor1= await this.floorRepo.findByName(passage.pisobuilding1);
+      const floor2= await this.floorRepo.findByName(passage.pisobuilding2);
+      console.log(floor1.id.toString());
+;      if(floor1.id.toString()!=id && floor2.id.toString()!=id){
+        return Result.fail<IPassageDTO>("Floor1 not found");
+      }
       const building1 = await this.buildingRepo.findByName(passage.building1);
-      if (building1.depth < passage.positionBuilding1[0] || building1.width < passage.positionBuilding1[1]) {
+      if (building1.depth < passageDTO.positionBuilding1[0] || building1.width < passageDTO.positionBuilding1[1]) {
         return Result.fail<IPassageDTO>("Position out of bounds");
       }
       const building2 = await this.buildingRepo.findByName(passage.building2);
-      if (building2.depth < passage.positionBuilding2[0] || building2.width < passage.positionBuilding2[1]) {
+      if (building2.depth < passageDTO.positionBuilding2[0] || building2.width < passageDTO.positionBuilding2[1]) {
         return Result.fail<IPassageDTO>("Position out of bounds");
       }else{
       passage.positionBuilding1 = passageDTO.positionBuilding1;

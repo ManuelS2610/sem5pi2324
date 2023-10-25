@@ -49,6 +49,9 @@ export default class RoomRepo implements IRoomRepo {
         roomDocument.category = room.category;
         roomDocument.description = room.description;
         roomDocument.floor = room.floor;
+        roomDocument.position = room.position;
+        roomDocument.distX = room.distX;
+        roomDocument.distY = room.distY;
         await roomDocument.save();
 
         return room;

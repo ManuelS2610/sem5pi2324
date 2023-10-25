@@ -20,6 +20,9 @@ const elevatorSchema = new mongoose.Schema(
     floors: {
       type: [String],
       required: true
+    },
+    position: {
+      type: [Number],
     }
   },
 

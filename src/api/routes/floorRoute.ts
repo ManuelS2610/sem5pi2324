@@ -67,7 +67,7 @@ export default (app: Router) => {
           ).required()
         })
       ).required(),
-      elevators: Joi.array().items(
+      elevator:
         Joi.object(
           {
             id: Joi.string().required(),
@@ -76,7 +76,7 @@ export default (app: Router) => {
             ).required()
           }
         )
-      ).required(),
+      .required(),
       rooms: Joi.array().items(
         Joi.object(
           {

@@ -3,4 +3,7 @@ export default interface IRoomDTO {
   category: string;
   description: string;
   floor: string;
+  position: number[];
+  distX: number;
+  distY: number;
 }

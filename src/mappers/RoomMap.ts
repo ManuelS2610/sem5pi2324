@@ -21,6 +21,9 @@ export class RoomMap extends Mapper<Room> {
       category: room.category,
       description: room.description,
       floor: room.floor,
+      position: room.position,
+      distX: room.distX,
+      distY: room.distY
     } as IRoomDTO;
   }
 
@@ -40,7 +43,10 @@ export class RoomMap extends Mapper<Room> {
       domainId: room.id.toString(),
       category: room.category,
       description: room.description,
-      floor: room.floor
+      floor: room.floor,
+      position: room.position,
+      distX: room.distX,
+      distY: room.distY
     }
     return a;
   }

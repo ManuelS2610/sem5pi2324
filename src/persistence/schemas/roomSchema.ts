@@ -28,6 +28,16 @@ const roomSchema = new mongoose.Schema(
       type: String,
       default: 'No Floor',
     },
+    position: {
+      type: [Number],
+      default: [0,0],
+    },
+    distX: {
+      type: Number,
+    },
+    distY: {
+      type: Number,
+    },
   },
   { timestamps: true },
 );

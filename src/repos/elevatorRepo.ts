@@ -48,6 +48,7 @@ export default class ElevatorRepo implements IElevatorRepo {
       } else {
         elevatorDocument.buildingName = elevator.buildingName;
         elevatorDocument.floor = elevator.floors;
+        elevatorDocument.position = elevator.position;
         await elevatorDocument.save();
 
         return elevator;

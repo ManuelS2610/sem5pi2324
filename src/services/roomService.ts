@@ -11,12 +11,14 @@ import { Floor } from '../domain/floor';
 
 import IFloorRepo from './IRepos/IFloorRepo';
 import { Result } from "../core/logic/Result";
+import IBuildingRepo from './IRepos/IBuildingRepo';
 
 @Service()
 export default class RoomService implements IRoomService{
   constructor(
       @Inject(config.repos.room.name) private roomRepo : IRoomRepo,
       @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+      @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
   ) {}
 
   public async createRoom(roomDTO: IRoomDTO): Promise<Result<IRoomDTO>> {
@@ -115,5 +117,34 @@ export default class RoomService implements IRoomService{
       throw e;
     }
   }
+
+  public async updatePosition(roomDTO: IRoomDTO, id: string): Promise<Result<IRoomDTO>> {
+    try{
+      const room = await this.roomRepo.findByDomainId(roomDTO.id);
+      if (room === null) {
+        return Result.fail<IRoomDTO>("Room not found");
+      }
+      const floor = await this.floorRepo.findByName(room.floor);
+      if (floor.id.toString() != id) {
+        return Result.fail<IRoomDTO>("Floor not found");
+      }
+      const building = await this.buildingRepo.findByName(floor.buildingName);
+      if (building.depth<roomDTO.position[0] || building.width<roomDTO.position[1] || roomDTO.position[0]+roomDTO.distX>building.depth+1 || roomDTO.position[1]+roomDTO.distY>building.width+1) {
+        return Result.fail<IRoomDTO>("Out of bounds");
+      }
+      else{
+      room.position = roomDTO.position;
+      room.distX = roomDTO.distX;
+      room.distY = roomDTO.distY;
+      await this.roomRepo.save(room);
+      const roomDTOResult = RoomMap.toDTO(room) as IRoomDTO;
+      return Result.ok<IRoomDTO>(roomDTOResult);
+      
+      }
+    }catch(e){
+      return Result.fail<IRoomDTO>(e);
+    }
+  }
+
 
 }
