@@ -51,7 +51,15 @@ export default (app: Router) => {
 
   route.get('/:designation', (req, res, next) => { ctrl.findByDesignation(req, res, next); req.params.designation; } );
 
-
+  route.patch('/inibir',
+  
+  celebrate({
+    body: Joi.object({
+      id: Joi.string().required(),
+      available: Joi.boolean().required()
+    }),
+    }),
+    (req, res, next) => ctrl.inhibitRobot(req, res, next));
   
 
 };
