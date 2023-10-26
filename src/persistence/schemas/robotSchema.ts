@@ -12,7 +12,6 @@ const robotSchema = new mongoose.Schema(
     type: {
       type: String,
       required: [true, 'Robot type:'],
-      enum:["Pick-Up&Delivery","Survaillance"],
       index: true,
     },
 
