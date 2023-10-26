@@ -49,5 +49,14 @@ export default (app: Router) => {
     }),
   }), (req, res, next) => ctrl.getBuildingsWithMinMaxFloors(req, res, next)); */
 
-  route.get('/:minFloors/:maxFloors', (req, res, next) => {  ctrl.getBuildingsWithMinMaxFloors(req, res, next); req.params.minFloors, req.params.maxFloors; } );
+  route.get('/:minFloors/:maxFloors', 
+    (req, res, next) =>
+      {  ctrl.getBuildingsWithMinMaxFloors(req, res, next);
+        req.params.minFloors, 
+       req.params.maxFloors; 
+      } 
+    );
+
+  //quero passar dois parametros no metodo get (minFloors e maxFloors)
+  //route.get('/:minFloors&:maxFloors', (req, res, next) => {ctrl.getBuildingsWithMinMaxFloors(req, res, next); req.params.minFloors, req.params.maxFloors});
 };
