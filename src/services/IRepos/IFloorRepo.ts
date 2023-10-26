@@ -9,4 +9,5 @@ export default interface IFloorRepo extends Repo<Floor> {
   findAll(): Promise<Floor[]>;
   findFloorsByBuildingName (buildingName: string): Promise<Floor[]>;
   findByName (floorName: string): Promise<Floor>;
+  findFloorsWithPassages(): Promise<Floor[]>;
 }

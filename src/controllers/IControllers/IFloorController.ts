@@ -7,5 +7,6 @@ export default interface IFloorController  {
   updateFloor(req: Request, res: Response, next: NextFunction);
   getallFloors(req: Request, res: Response, next: NextFunction);
   findFloorsByBuildingName(req: Request, res: Response, next: NextFunction);
+  findFloorsWithPassages(req: Request, res: Response, next: NextFunction);
   loadMap(req:Request, res:Response , next: NextFunction);
 }

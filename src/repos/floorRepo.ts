@@ -6,6 +6,7 @@ import { FloorMap } from '../mappers/FloorMap';
 import { Document, FilterQuery, Model } from 'mongoose';
 import { IFloorPersistence } from '../dataschema/IFloorPersistence';
 import IBuildingRepo from '../services/IRepos/IBuildingRepo';
+import { IPassagePersistence } from '../dataschema/IPassagePersistence';
 
 import IFloorRepo from "../services/IRepos/IFloorRepo";
 import { FloorId } from '../domain/floorId';
@@ -17,7 +18,8 @@ export default class FloorRepo implements IFloorRepo {
 
   constructor(
     @Inject('floorSchema') private floorSchema : Model<IFloorPersistence & Document>,
-    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo
+    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo,
+    @Inject('passageSchema') private passageSchema : Model<IPassagePersistence & Document>,
   ) {}
 
   private createBaseQuery (): any {
@@ -123,6 +125,23 @@ export default class FloorRepo implements IFloorRepo {
     }
   
     return [];
+  }
+
+  public async findFloorsWithPassages(): Promise<Floor[]> {
+    const floorRecords = await this.floorSchema.find();
+    const passageRecords = await this.passageSchema.find();
+    const floorsWithPassages = floorRecords.filter((floor) => {
+      const hasPassage = passageRecords.some((passage) => {
+       
+        return (
+          passage.pisobuilding1 === floor.name || passage.pisobuilding2 === floor.name 
+        );
+      });
+  
+      return hasPassage;
+    });
+  
+    return floorsWithPassages.map((item) => FloorMap.toDomain(item));
   }
  
 }

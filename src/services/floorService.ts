@@ -151,6 +151,23 @@ export default class FloorService implements IFloorService{
     }
   }
 
+  public async findFloorsWithPassages(): Promise<Result<IFloorDTO[]>> {
+    try {
+      console.log(1);
+      const floors = await this.floorRepo.findFloorsWithPassages();
+      console.log(2);
+      if (floors === null) {
+        return Result.fail<IFloorDTO[]>("Floors not found");
+      }else{
+        const floorsDTO = floors.map((floor) => FloorMap.toDTO(floor) as IFloorDTO);
+        return Result.ok<IFloorDTO[]>(floorsDTO);
+      }
+      
+    } catch (e) {
+      throw e;
+    }
+  }
+
 
   public async loadMap(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>{
     try {

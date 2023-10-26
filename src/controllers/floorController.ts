@@ -84,6 +84,20 @@ export default class FloorController implements IFloorController {
         }
     }
 
+    public async findFloorsWithPassages(req:Request, res:Response , next: NextFunction){
+        try{
+            const floorsOrError = await this.floorServiceInstance.findFloorsWithPassages() as Result<Array<IFloorDTO>>;
+            if(floorsOrError.isFailure){
+                return res.status(404).send();
+            }
+            const floorsDTO = floorsOrError.getValue();
+            return res.json(floorsDTO).status(201);
+        }
+        catch(e){
+            return next(e);
+        }
+    }
+
 
     public async loadMap(req: Request, res: Response, next: NextFunction) {
         try {
