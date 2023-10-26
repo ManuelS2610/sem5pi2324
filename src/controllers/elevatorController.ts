@@ -23,7 +23,7 @@ public async createElevator(req:Request, res:Response , next: NextFunction){
     try{
         const elevatorOrError = await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
         if(elevatorOrError.isFailure){
-            return res.status(402).send();
+            return res.status(402).send('Erro ao criar um elevador');
         }
         const elevatorDTO = elevatorOrError.getValue();
         return res.json(elevatorDTO).status(201);

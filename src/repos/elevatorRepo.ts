@@ -8,6 +8,11 @@ import { IElevatorPersistence } from '../dataschema/IElevatorPersistence';
 
 import IElevatorRepo from '../services/IRepos/IElevatorRepo';
 import { ElevatorId } from '../domain/elevatorId';
+import { IBuildingPersistence } from '../dataschema/IBuildingPersistence';
+import { IElevatorDTO } from '../dto/IElevatorDTO';
+import { Result } from '../core/logic/Result';
+import { IFloorPersistence } from '../dataschema/IFloorPersistence';
+import { isEmpty } from 'lodash';
 
 @Service()
 export default class ElevatorRepo implements IElevatorRepo {
@@ -15,6 +20,8 @@ export default class ElevatorRepo implements IElevatorRepo {
 
   constructor(
     @Inject('elevatorSchema') private elevatorSchema : Model<IElevatorPersistence & Document>,
+    @Inject('buildingSchema') private buildingSchema : Model<IBuildingPersistence & Document>,
+    @Inject('floorSchema') private floorSchema : Model<IFloorPersistence & Document>
   ) {}
 
   private createBaseQuery (): any {
@@ -78,24 +85,10 @@ export default class ElevatorRepo implements IElevatorRepo {
     return null;
   }
 
-  public async checkIfBuildingHasElevator(buildingName: string): Promise<boolean> {
-    try {
-      // Verifique se há algum elevador associado a este edifício
-      const query = { buildingName: buildingName };
-      const elevatorsInBuilding = await this.elevatorSchema.find(query as FilterQuery<IElevatorPersistence & Document>);
-  
-      // Se a consulta retornar pelo menos um elevador, o edifício possui elevadores
-      return elevatorsInBuilding.length > 0;
-    } catch (error) {
-      // Lide com erros de consulta, se necessário
-      throw error;
-    }
-  }
-
   public async listByBuildingName(buildingName: string): Promise<Array<Elevator>> {
     const query = { buildingName: buildingName };
     const elevators = await this.elevatorSchema.find(query).exec();
-  
+
     if (elevators && elevators.length > 0) {
       return elevators.map((elevator) => ElevatorMap.toDomain(elevator));
     } else {
@@ -103,6 +96,20 @@ export default class ElevatorRepo implements IElevatorRepo {
     }
   }
 
-  
+
+  public async checkIfBuildingHasElevator(buildingName: string): Promise<boolean> {
+    try {
+      const query = { buildingName: buildingName };
+      const elevatorsInBuilding = await this.elevatorSchema.find(query as FilterQuery<IElevatorPersistence & Document>);
+
+      if (elevatorsInBuilding.length > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
 }

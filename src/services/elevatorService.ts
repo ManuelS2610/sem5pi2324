@@ -33,13 +33,29 @@ export default class ElevatorService implements IElevatorService {
       if (!found1) {
         return Result.fail<IElevatorDTO>(`Building not found`);
       }
+
+      const existsInBuilding = await this.elevatorRepo.checkIfBuildingHasElevator(elevatorDTO.buildingName);
+      const found3 = !!existsInBuilding;
+      if (!found3) {
+        return Result.fail<IElevatorDTO>(`Elevator already exists in the building`);
+      }
+
       for (const floorName of elevatorDTO.floors) {
+
         const elevator2 = await this.floorRepo.findByName(floorName);
+        if(elevator2.buildingName != elevatorDTO.buildingName){
+          return Result.fail<IElevatorDTO>(`Floor not found: ${floorName}`);
+        }
+        
         const found2 = !!elevator2;
         if (!found2) {
           return Result.fail<IElevatorDTO>(`Floor not found: ${floorName}`);
         }
+        
       }
+
+
+      
 
       const elevatorOrError = await Elevator.create(elevatorDTO);
       if (elevatorOrError.isFailure) {
@@ -180,6 +196,8 @@ export default class ElevatorService implements IElevatorService {
       return Result.fail<IElevatorDTO>(e);
     }
   }
+
+
 }
 
 
