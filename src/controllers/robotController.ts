@@ -94,5 +94,19 @@ public async findByTask(req:Request, res:Response , next: NextFunction){
     }
 }
 
+public async inhibitRobot(req:Request, res:Response , next: NextFunction){
+    try{
+        const robotOrError = await this.robotServiceInstance.inhibitRobot(req.body as IRobotDTO) as Result<IRobotDTO>;
+        if(robotOrError.isFailure){
+            return res.status(404).send();
+        }
+        const robotDTO = robotOrError.getValue();
+        return res.json(robotDTO).status(201);
+    }
+    catch(e){
+        return next(e);
+    }
+}
+
 
 }

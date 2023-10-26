@@ -9,5 +9,6 @@ export default interface IRobotService  {
   getallRobots(): Promise<Result<Array<IRobotDTO>>>;
   findByTask(type: string): Promise<Result<Array<IRobotDTO>>>;
   findByDesignation(designation: string): Promise<Result<Array<IRobotDTO>>>;
+  inhibitRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>>
 
 }

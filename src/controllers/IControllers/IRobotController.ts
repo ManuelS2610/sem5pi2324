@@ -6,4 +6,5 @@ export default interface IRobotController  {
   getallRobots(req: Request, res: Response, next: NextFunction);
   findByTask(req: Request, res: Response, next: NextFunction);
   findByDesignation(req: Request, res: Response, next: NextFunction);
+  inhibitRobot(req:Request, res:Response , next: NextFunction);
 }
