@@ -71,6 +71,59 @@ describe('building controller', function () {
 
   });
 
+
+  it('updateBuilding: returns json with values', async function () {
+     let body = {
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+
+    
+    let buildingRepoInstance = Container.get(BuildingRepo);
+    Container.set('BuildingRepo', buildingRepoInstance);// Register BuildingRepo in the container
+
+    let buildingServiceClass = require(config.services.building.path).default;
+    let buildingServiceInstance = Container.get(buildingServiceClass)
+
+    Container.set(config.services.building.name, buildingServiceInstance);
+    buildingServiceInstance = Container.get(config.services.building.name);
+
+    sinon.stub(buildingServiceInstance, "updateBuilding").
+      returns(Result.ok<IBuildingDTO>(
+        {
+          "id": "123",
+          "name": req.body.name,
+          "description": req.body.description,
+          "depth": req.body.depth,
+          "width": req.body.width
+        }
+      ));
+
+    const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
+
+    await ctrl.updateBuilding(<Request>req, <Response>res, <NextFunction>next);
+
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+      "id": "123",
+      "name": req.body.name,
+      "description": req.body.description,
+      "depth": req.body.depth,
+      "width": req.body.width
+    }));
+
+  }
+  );
+
+
+
+
+
   it('getallBuildings: returns json with values', async function () {
     let body = {
       id: '123',
