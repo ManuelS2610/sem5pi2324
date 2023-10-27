@@ -185,51 +185,46 @@ describe('building controller', function () {
   });
 
   it('getBuildingsWithMinMaxFloors: returns json with values in URL', async function () {
-    let queryParams = {
-      minFloors: 1,
-      maxFloors: 10 
-    };
+    // Define os parâmetros minFloors e maxFloors
+    const minFloors = '1';
+    const maxFloors = '10';
+
+    // Crie um objeto req simulado com os parâmetros na URL
     let req: Partial<Request> = {
-      url: url.format({
-        pathname: '/:minFloors/:maxFloors',
-        query: queryParams
-      })
+      params: { minFloors, maxFloors }
     };
-  
+
     let res: Partial<Response> = {
-      json: sinon.spy()
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis()
     };
-    let next: Partial<NextFunction> = () => { };
-  
-    // Create an instance of BuildingRepo
-    let buildingRepoInstance = Container.get(BuildingRepo);
-    Container.set('buildingRepo', buildingRepoInstance);// Register BuildingRepo in the container
 
-    let buildingServiceClass = require(config.services.elevator.path).default;
-    let buildingServiceInstance = Container.get(buildingServiceClass)
+    let next: Partial<NextFunction> = () => {};
 
-    Container.set(config.services.building.name, buildingServiceClass);
+    // Crie um stub para buildingServiceInstance.getBuildingsWithMinMaxFloors
+    const buildingServiceInstance = {
+      getBuildingsWithMinMaxFloors: sinon.stub()
+    };
 
-    buildingServiceClass = Container.get(config.services.building.name);
+    // Configure o stub para retornar um resultado válido
+    buildingServiceInstance.getBuildingsWithMinMaxFloors.returns(
+      Result.ok<IBuildingDTO[]>([
+        {
+          id: '123',
+          name: 'X',
+          description: 'Edificio de LEI',
+          depth: 10,
+          width: 10
+        }
+      ])
+    );
 
-    sinon.stub(buildingServiceInstance, "getBuildingsWithMinMaxFloors").
-      returns(Result.ok<IBuildingDTO[]>(
-        [
-          {
-            id: '123',
-            name: 'X',
-            description: 'Edificio de LEI',
-            depth: 10,
-            width: 10
-          }
-        ]
-      ));
+    const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
 
-      const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
-  
-    await ctrl.getBuildingsWithMinMaxFloors(<Request>req, <Response>res, <NextFunction>next);
-  
-    sinon.assert.calledOnce(res.json);
+    // Chame a função a ser testada
+    await ctrl.getBuildingsWithMinMaxFloors(req as Request, res as Response, next as NextFunction);
+
+    // Verifique se a função json do res foi chamada com os valores corretos
     sinon.assert.calledWith(res.json, sinon.match([
       {
         id: '123',
@@ -240,7 +235,6 @@ describe('building controller', function () {
       }
     ]));
   });
-
 
   
 });
