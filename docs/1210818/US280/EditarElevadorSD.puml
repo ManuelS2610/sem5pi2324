@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant IElevatorRepo
+participant ElevatorRepo
+participant ElevatorMap
+participant IElevatorPersistence
+participant ElevatorSchema
+participant Elevator
+participant IElevatorDTO
+
+User -> ElevatorRoute: Update Elevator
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController : updateElevator()
+activate IElevatorController
+IElevatorController -> ElevatorController : updateElevator()
+deactivate IElevatorController
+activate ElevatorController
+ElevatorController -> IElevatorService : updateElevator()
+activate IElevatorService
+IElevatorService -> ElevatorService : updateElevator()
+deactivate IElevatorService
+activate ElevatorService
+ElevatorService -> Elevator : update()
+activate Elevator
+Elevator -> ElevatorService : Elevator
+deactivate Elevator
+ElevatorService -> IElevatorRepo: save()
+activate IElevatorRepo
+IElevatorRepo -> ElevatorRepo : save()
+deactivate IElevatorRepo
+activate ElevatorRepo
+ElevatorRepo -> ElevatorSchema : findOne()
+ElevatorRepo -> ElevatorMap : toPersistence()
+activate ElevatorMap
+ElevatorMap -> ElevatorRepo : Elevator
+deactivate ElevatorMap
+ElevatorRepo -> ElevatorSchema: update()
+deactivate ElevatorRepo
+ElevatorService -> ElevatorMap : toDTO()
+activate ElevatorMap
+ElevatorMap -> IElevatorDTO
+ElevatorMap -> ElevatorService : ElevatorDTO
+deactivate ElevatorMap
+ElevatorService -> ElevatorController : ElevatorDTO
+deactivate ElevatorService
+ElevatorController -> ElevatorRoute : res.json(ElevatorDTO).status()
+deactivate ElevatorController
+ElevatorRoute -> User
+deactivate ElevatorRoute
+@enduml
