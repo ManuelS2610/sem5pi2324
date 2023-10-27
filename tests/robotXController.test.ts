@@ -221,6 +221,23 @@ describe('robot controller', function () {
       description: req.body.description,
       available: req.body.available
     }));
+
+    const ctrl = new RobotController(robotServiceInstance as IRobotService)
+
+    // Act
+    await ctrl.createRobot(<Request>req, <Response>res, <NextFunction>next)
+
+    // Assert
+    robotServiceMock.verify();
+    sinon.assert.calledOnce(res.json)
+    sinon.assert.calledWith(res.json, sinon.match({
+      id: '123',
+      type: req.body.type,
+      designation: req.body.designation,
+      serialNumber: req.body.serialNumber,
+      description: req.body.description,
+      available: req.body.available
+    }))
   });
 
-  });
+});
