@@ -4,7 +4,7 @@ import { Response, Request, NextFunction } from 'express';
 
 import { Container } from 'typedi';
 import config from "../../config";
-
+import url from 'url';
 import { Result } from '../core/logic/Result';
 
 import IRobotService from '../services/IServices/IRobotService';
@@ -35,7 +35,7 @@ describe('robot controller', function () {
     };
     let next: Partial<NextFunction> = () => { };
 
-
+  
     let robotRepoInstance = Container.get(RobotRepo);
     Container.set('RobotRepo', robotRepoInstance);// Register RobotRepo in the container
 
@@ -66,11 +66,11 @@ describe('robot controller', function () {
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match({
       "id": "123",
-      "type": req.body.type,
-      "designation": req.body.designation,
-      "serialNumber": req.body.serialNumber,
-      "description": req.body.description,
-      "available": req.body.available,
+          "type": req.body.type,
+          "designation": req.body.designation,
+          "serialNumber": req.body.serialNumber,
+          "description": req.body.description,
+          "available": req.body.available,
     }));
   });
 
@@ -137,59 +137,6 @@ describe('robot controller', function () {
     ]));
   });
 
-  it('updateRobot: returns json with values', async function () {
-
-    let body = {
-    };
-    let req: Partial<Request> = {};
-    req.body = body;
-
-    let res: Partial<Response> = {
-      json: sinon.spy()
-    };
-    let next: Partial<NextFunction> = () => { };
-
-    // Create an instance of RobotRepo
-    let robotRepoInstance = Container.get(RobotRepo);
-    Container.set('RobotRepo', robotRepoInstance);// Register RobotRepo in the container
-
-    // Create an instance of RobotTypeRepo
-    let robotTypeRepoInstance = Container.get(RobotTypeRepo);
-    Container.set('RobotTypeRepo', robotTypeRepoInstance);// Register RobotTypeRepo in the container
-
-    let robotServiceClass = require(config.services.robot.path).default;
-    let robotServiceInstance = Container.get(robotServiceClass)
-
-    Container.set(config.services.robot.name, robotServiceInstance);
-
-    robotServiceInstance = Container.get(config.services.robot.name);
-
-    sinon.stub(robotServiceInstance, "updateRobot").
-      returns(Result.ok<IRobotDTO>(
-        {
-          "id": "123",
-          "type": req.body.type,
-          "designation": req.body.designation,
-          "serialNumber": req.body.serialNumber,
-          "description": req.body.description,
-          "available": req.body.available,
-        }
-      ));
-
-    const ctrl = new RobotController(robotServiceInstance as IRobotService);
-
-    await ctrl.updateRobot(<Request>req, <Response>res, <NextFunction>next);
-
-    sinon.assert.calledOnce(res.json);
-    sinon.assert.calledWith(res.json, sinon.match({
-      "id": "123",
-      "type": req.body.type,
-      "designation": req.body.designation,
-      "serialNumber": req.body.serialNumber,
-      "description": req.body.description,
-      "available": req.body.available,
-    }));
-  });
   it('inhibitRobot: returns json with values', async function () {
 
     let body = {
@@ -219,7 +166,7 @@ describe('robot controller', function () {
 
     robotServiceInstance = Container.get(config.services.robot.name);
 
-    sinon.stub(robotServiceInstance, "inhibitRobot ").
+    sinon.stub(robotServiceInstance, "inhibitRobot").
       returns(Result.ok<IRobotDTO>(
         {
           "id": "123",
@@ -245,5 +192,140 @@ describe('robot controller', function () {
       "available": req.body.available,
     }));
   });
-});
 
+
+
+  it('findByDesignation: returns json with values in URL', async function () {
+    let queryParams = {
+      type: 'Edificio de LEI' 
+    };
+    let req: Partial<Request> = {
+      url: url.format({
+        pathname: '/:designation',
+        query: queryParams
+      })
+    };
+  
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+  
+    // Create an instance of RobotRepo
+    let robotRepoInstance = Container.get(RobotRepo);
+    Container.set('RobotRepo', robotRepoInstance);// Register RobotRepo in the container
+
+    // Create an instance of RobotTypeRepo
+    let robotTypeRepoInstance = Container.get(RobotTypeRepo);
+    Container.set('RobotTypeRepo', robotTypeRepoInstance);// Register RobotTypeRepo in the container
+
+    let robotServiceClass = require(config.services.robot.path).default;
+    let robotServiceInstance = Container.get(robotServiceClass)
+
+    Container.set(config.services.robot.name, robotServiceInstance);
+
+    robotServiceInstance = Container.get(config.services.robot.name);
+
+    sinon.stub(robotServiceInstance, "findByDesignation").
+      returns(Result.ok<IRobotDTO[]>(
+        [
+          {
+            id: '123',
+            type: 'Surveillance',
+            designation: 'Edificio de LEI',
+            serialNumber: "10f34ds2d",
+            description: "dsada",
+            available: true
+          }
+        ]
+      ));
+
+      const ctrl = new RobotController(robotServiceInstance as IRobotService);
+  
+    await ctrl.findByDesignation(<Request>req, <Response>res, <NextFunction>next);
+  
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([
+      {
+        id: '123',
+        type: 'Surveillance',
+        designation: 'Edificio de LEI',
+        serialNumber: "10f34ds2d",
+        description: "dsada",
+        available: true
+      }
+    ]));
+  });
+
+
+  it('findByTask: returns json with values in URL', async function () {
+    let queryParams = {
+      type: 'Surveillance' 
+    };
+    let req: Partial<Request> = {
+      url: url.format({
+        pathname: '/:type',
+        query: queryParams
+      })
+    };
+  
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+  
+    // Create an instance of RobotRepo
+    let robotRepoInstance = Container.get(RobotRepo);
+    Container.set('RobotRepo', robotRepoInstance);// Register RobotRepo in the container
+
+    // Create an instance of RobotTypeRepo
+    let robotTypeRepoInstance = Container.get(RobotTypeRepo);
+    Container.set('RobotTypeRepo', robotTypeRepoInstance);// Register RobotTypeRepo in the container
+
+    let robotServiceClass = require(config.services.robot.path).default;
+    let robotServiceInstance = Container.get(robotServiceClass)
+
+    Container.set(config.services.robot.name, robotServiceInstance);
+
+    robotServiceInstance = Container.get(config.services.robot.name);
+
+    sinon.stub(robotServiceInstance, "findByTask").
+      returns(Result.ok<IRobotDTO[]>(
+        [
+          {
+            id: '123',
+            type: 'Surveillance',
+            designation: 'Edificio de LEI',
+            serialNumber: "10f34ds2d",
+            description: "dsada",
+            available: true
+          }
+        ]
+      ));
+
+      const ctrl = new RobotController(robotServiceInstance as IRobotService);
+  
+    await ctrl.findByTask(<Request>req, <Response>res, <NextFunction>next);
+  
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([
+      {
+        id: '123',
+        type: 'Surveillance',
+        designation: 'Edificio de LEI',
+        serialNumber: "10f34ds2d",
+        description: "dsada",
+        available: true
+      }
+    ]));
+  });
+
+
+
+
+
+
+
+
+
+});
