@@ -85,6 +85,7 @@ export default class PassageRepo implements IPassageRepo {
   public async findByPisos (pisobuilding1: string, pisobuilding2: string): Promise<boolean> {
     const query = { pisobuilding1: pisobuilding1, pisobuilding2: pisobuilding2};
     const passageRecord = await this.passageSchema.findOne( query as FilterQuery<IPassagePersistence & Document> );
+    console.log(passageRecord);
     if (passageRecord != null) {
       return true;
     }
@@ -93,7 +94,7 @@ export default class PassageRepo implements IPassageRepo {
   public async findByPisosReverse (pisobuilding1: string, pisobuilding2: string): Promise<boolean> {
     const query = { pisobuilding1: pisobuilding2, pisobuilding2: pisobuilding1};
     const passageRecord = await this.passageSchema.findOne( query as FilterQuery<IPassagePersistence & Document> );
-
+    console.log(passageRecord);
     if (passageRecord != null) {
       return true;
     }

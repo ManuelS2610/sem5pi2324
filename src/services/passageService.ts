@@ -40,13 +40,8 @@ export default class PassageService implements IPassageService {
       if (!found4) {
         return Result.fail<IPassageDTO>("Floor2 not found");
       }
-      if(floor1.buildingName!=building1.name){
-        return Result.fail<IPassageDTO>("Floor1 not found");
-      }
-      if(floor2.buildingName!=building2.name){
-        return Result.fail<IPassageDTO>("Floor2 not found");
-      }
       const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      console.log(exists);
       if (exists) {
         return Result.fail<IPassageDTO>("Passage already exists");
       }
@@ -94,13 +89,8 @@ export default class PassageService implements IPassageService {
       if (!found4) {
         return Result.fail<IPassageDTO>("Floor2 not found");
       }
-      if(floor1.buildingName!=building1.name){
-        return Result.fail<IPassageDTO>("Floor1 not found");
-      }
-      if(floor2.buildingName!=building2.name){
-        return Result.fail<IPassageDTO>("Floor2 not found");
-      }
       const exists = await this.passageRepo.findByPisos(passageDTO.pisobuilding1, passageDTO.pisobuilding2);
+      console.log(exists);
       if (exists) {
         return Result.fail<IPassageDTO>("Passage already exists");
       }
