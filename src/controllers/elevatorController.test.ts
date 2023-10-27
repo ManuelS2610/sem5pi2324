@@ -13,6 +13,8 @@ import ElevatorRepo from '../repos/elevatorRepo';
 import FloorRepo from '../repos/floorRepo';
 import { IElevatorDTO } from '../dto/IElevatorDTO';
 
+import url from 'url';
+
 describe('elevator controller', function () {
 
   beforeEach(function () { });
@@ -115,4 +117,115 @@ describe('elevator controller', function () {
 
   }
   );
+
+  it('getElevatorsInBuilding: returns json with values in URL', async function () {
+    let queryParams = {
+      buildingName: 'L1' 
+    };
+    let req: Partial<Request> = {
+      url: url.format({
+        pathname: '/:buildingName',
+        query: queryParams
+      })
+    };
+  
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+  
+    // Create an instance of ElevatorRepo
+    let elevatorRepoInstance = Container.get(ElevatorRepo);
+    Container.set('ElevatorRepo', elevatorRepoInstance);// Register ElevatorRepo in the container
+
+    let elevatorServiceClass = require(config.services.elevator.path).default;
+    let elevatorServiceInstance = Container.get(elevatorServiceClass)
+
+    Container.set(config.services.elevator.name, elevatorServiceClass);
+
+    elevatorServiceClass = Container.get(config.services.elevator.name);
+
+    sinon.stub(elevatorServiceInstance, "getElevatorsInBuilding").
+      returns(Result.ok<IElevatorDTO[]>(
+        [
+          {
+            id: '123',
+            buildingName: 'X',
+            floors: ["1", "2", "3", "4"],
+            position: [1,1]
+          }
+        ]
+      ));
+
+      const ctrl = new ElevatorController(elevatorServiceInstance as IElevatorService);
+  
+    await ctrl.getElevatorsInBuilding(<Request>req, <Response>res, <NextFunction>next);
+  
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([
+      {
+        id: '123',
+        buildingName: 'X',
+        floors: ["1", "2", "3", "4"],
+        position: [1,1]
+      }
+    ]));
+  });
+
+  it('getFloorsServedByElevatorsInBuilding: returns json with values in URL', async function () {
+    let queryParams = {
+      buildingName: 'L2' 
+    };
+    let req: Partial<Request> = {
+      url: url.format({
+        pathname: '/:buildingName',
+        query: queryParams
+      })
+    };
+  
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+  
+    // Create an instance of ElevatorRepo
+    let elevatorRepoInstance = Container.get(ElevatorRepo);
+    Container.set('ElevatorRepo', elevatorRepoInstance);// Register ElevatorRepo in the container
+
+    let elevatorServiceClass = require(config.services.elevator.path).default;
+    let elevatorServiceInstance = Container.get(elevatorServiceClass)
+
+    Container.set(config.services.elevator.name, elevatorServiceClass);
+
+    elevatorServiceClass = Container.get(config.services.elevator.name);
+
+    sinon.stub(elevatorServiceInstance, "getFloorsServedByElevatorsInBuilding").
+      returns(Result.ok<IElevatorDTO[]>(
+        [
+          {
+            id: '123',
+            buildingName: 'X',
+            floors: ["1", "2", "3", "4"],
+            position: [1,1]
+          }
+        ]
+      ));
+
+      const ctrl = new ElevatorController(elevatorServiceInstance as IElevatorService);
+  
+    await ctrl.getFloorsServedByElevatorsInBuilding(<Request>req, <Response>res, <NextFunction>next);
+  
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([
+      {
+        id: '123',
+        buildingName: 'X',
+        floors: ["1", "2", "3", "4"],
+        position: [1,1]
+      }
+    ]));
+  });
+
+
+
 });
