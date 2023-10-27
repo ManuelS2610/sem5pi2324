@@ -219,7 +219,7 @@ describe('robot controller', function () {
 
     robotServiceInstance = Container.get(config.services.robot.name);
 
-    sinon.stub(robotServiceInstance, "inhibitRobot").
+    sinon.stub(robotServiceInstance, "inhibitRobot ").
       returns(Result.ok<IRobotDTO>(
         {
           "id": "123",
