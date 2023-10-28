@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant Postman
+participant System <<Container>>
+participant MongoDB
+
+activate User
+User -> Postman : Dar informaçao /:building1/:building2
+activate Postman
+Postman -> System : GET /:building1/:building2
+activate System
+System -> System : check request
+System -> MongoDB : Search
+activate MongoDB
+MongoDB --> System : Return passages
+deactivate MongoDB
+System --> Postman : Return passages (JSON)
+deactivate System
+Postman -> User : Show Passages (JSON)
+deactivate Postman
+deactivate User
+@enduml

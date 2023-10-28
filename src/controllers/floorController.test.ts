@@ -87,16 +87,16 @@ describe('floor controller', function () {
         {
           "id": "123",
           "name": req.body.name,
-          "buildingName":req.body.buildingName,
+          "buildingName": req.body.buildingName,
           "description": req.body.description,
           "map": req.body.map
 
-    
+
         }
       ));
 
     const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
-        elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
 
     await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
@@ -105,14 +105,14 @@ describe('floor controller', function () {
       "id": "123",
       "name": req.body.name,
       "description": req.body.description,
-      "map" : req.body.map
+      "map": req.body.map
     }));
 
   });
 
 
   it('updateFloor: returns json with values', async function () {
-     let body = {
+    let body = {
     };
     let req: Partial<Request> = {};
     req.body = body;
@@ -122,7 +122,7 @@ describe('floor controller', function () {
     };
     let next: Partial<NextFunction> = () => { };
 
-    
+
     let floorServiceClass = require(config.services.floor.path).default;
     let floorServiceInstance = Container.get(floorServiceClass)
     Container.set(config.services.floor.name, floorServiceInstance);
@@ -160,26 +160,26 @@ describe('floor controller', function () {
     sinon.stub(floorServiceInstance, "updateFloor").
       returns(Result.ok<IFloorDTO>(
         {
-            "id": "123",
-            "name": req.body.name,
-            "buildingName":req.body.buildingName,
-            "description": req.body.description,
-            "map": req.body.map
+          "id": "123",
+          "name": req.body.name,
+          "buildingName": req.body.buildingName,
+          "description": req.body.description,
+          "map": req.body.map
         }
       ));
 
-      const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
-        elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
+    const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
 
     await ctrl.updateFloor(<Request>req, <Response>res, <NextFunction>next);
 
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match({
-        "id": "123",
-        "name": req.body.name,
-        "buildingName":req.body.buildingName,
-        "description": req.body.description,
-        "map": req.body.map
+      "id": "123",
+      "name": req.body.name,
+      "buildingName": req.body.buildingName,
+      "description": req.body.description,
+      "map": req.body.map
     }));
 
   }
@@ -191,7 +191,7 @@ describe('floor controller', function () {
 
   it('getallFloors: returns json with values', async function () {
     let body = {
-    id: '123',
+      id: '123',
       name: 'X1',
       buildingName: 'X',
       description: 'piso de LEI',
@@ -243,15 +243,15 @@ describe('floor controller', function () {
           {
             "id": "123",
             "name": req.body.name,
-            "buildingName":req.body.buildingName,
+            "buildingName": req.body.buildingName,
             "description": req.body.description,
             "map": req.body.map
           }
         ]
       ));
 
-      const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
-        elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
+    const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
 
     await ctrl.getallFloors(<Request>req, <Response>res, <NextFunction>next);
 
@@ -260,19 +260,19 @@ describe('floor controller', function () {
       {
         "id": "123",
         "name": req.body.name,
-        "buildingName":req.body.buildingName,
+        "buildingName": req.body.buildingName,
         "description": req.body.description,
         "map": req.body.map
       }
     ]));
-    
+
 
   });
 
-  
+
   it('findByBuildingName: returns json with values', async function () {
     let queryParams = {
-      buildingName: 'L' 
+      buildingName: 'L'
     };
     let req: Partial<Request> = {
       url: url.format({
@@ -280,9 +280,9 @@ describe('floor controller', function () {
         query: queryParams
       })
     };
-  
+
     let res: Partial<Response> = {
-        json: sinon.spy(),
+      json: sinon.spy(),
     };
     let next: Partial<NextFunction> = () => { };
     let floorServiceClass = require(config.services.floor.path).default;
@@ -319,104 +319,180 @@ describe('floor controller', function () {
 
     roomServiceInstance = Container.get(config.services.room.name);
     sinon.stub(floorServiceInstance, 'findFloorsByBuildingName').returns(Result.ok<IFloorDTO>({
-       id:'123', name: 'L1', buildingName: 'L', description: 'Piso', map: null
-      }));
+      id: '123', name: 'L1', buildingName: 'L', description: 'Piso', map: null
+    }));
     const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
-        elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
     await ctrl.findFloorsByBuildingName(<Request>req, <Response>res, <NextFunction>next);
     sinon.assert.calledOnce(res.json);
     sinon.assert.calledWith(res.json, sinon.match({
-        id:'123',
-         name: 'L1', 
-         buildingName: 'L', 
-         description: 'Piso',
-          map: null
+      id: '123',
+      name: 'L1',
+      buildingName: 'L',
+      description: 'Piso',
+      map: null
     }));
-});
+  });
 
   it('findFloorsWithPassages: returns json with values', async function () {
     let body = {
       id: '123',
-        name: 'X1',
-        buildingName: 'X',
-        description: 'piso de LEI',
-        map: [1][1]
-      };
-      let req: Partial<Request> = {};
-      req.body = body;
-  
-      let res: Partial<Response> = {
-        json: sinon.spy()
-      };
-      let next: Partial<NextFunction> = () => { };
-      let floorServiceClass = require(config.services.floor.path).default;
-      let floorServiceInstance = Container.get(floorServiceClass)
-      Container.set(config.services.floor.name, floorServiceInstance);
-  
-      floorServiceInstance = Container.get(config.services.floor.name);
-  
-      let passageRepoInstance = Container.get(PassageRepo);
-      Container.set('PassageRepo', passageRepoInstance);// Register PassageRepo in the container
-      let passageServiceClass = require(config.services.passage.path).default;
-      let passageServiceInstance = Container.get(passageServiceClass)
-      Container.set(config.services.passage.name, passageServiceInstance);
-  
-  
-      passageServiceInstance = Container.get(config.services.passage.name);
-  
-      let elevatorRepoInstance = Container.get(PassageRepo);
-      Container.set('ElevatorRepo', elevatorRepoInstance);// Register PassageRepo in the container
-      let elevatorServiceClass = require(config.services.elevator.path).default;
-      let elevatorServiceInstance = Container.get(elevatorServiceClass)
-      Container.set(config.services.elevator.name, elevatorServiceInstance);
-  
-  
-      elevatorServiceInstance = Container.get(config.services.elevator.name);
-  
-  
-      let roomRepoInstance = Container.get(PassageRepo);
-      Container.set('RoomRepo', roomRepoInstance);// Register PassageRepo in the container
-      let roomServiceClass = require(config.services.room.path).default;
-      let roomServiceInstance = Container.get(roomServiceClass)
-      Container.set(config.services.room.name, roomServiceInstance);
-  
-  
-      roomServiceInstance = Container.get(config.services.room.name);
-      sinon.stub(floorServiceInstance, "findFloorsWithPassages").
-        returns(Result.ok<IFloorDTO[]>(
-          [
-            {
-              "id": "123",
-              "name": req.body.name,
-              "buildingName":req.body.buildingName,
-              "description": req.body.description,
-              "map": req.body.map
-            }
-          ]
-        ));
-  
-        const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
-          elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
-  
-      await ctrl.findFloorsWithPassages(<Request>req, <Response>res, <NextFunction>next);
-  
-      sinon.assert.calledOnce(res.json);
-      sinon.assert.calledWith(res.json, sinon.match([
+      name: 'X1',
+      buildingName: 'X',
+      description: 'piso de LEI',
+      map: [1][1]
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+    let floorServiceClass = require(config.services.floor.path).default;
+    let floorServiceInstance = Container.get(floorServiceClass)
+    Container.set(config.services.floor.name, floorServiceInstance);
+
+    floorServiceInstance = Container.get(config.services.floor.name);
+
+    let passageRepoInstance = Container.get(PassageRepo);
+    Container.set('PassageRepo', passageRepoInstance);// Register PassageRepo in the container
+    let passageServiceClass = require(config.services.passage.path).default;
+    let passageServiceInstance = Container.get(passageServiceClass)
+    Container.set(config.services.passage.name, passageServiceInstance);
+
+
+    passageServiceInstance = Container.get(config.services.passage.name);
+
+    let elevatorRepoInstance = Container.get(PassageRepo);
+    Container.set('ElevatorRepo', elevatorRepoInstance);// Register PassageRepo in the container
+    let elevatorServiceClass = require(config.services.elevator.path).default;
+    let elevatorServiceInstance = Container.get(elevatorServiceClass)
+    Container.set(config.services.elevator.name, elevatorServiceInstance);
+
+
+    elevatorServiceInstance = Container.get(config.services.elevator.name);
+
+
+    let roomRepoInstance = Container.get(PassageRepo);
+    Container.set('RoomRepo', roomRepoInstance);// Register PassageRepo in the container
+    let roomServiceClass = require(config.services.room.path).default;
+    let roomServiceInstance = Container.get(roomServiceClass)
+    Container.set(config.services.room.name, roomServiceInstance);
+
+
+    roomServiceInstance = Container.get(config.services.room.name);
+    sinon.stub(floorServiceInstance, "findFloorsWithPassages").
+      returns(Result.ok<IFloorDTO[]>(
+        [
+          {
+            "id": "123",
+            "name": req.body.name,
+            "buildingName": req.body.buildingName,
+            "description": req.body.description,
+            "map": req.body.map
+          }
+        ]
+      ));
+
+    const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
+
+    await ctrl.findFloorsWithPassages(<Request>req, <Response>res, <NextFunction>next);
+
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match([
+      {
+        "id": "123",
+        "name": req.body.name,
+        "buildingName": req.body.buildingName,
+        "description": req.body.description,
+        "map": req.body.map
+      }
+    ]));
+
+
+  });
+  it('loadMap: returns json with values', async function () {
+    let body = {
+      id: "123",
+      map: [
+        [2, 1, 0, 2, 3],
+        [0, 3, 1, 2, 1],
+        [3, 1, 2, 0, 3],
+        [2, 0, 1, 3, 1],
+        [0, 2, 0, 1, 4]
+      ],
+    };
+    let req: Partial<Request> = {};
+    req.body = body;
+
+    let res: Partial<Response> = {
+      json: sinon.spy()
+    };
+    let next: Partial<NextFunction> = () => { };
+
+
+    let floorServiceClass = require(config.services.floor.path).default;
+    let floorServiceInstance = Container.get(floorServiceClass)
+    Container.set(config.services.floor.name, floorServiceInstance);
+
+    floorServiceInstance = Container.get(config.services.floor.name);
+
+    let passageRepoInstance = Container.get(PassageRepo);
+    Container.set('PassageRepo', passageRepoInstance);// Register PassageRepo in the container
+    let passageServiceClass = require(config.services.passage.path).default;
+    let passageServiceInstance = Container.get(passageServiceClass)
+    Container.set(config.services.passage.name, passageServiceInstance);
+
+
+    passageServiceInstance = Container.get(config.services.passage.name);
+
+    let elevatorRepoInstance = Container.get(PassageRepo);
+    Container.set('ElevatorRepo', elevatorRepoInstance);// Register PassageRepo in the container
+    let elevatorServiceClass = require(config.services.elevator.path).default;
+    let elevatorServiceInstance = Container.get(elevatorServiceClass)
+    Container.set(config.services.elevator.name, elevatorServiceInstance);
+
+
+    elevatorServiceInstance = Container.get(config.services.elevator.name);
+
+
+    let roomRepoInstance = Container.get(PassageRepo);
+    Container.set('RoomRepo', roomRepoInstance);// Register PassageRepo in the container
+    let roomServiceClass = require(config.services.room.path).default;
+    let roomServiceInstance = Container.get(roomServiceClass)
+    Container.set(config.services.room.name, roomServiceInstance);
+
+
+    roomServiceInstance = Container.get(config.services.room.name);
+
+    sinon.stub(floorServiceInstance, "loadMap").
+      returns(Result.ok<IFloorDTO>(
         {
           "id": "123",
-          "name": req.body.name,
-          "buildingName":req.body.buildingName,
-          "description": req.body.description,
+          "name": 'X1',
+          "buildingName": 'X',
+          "description": 'piso de LEI',
           "map": req.body.map
         }
-      ]));
-      
-  
-    });
+      ));
 
+    const ctrl = new FloorController(floorServiceInstance as IFloorService, passageServiceInstance as IPassageService,
+      elevatorServiceInstance as IElevatorService, roomServiceInstance as IRoomService);
 
+    await ctrl.loadMap(<Request>req, <Response>res, <NextFunction>next);
 
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.json, sinon.match({
+      "id": "123",
+      "name": 'X1',
+      "buildingName": 'X',
+      "description": 'piso de LEI',
+      "map": req.body.map
+    }));
 
+  }
+  );
 
-  
 });

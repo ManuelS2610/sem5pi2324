@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant Postman
+participant System <<Container>>
+participant MongoDB
+
+activate User
+User -> Postman : Dar informaçao {id,map,passages:[{id,positionBuilding1,positionBuilding2}],elevator:{id,position},rooms:[{ id,position,distX,distY}]}
+activate Postman
+Postman -> System : PATCH {id,map,passages:[{id,positionBuilding1,positionBuilding2}],elevator:{id,position},rooms:[{ id,position,distX,distY}]}
+activate System
+System -> System : check verifications passages
+System -> MongoDB : Save passages
+activate MongoDB
+MongoDB --> System : Return passages
+deactivate MongoDB
+System -> System : check verifications elevator
+System -> MongoDB : Save elevator
+activate MongoDB
+MongoDB --> System : Return elevator
+deactivate MongoDB
+System -> System : check verifications rooms
+System -> MongoDB : Save rooms
+activate MongoDB
+MongoDB --> System : Return rooms
+deactivate MongoDB
+System -> System : check verifications floor
+System -> MongoDB : Save floor
+activate MongoDB
+MongoDB --> System : Return floor
+deactivate MongoDB
+System --> Postman : Return floor (JSON)
+deactivate System
+Postman -> User : Show floor (JSON)
+deactivate Postman
+deactivate User
+@enduml

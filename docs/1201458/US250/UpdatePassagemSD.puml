@@ -12,10 +12,13 @@ participant passageRepo
 participant PassageMap
 participant IPassagePersistence
 participant passageSchema
-participant passage
 participant IPassageDTO
+participant IBuildingRepo
+participant IFloorRepo
+participant buildingRepo
+participant floorRepo
 
-User -> passageRoute: update passage
+User -> passageRoute: PUT /{id, building1,building2,pisobuilding1,pisobuilding2}
 activate passageRoute
 passageRoute -> IPassageController : updatePassage()
 activate IPassageController
@@ -27,10 +30,55 @@ activate IPassageService
 IPassageService -> passageService : updatePassage()
 deactivate IPassageService
 activate passageService
-passageService -> passage : create()
-activate passage
-passage -> passageService : passage
-deactivate passage
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IPassageRepo : findByPisos()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisos()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
+passageService -> IPassageRepo : findByPisosReverse()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisosReverse()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
+passageService -> IPassageRepo : findByDomainId()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByDomainId()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : passage
+deactivate passageRepo
 passageService -> IPassageRepo: save()
 activate IPassageRepo
 IPassageRepo -> passageRepo : save()
@@ -39,19 +87,19 @@ activate passageRepo
 passageRepo -> passageSchema : findOne()
 passageRepo -> PassageMap : toPersistence()
 activate PassageMap
-PassageMap -> passageRepo : passage
+PassageMap --> passageRepo : passage
 deactivate PassageMap
 passageRepo -> passageSchema: create()
 deactivate passageRepo
 passageService -> PassageMap : toDTO()
 activate PassageMap
 PassageMap -> IPassageDTO
-PassageMap -> passageService : passageDTO
+PassageMap --> passageService : passageDTO
 deactivate PassageMap
-passageService -> passageController : passageDTO
+passageService --> passageController : passageDTO
 deactivate passageService
-passageController -> passageRoute : res.json(passageDTO).status()
+passageController --> passageRoute : res.json(passageDTO).status()
 deactivate passageController
-passageRoute -> User
+passageRoute --> User
 deactivate passageRoute
 @enduml

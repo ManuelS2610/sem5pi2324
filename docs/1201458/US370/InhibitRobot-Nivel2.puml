@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant Postman
+participant System <<Container>>
+participant MongoDB
+
+activate User
+User -> Postman : Dar informaçao {id,available}
+activate Postman
+Postman -> System : PATCH {id,available}
+activate System
+System -> System : check verifications
+System -> MongoDB : Save robot
+activate MongoDB
+MongoDB --> System : Return robot
+deactivate MongoDB
+System --> Postman : Return robot (JSON)
+deactivate System
+Postman -> User : Show robot (JSON)
+deactivate Postman
+deactivate User
+@enduml

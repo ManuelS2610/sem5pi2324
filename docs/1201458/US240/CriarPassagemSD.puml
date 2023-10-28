@@ -14,8 +14,11 @@ participant IPassagePersistence
 participant passageSchema
 participant passage
 participant IPassageDTO
+participant buildingRepo
+participant floorRepo
 
-User -> passageRoute: Create passage
+
+User -> passageRoute: POST /{ building1,building2,pisobuilding1,pisobuilding2}
 activate passageRoute
 passageRoute -> IPassageController : createPassage()
 activate IPassageController
@@ -27,6 +30,48 @@ activate IPassageService
 IPassageService -> passageService : createPassage()
 deactivate IPassageService
 activate passageService
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IPassageRepo : findByPisos()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisos()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
+passageService -> IPassageRepo : findByPisosReverse()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisosReverse()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
 passageService -> passage : create()
 activate passage
 passage -> passageService : passage
