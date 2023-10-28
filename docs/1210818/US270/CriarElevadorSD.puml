@@ -2,45 +2,42 @@
 !define ACTOR class
 
 actor User
-participant ElevatorRoute as "Route"
-participant IElevatorController as "IController"
-participant ElevatorController as "Controller"
-participant IElevatorService as "IService"
-participant ElevatorService as "Service"
-participant Elevator as "Elevator"
-participant IElevatorDTO as "ElevatorDTO"
-participant ElevatorMap as "Map"
-participant IElevatorMap as "IMap"
-participant IElevatorRepo as "IRepository"
-database ElevatorRepo as "Repository"
 
-activate User
-User -> Route : Request to create an elevator in a building (POST)
-activate Route
-Route -> IController : createElevator(elevator)
-IController -> Controller : createElevator(elevator)
-activate Controller
-Controller -> IService : createElevator(elevator)
-activate Service
-Service -> Elevator : create(elevator)
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant ElevatorRepo
+participant Elevator
+participant IElevatorDTO
+
+User -> ElevatorRoute: Solicitação para criar um elevador em um edifício (POST)
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController: createElevator(elevator)
+IElevatorController -> ElevatorController: createElevator(elevator)
+activate ElevatorController
+ElevatorController -> IElevatorService: createElevator(elevator)
+activate IElevatorService
+IElevatorService -> ElevatorService: createElevator(elevator)
+activate ElevatorService
+ElevatorService -> ElevatorRepo: createElevator(elevator)
+activate ElevatorRepo
+ElevatorRepo -> Elevator: create(elevator)
 activate Elevator
-Elevator -> Service : Elevator
-Service -> IRepository : save(Elevator)
-activate IRepository
-IRepository -> Repository : save(Elevator)
-activate Repository
-Repository -> IElevatorMap : ToDTO(Elevator)
-IElevatorMap -> Map : ToDTO(Elevator)
-activate Map
-Map -> IElevatorDTO : Retrieve ElevatorDTO
-deactivate Map
-IElevatorDTO -> Service : Retrieve ElevatorDTO
+Elevator -> ElevatorRepo: Elevador criado
+deactivate Elevator
+ElevatorRepo -> ElevatorService: Elevador criado
+deactivate ElevatorRepo
+ElevatorService -> IElevatorDTO: Elevador criado
+activate IElevatorDTO
+IElevatorDTO --> ElevatorService: Dados do Elevador
 deactivate IElevatorDTO
-Service -> Controller : Retrieve ElevatorDTO
-deactivate Service
-Controller -> Route : Retrieve ElevatorDTO
-deactivate Controller
-Route -> User : 200 OK, JSON
-deactivate Route
+ElevatorService --> ElevatorController: Dados do Elevador
+deactivate ElevatorService
+ElevatorController --> ElevatorRoute: Dados do Elevador
+deactivate ElevatorController
+ElevatorRoute --> User: 200 OK, JSON
+deactivate ElevatorRoute
 deactivate User
 @enduml
