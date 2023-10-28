@@ -1,0 +1,34 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant Postman as "FloorRoute"
+participant System as System <<Container>>
+participant MongoDB as "FloorRepo"
+
+
+activate User
+User -> Postman :1. Dar informação {name, buildingName, description}
+activate Postman
+Postman -> System :2. POST createFloor /{name, buildingName, description}
+activate System
+
+System -> BuildingRepo :3. Check if building exists
+activate BuildingRepo
+deactivate BuildingRepo
+System -> System :4. Check verification
+
+System -> MongoDB :5. Save floor
+activate MongoDB
+MongoDB -> System :6. Return floor
+deactivate MongoDB
+System -> Postman :7. Return floor (JSON)
+deactivate System
+Postman -> User :8. Show Floor (JSON)
+deactivate Postman
+deactivate User
+
+
+@enduml
+
+

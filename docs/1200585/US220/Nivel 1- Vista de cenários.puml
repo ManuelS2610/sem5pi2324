@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+
+User -> (Listar pisos de edifício com passagem para outros edifícios)
+@enduml
+

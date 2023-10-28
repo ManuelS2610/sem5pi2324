@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="481px" preserveAspectRatio="none" style="width:1016px;height:481px;background:#FFFFFF;" version="1.1" viewBox="0 0 1016 481" width="1016px" zoomAndPan="magnify"><defs><filter height="300%" id="fv5w3it4am1v7" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="277.8125" style="stroke:#A80036;stroke-width:1.0;" width="10" x="17.5" y="99.6094"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="255.4609" style="stroke:#A80036;stroke-width:1.0;" width="10" x="363.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="194.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="706.5" y="152.3125"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="846.5" y="286.3672"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="950" y="182.6641"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="22" x2="22" y1="89.6094" y2="395.4219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="368" x2="368" y1="89.6094" y2="395.4219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="711.5" x2="711.5" y1="89.6094" y2="395.4219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="851" x2="851" y1="89.6094" y2="395.4219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="955" x2="955" y1="89.6094" y2="395.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="5" y="86.5332">User</text><ellipse cx="22.5" cy="15" fill="#FEFECE" filter="url(#fv5w3it4am1v7)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M22.5,23 L22.5,50 M9.5,31 L35.5,31 M22.5,50 L9.5,65 M22.5,50 L35.5,65 " fill="none" filter="url(#fv5w3it4am1v7)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="5" y="408.9551">User</text><ellipse cx="22.5" cy="422.0313" fill="#FEFECE" filter="url(#fv5w3it4am1v7)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M22.5,430.0313 L22.5,457.0313 M9.5,438.0313 L35.5,438.0313 M22.5,457.0313 L9.5,472.0313 M22.5,457.0313 L35.5,472.0313 " fill="none" filter="url(#fv5w3it4am1v7)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="85" x="324" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="331" y="74.5332">FloorRoute</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="85" x="324" y="394.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="331" y="415.9551">FloorRoute</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="92" x="663.5" y="35.3906"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="78" x="670.5" y="56.9238">«Container»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="686.5" y="74.5332">System</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="49.2188" style="stroke:#A80036;stroke-width:1.5;" width="92" x="663.5" y="394.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="78" x="670.5" y="415.9551">«Container»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="686.5" y="433.5645">System</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="81" x="809" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="816" y="74.5332">FloorRepo</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="81" x="809" y="394.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="816" y="415.9551">FloorRepo</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="98" x="904" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="911" y="74.5332">BuildingRepo</text><rect fill="#FEFECE" filter="url(#fv5w3it4am1v7)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="98" x="904" y="394.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="911" y="415.9551">BuildingRepo</text><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="277.8125" style="stroke:#A80036;stroke-width:1.0;" width="10" x="17.5" y="99.6094"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="255.4609" style="stroke:#A80036;stroke-width:1.0;" width="10" x="363.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="194.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="706.5" y="152.3125"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="846.5" y="286.3672"/><rect fill="#FFFFFF" filter="url(#fv5w3it4am1v7)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="950" y="182.6641"/><polygon fill="#A80036" points="351.5,117.9609,361.5,121.9609,351.5,125.9609,355.5,121.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="27.5" x2="357.5" y1="121.9609" y2="121.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="317" x="34.5" y="117.1045">1. Dar informação {id,name, buildingName, description}</text><polygon fill="#A80036" points="694.5,148.3125,704.5,152.3125,694.5,156.3125,698.5,152.3125" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="373.5" x2="700.5" y1="152.3125" y2="152.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="314" x="380.5" y="147.4561">2. PUT createFloor /{name, buildingName, description}</text><polygon fill="#A80036" points="938,178.6641,948,182.6641,938,186.6641,942,182.6641" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="716.5" x2="944" y1="182.6641" y2="182.6641"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="149" x="723.5" y="177.8076">3. Check if building exists</text><line style="stroke:#A80036;stroke-width:1.0;" x1="716.5" x2="758.5" y1="243.0156" y2="243.0156"/><line style="stroke:#A80036;stroke-width:1.0;" x1="758.5" x2="758.5" y1="243.0156" y2="256.0156"/><line style="stroke:#A80036;stroke-width:1.0;" x1="717.5" x2="758.5" y1="256.0156" y2="256.0156"/><polygon fill="#A80036" points="727.5,252.0156,717.5,256.0156,727.5,260.0156,723.5,256.0156" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="116" x="723.5" y="238.1592">4. Check verification</text><polygon fill="#A80036" points="834.5,282.3672,844.5,286.3672,834.5,290.3672,838.5,286.3672" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="716.5" x2="840.5" y1="286.3672" y2="286.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71" x="723.5" y="281.5107">5. Save floor</text><polygon fill="#A80036" points="727.5,312.7188,717.5,316.7188,727.5,320.7188,723.5,316.7188" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="721.5" x2="850.5" y1="316.7188" y2="316.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="733.5" y="311.8623">6. Return floor</text><polygon fill="#A80036" points="384.5,343.0703,374.5,347.0703,384.5,351.0703,380.5,347.0703" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="378.5" x2="710.5" y1="347.0703" y2="347.0703"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="127" x="390.5" y="342.2139">7. Return floor (JSON)</text><polygon fill="#A80036" points="33.5,373.4219,23.5,377.4219,33.5,381.4219,29.5,377.4219" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="27.5" x2="367.5" y1="377.4219" y2="377.4219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126" x="39.5" y="372.5654">8. Show Floor (JSON)</text><!--MD5=[e44fa02b403aa31187618d38f0c162c7]
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant Postman as "FloorRoute"
+participant System as System <<Container>>
+participant MongoDB as "FloorRepo"
+
+
+activate User
+User -> Postman :1. Dar informação {id,name, buildingName, description}
+activate Postman
+Postman -> System :2. PUT createFloor /{name, buildingName, description}
+activate System
+
+System -> BuildingRepo :3. Check if building exists
+activate BuildingRepo
+deactivate BuildingRepo
+System -> System :4. Check verification
+
+System -> MongoDB :5. Save floor
+activate MongoDB
+MongoDB -> System :6. Return floor
+deactivate MongoDB
+System -> Postman :7. Return floor (JSON)
+deactivate System
+Postman -> User :8. Show Floor (JSON)
+deactivate Postman
+deactivate User
+
+
+@enduml
+
+@startuml
+
+actor User
+participant Postman as "FloorRoute"
+participant System as System <<Container>>
+participant MongoDB as "FloorRepo"
+
+
+activate User
+User -> Postman :1. Dar informação {id,name, buildingName, description}
+activate Postman
+Postman -> System :2. PUT createFloor /{name, buildingName, description}
+activate System
+
+System -> BuildingRepo :3. Check if building exists
+activate BuildingRepo
+deactivate BuildingRepo
+System -> System :4. Check verification
+
+System -> MongoDB :5. Save floor
+activate MongoDB
+MongoDB -> System :6. Return floor
+deactivate MongoDB
+System -> Postman :7. Return floor (JSON)
+deactivate System
+Postman -> User :8. Show Floor (JSON)
+deactivate Postman
+deactivate User
+
+
+@enduml
+
+PlantUML version 1.2021.11(Sat Oct 02 14:26:11 BST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

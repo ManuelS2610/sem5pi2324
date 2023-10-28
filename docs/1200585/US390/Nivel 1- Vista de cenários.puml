@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor GestorFrota
+
+GestorFrota -> ( pesquisar todos os robots da frota por designação ou tarefa que pode executar)
+@enduml
+

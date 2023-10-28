@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/skinparam
+
+actor User as "Gestor de Frota"
+participant Postman as "Postman"
+participant System as System <<Container>>
+participant MongoDB as "RobotRepo"
+
+activate User
+User -> Postman: 1. Request for a list of robots by type or designation
+activate Postman
+
+Postman -> System: 2. Request GET /robots/:type or GET /robots/:designation
+activate System
+
+System -> System: 3. Check request
+System -> MongoDB: 4. Search the Repo
+activate MongoDB
+
+MongoDB --> System: 5. Return the list of robots
+
+System --> Postman: 6. Return the list of robots (JSON)
+deactivate MongoDB
+
+Postman --> User: 7. Display the list of robots (JSON)
+deactivate Postman
+deactivate System
+deactivate User
+
+@enduml
+

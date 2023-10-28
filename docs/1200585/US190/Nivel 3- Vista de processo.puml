@@ -1,0 +1,56 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant FloorRoute as "Route"
+participant IFloorController as "IController"
+participant floorController as "Controller"
+participant IFloorService as "IService"
+participant floorService as "Service"
+participant floor as "Floor"
+participant floorDTO as "FloorDTO"
+participant floorMap as "Map"
+participant IFloorMap as "IMap"
+participant IFloorRepository as "IRepository"
+database floorRepository as "Repository"
+
+activate User
+User -> FloorRoute : Request to create a floor (POST)
+activate FloorRoute
+FloorRoute -> IFloorController : createFloor(floor)
+IFloorController -> floorController : createFloor(floor)
+
+activate floorController
+floorController -> IFloorService : createFloor(floor)
+
+IFloorService -> floorService : createFloor(floor)
+activate floorService
+
+floorService -> floorDTO : create(floor)
+activate floorDTO
+floorDTO --> floorService : Retrieve floorDTO
+deactivate floorDTO
+floorService -> IFloorRepository : save(floorDTO)
+
+IFloorRepository -> floorRepository : save(floorDTO)
+
+activate floorRepository
+floorRepository -> floorRepository : save
+floorRepository -> floorMap : ToDTO(floorDTO)
+deactivate floorRepository
+
+activate floorMap
+floorMap --> floorService : Retrieve floorDTO
+deactivate floorMap
+
+floorService --> floorController : Retrieve floorDTO
+deactivate floorService
+floorController --> FloorRoute : Retrieve floorDTO
+deactivate floorController
+FloorRoute --> User : 200 ok , JSON
+deactivate FloorRoute
+deactivate User
+
+@enduml
+
+

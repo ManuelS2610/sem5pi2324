@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant floorRoute
+participant IFloorController
+participant floorController
+participant IFloorService
+participant floorService
+participant IFloorRepo
+participant floorRepo
+participant FloorMap
+participant IFloorDTO
+
+User -> floorRoute : GET /:buildingName
+activate floorRoute
+floorRoute -> IFloorController : findFloorsByBuildingName()
+activate IFloorController
+IFloorController -> floorController : findFloorsByBuildingName()
+deactivate IFloorController
+activate floorController
+floorController -> IFloorService : findFloorsByBuildingName()
+activate IFloorService
+IFloorService -> floorService : findFloorsByBuildingName()
+deactivate IFloorService
+activate floorService
+floorService -> IFloorRepo : findFloorsByBuildingName()
+activate IFloorRepo
+IFloorRepo -> floorRepo : findFloorsByBuildingName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> floorService : floor[]
+deactivate floorRepo
+floorService -> FloorMap : toDTO()
+activate FloorMap
+FloorMap -> IFloorDTO
+FloorMap --> floorService : floorDTO[]
+deactivate FloorMap
+floorService --> floorController: floorDTO[]
+deactivate floorService
+floorController --> floorRoute: floorController -> floorRoute : res.json(floorDTO).status()
+deactivate floorController
+floorRoute --> User
+@enduml

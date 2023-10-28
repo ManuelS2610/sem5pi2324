@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as "Gestor de Frota"
+participant robotRoute
+participant IRobotController
+participant robotController
+participant IRobotService
+participant robotService
+participant IRobotRepo
+participant robotRepo
+participant RobotMap
+participant IRobotDTO
+
+User -> robotRoute : GET /:type OR GET /:designation
+activate robotRoute
+robotRoute -> IRobotController : findByTask() or findByDesignation()
+activate IRobotController
+IRobotController -> robotController :  findByTask() or findByDesignation()
+deactivate IRobotController
+activate robotController
+robotController -> IRobotService :  findByTask() or findByDesignation()
+activate IRobotService
+IRobotService -> robotService :  findByTask() or findByDesignation()
+deactivate IRobotService
+activate robotService
+robotService -> IRobotRepo : findByTask() or findByDesignation()
+activate IRobotRepo
+IRobotRepo -> robotRepo : findByTask() or findByDesignation()
+activate robotRepo
+deactivate IRobotRepo
+robotRepo --> robotService : robot[]
+deactivate robotRepo
+robotService -> RobotMap : toDTO()
+activate RobotMap
+RobotMap -> IRobotDTO
+RobotMap --> robotService : robotDTO[]
+deactivate RobotMap
+robotService --> robotController: robotDTO[]
+deactivate robotService
+robotController --> robotRoute: robotController -> robotRoute : res.json(robotDTO).status()
+deactivate robotController
+robotRoute --> User
+@enduml

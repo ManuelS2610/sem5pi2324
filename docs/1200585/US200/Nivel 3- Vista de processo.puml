@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant floorRoute
+participant IFloorController
+participant floorController
+participant IFloorService
+participant floorService
+participant IFloorRepo
+participant floorRepo
+participant FloorMap
+participant IFloorPersistence
+participant floorSchema
+participant IFloorDTO
+participant IBuildingRepo
+participant buildingRepo
+
+
+User -> floorRoute: PUT /{id, name,buildingName,description}
+activate floorRoute
+floorRoute -> IFloorController : updateFloor()
+activate IFloorController
+IFloorController -> floorController :  updateFloor()
+deactivate IFloorController
+activate floorController
+floorController -> IFloorService : updateFloor()
+activate IFloorService
+IFloorService -> floorService : updateFloor()
+deactivate IFloorService
+activate floorService
+floorService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> floorService : building
+deactivate buildingRepo
+floorService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> floorService : floor
+deactivate floorRepo
+floorService -> IFloorRepo : findByDomainId()
+activate IFloorRepo
+IFloorRepo -> floorRepo : findByDomainId()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> floorService : floor
+deactivate floorRepo
+floorService -> IFloorRepo: save()
+activate IFloorRepo
+IFloorRepo -> floorRepo : save()
+deactivate IFloorRepo
+activate floorRepo
+floorRepo -> floorSchema : findOne()
+floorRepo -> FloorMap : toPersistence()
+activate FloorMap
+FloorMap --> floorRepo : floor
+deactivate FloorMap
+floorRepo -> floorSchema: create()
+deactivate floorRepo
+floorService -> FloorMap : toDTO()
+activate FloorMap
+FloorMap -> IFloorDTO
+FloorMap --> floorService : floorDTO
+deactivate FloorMap
+floorService --> floorController : floorDTO
+deactivate floorService
+floorController --> floorRoute : res.json(floorDTO).status()
+deactivate floorController
+floorRoute --> User
+deactivate floorRoute
+@enduml
