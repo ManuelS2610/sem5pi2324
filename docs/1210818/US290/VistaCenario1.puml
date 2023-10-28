@@ -1,0 +1,4 @@
+@startuml
+ACTOR user
+user -> "Listar elevadores em edifício"
+@enduml

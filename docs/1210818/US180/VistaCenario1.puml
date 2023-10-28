@@ -1,0 +1,4 @@
+@startuml
+ACTOR user
+user -> "Listar edificios com min e max de pisos"
+@enduml

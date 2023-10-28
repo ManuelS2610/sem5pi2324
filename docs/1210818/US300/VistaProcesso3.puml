@@ -1,0 +1,45 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant ElevatorRepo
+participant Elevator
+participant IFloorDTO
+
+User -> ElevatorRoute: List Floors Served by Elevator
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController: getFloorsServedByElevatorsInBuilding()
+activate IElevatorController
+IElevatorController -> ElevatorController: getFloorsServedByElevatorsInBuilding()
+deactivate IElevatorController
+activate ElevatorController
+ElevatorController -> IElevatorService: getFloorsServedByElevatorsInBuilding()
+activate IElevatorService
+IElevatorService -> ElevatorService: getFloorsServedByElevatorsInBuilding()
+deactivate IElevatorService
+activate ElevatorService
+ElevatorService -> ElevatorRepo: getFloorsServedByElevatorsInBuilding()
+activate ElevatorRepo
+ElevatorRepo -> Elevator: findFloorsServedByElevatorsInBuilding()
+activate Elevator
+Elevator -> ElevatorRepo: Floors
+deactivate Elevator
+ElevatorRepo -> IFloorDTO: Floors
+activate IFloorDTO
+IFloorDTO -> ElevatorRepo: FloorDTO
+deactivate IFloorDTO
+ElevatorRepo -> ElevatorService: FloorDTO
+deactivate ElevatorRepo
+ElevatorService -> ElevatorController: FloorDTO
+deactivate ElevatorService
+ElevatorController -> ElevatorRoute: res.json(FloorDTO).status()
+deactivate ElevatorController
+ElevatorRoute -> User
+deactivate ElevatorRoute
+@enduml

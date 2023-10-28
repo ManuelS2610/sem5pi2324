@@ -1,0 +1,49 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant BuildingRoute
+participant IBuildingController
+participant BuildingController
+participant IBuildingService
+participant BuildingService
+participant IBuildingRepo
+participant BuildingRepo
+participant BuildingMap
+participant IBuildingPersistence
+participant BuildingSchema
+participant Building
+participant IBuildingDTO
+
+User -> BuildingRoute: List Buildings with Min/Max Floors
+activate BuildingRoute
+BuildingRoute -> IBuildingController: getBuildingsWithMinMaxFloors()
+activate IBuildingController
+IBuildingController -> BuildingController: getBuildingsWithMinMaxFloors()
+deactivate IBuildingController
+activate BuildingController
+BuildingController -> IBuildingService: getBuildingsWithMinMaxFloors()
+activate IBuildingService
+IBuildingService -> BuildingService: getBuildingsWithMinMaxFloors()
+deactivate IBuildingService
+activate BuildingService
+BuildingService -> BuildingRepo: getBuildingsWithMinMaxFloors()
+activate BuildingRepo
+BuildingRepo -> Building: findBuildingsWithMinMaxFloors()
+activate Building
+Building -> BuildingRepo: Buildings
+deactivate Building
+BuildingRepo -> IBuildingDTO: Buildings
+activate IBuildingDTO
+IBuildingDTO -> BuildingRepo: BuildingDTO
+deactivate IBuildingDTO
+BuildingRepo -> BuildingService: BuildingDTO
+deactivate BuildingRepo
+BuildingService -> BuildingController: BuildingDTO
+deactivate BuildingService
+BuildingController -> BuildingRoute: res.json(BuildingDTO).status()
+deactivate BuildingController
+BuildingRoute -> User
+deactivate BuildingRoute
+@enduml

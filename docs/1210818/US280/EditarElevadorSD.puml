@@ -1,53 +1,41 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+!define ACTOR class
 
 actor User
+
 participant ElevatorRoute
 participant IElevatorController
 participant ElevatorController
 participant IElevatorService
 participant ElevatorService
-participant IElevatorRepo
 participant ElevatorRepo
-participant ElevatorMap
-participant IElevatorPersistence
-participant ElevatorSchema
 participant Elevator
 participant IElevatorDTO
 
-User -> ElevatorRoute: Update Elevator
+User -> ElevatorRoute: List Elevators in Building
 activate ElevatorRoute
-ElevatorRoute -> IElevatorController : updateElevator()
+ElevatorRoute -> IElevatorController : getElevatorsInBuilding()
 activate IElevatorController
-IElevatorController -> ElevatorController : updateElevator()
+IElevatorController -> ElevatorController : getElevatorsInBuilding()
 deactivate IElevatorController
 activate ElevatorController
-ElevatorController -> IElevatorService : updateElevator()
+ElevatorController -> IElevatorService : getElevatorsInBuilding()
 activate IElevatorService
-IElevatorService -> ElevatorService : updateElevator()
+IElevatorService -> ElevatorService : getElevatorsInBuilding()
 deactivate IElevatorService
 activate ElevatorService
-ElevatorService -> Elevator : update()
-activate Elevator
-Elevator -> ElevatorService : Elevator
-deactivate Elevator
-ElevatorService -> IElevatorRepo: save()
-activate IElevatorRepo
-IElevatorRepo -> ElevatorRepo : save()
-deactivate IElevatorRepo
+ElevatorService -> ElevatorRepo : getElevatorsInBuilding()
 activate ElevatorRepo
-ElevatorRepo -> ElevatorSchema : findOne()
-ElevatorRepo -> ElevatorMap : toPersistence()
-activate ElevatorMap
-ElevatorMap -> ElevatorRepo : Elevator
-deactivate ElevatorMap
-ElevatorRepo -> ElevatorSchema: update()
+ElevatorRepo -> Elevator : findElevatorsInBuilding()
+activate Elevator
+Elevator -> ElevatorRepo : Elevators
+deactivate Elevator
+ElevatorRepo -> ElevatorService : Elevators
 deactivate ElevatorRepo
-ElevatorService -> ElevatorMap : toDTO()
-activate ElevatorMap
-ElevatorMap -> IElevatorDTO
-ElevatorMap -> ElevatorService : ElevatorDTO
-deactivate ElevatorMap
+ElevatorService -> IElevatorDTO : Elevators
+activate IElevatorDTO
+IElevatorDTO -> ElevatorService : ElevatorDTO
+deactivate IElevatorDTO
 ElevatorService -> ElevatorController : ElevatorDTO
 deactivate ElevatorService
 ElevatorController -> ElevatorRoute : res.json(ElevatorDTO).status()

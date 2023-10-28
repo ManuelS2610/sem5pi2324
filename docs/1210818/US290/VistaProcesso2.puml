@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/skinparam
+
+actor User
+participant Postman as "Postman"
+participant System as System <<Container>>
+participant MongoDB as "MongoDB"
+
+activate User
+User -> Postman: 1. Solicitação de lista de elevadores em edifício
+activate Postman
+
+Postman -> System: 2. Requisição GET /elevators/:buildingId
+activate System
+
+System -> System: 3. Verificação de autorização
+System -> MongoDB: 4. Consulta ao banco de dados
+activate MongoDB
+
+MongoDB --> System: 5. Retorna lista de elevadores
+
+System --> Postman: 6. Retorna lista de elevadores (JSON)
+deactivate MongoDB
+
+Postman --> User: 7. Exibe lista de elevadores (JSON)
+deactivate Postman
+deactivate System
+deactivate User
+
+@enduml

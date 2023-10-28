@@ -1,8 +1,8 @@
-# US 270
+# US 290
 
 ## Requirements
 
-US270 - Criar elevador em edifício.*
+US290 - Listar elevadores em edificio.
 
 ## Nível 1
 **Vista Lógica**
@@ -30,4 +30,4 @@ US270 - Criar elevador em edifício.*
 
 **Vista Processo**
 
-![Sequence Diagram](CriarElevadorSD.png "Sequence Diagram")
+![Sequence Diagram](VistaProcesso3.png "Sequence Diagram")

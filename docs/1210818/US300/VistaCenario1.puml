@@ -1,0 +1,4 @@
+@startuml
+ACTOR user
+user -> ListarPisos: Listar pisos de edifício servidos por elevador
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+ACTOR user
+user -> "Editar elevador num edifício"
+@enduml

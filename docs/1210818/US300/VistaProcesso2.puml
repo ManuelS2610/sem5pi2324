@@ -1,0 +1,30 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant Postman as "Postman"
+participant System as System <<Container>>
+participant MongoDB as "MongoDB"
+
+activate User
+User -> Postman: 1. Solicitação de lista de pisos servidos por elevador
+activate Postman
+
+Postman -> System: 2. Requisição GET /floors/:buildingId
+activate System
+
+System -> System: 3. Verificação de autorização
+System -> MongoDB: 4. Consulta ao banco de dados
+activate MongoDB
+
+MongoDB --> System: 5. Retorna lista de pisos servidos por elevador
+
+System --> Postman: 6. Retorna lista de pisos servidos por elevador (JSON)
+deactivate MongoDB
+
+Postman --> User: 7. Exibe lista de pisos servidos por elevador (JSON)
+deactivate Postman
+deactivate System
+deactivate User
+@enduml
