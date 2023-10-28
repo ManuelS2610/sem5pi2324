@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/skinparam
+
+actor User
+participant Postman as "Postman"
+participant System as System <<Container>>
+participant MongoDB as "BuildingRepo"
+
+activate User
+User -> Postman: 1. Request for a list of all buildings
+activate Postman
+
+Postman -> System: 2. Request GET
+activate System
+
+System -> System: 3. Check request
+System -> MongoDB: 4. Search the Repo
+activate MongoDB
+
+MongoDB --> System: 5. Return the list of all buildings (JSON)
+
+System --> Postman: 6. Return the list of all buildings (JSON)
+deactivate MongoDB
+
+Postman --> User: 7. Display the list of all buildings (JSON)
+deactivate Postman
+deactivate System
+deactivate User
+
+@enduml

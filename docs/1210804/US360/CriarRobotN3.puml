@@ -1,0 +1,51 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant RobotRoute as "Route"
+participant IRobotController as "IController"
+participant robotController as "Controller"
+participant IRobotService as "IService"
+participant robotService as "Service"
+participant robotDTO as "robotDTO"
+participant robotMap as "Map"
+participant IRobotRepository as "IRepository"
+database robotRepository as "Repository"
+
+activate User
+User -> RobotRoute : Request to create a robot (POST)
+activate RobotRoute
+RobotRoute -> IRobotController : createrobot(robot)
+IRobotController -> robotController : createrobot(robot)
+
+activate robotController
+robotController -> IRobotService : createrobot(robot)
+
+IRobotService -> robotService : createrobot(robot)
+activate robotService
+
+robotService -> robotDTO : create(robot)
+activate robotDTO
+robotDTO --> robotService : Retrieve robotDTO
+deactivate robotDTO
+robotService -> IRobotRepository : save(robotDTO)
+
+IRobotRepository -> robotRepository : save(robotDTO)
+
+activate robotRepository
+robotRepository -> robotRepository : save
+robotRepository -> robotMap : ToDTO(robotDTO)
+deactivate robotRepository
+
+activate robotMap
+robotMap --> robotService : Retrieve robotDTO
+deactivate robotMap
+
+robotService --> robotController : Retrieve robotDTO
+deactivate robotService
+robotController --> RobotRoute : Retrieve robotDTO
+deactivate robotController
+RobotRoute --> User : 200 ok , JSON
+deactivate RobotRoute
+deactivate User
+@enduml

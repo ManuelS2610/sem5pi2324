@@ -1,0 +1,28 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant Postman as "Postman"
+participant System as "Container"
+participant MongoDB as "MongoDB"
+
+activate User
+User -> Postman :1. Dar informação {category, description, floor, position[], distX,distY}
+activate Postman
+Postman -> System :2. POST createRoom /{category, description, floor, position[], distX,distY}
+activate System
+System -> System :3. Check verification
+
+System -> MongoDB :4. Save Room
+activate MongoDB
+MongoDB -> System :5. Return Room
+deactivate MongoDB
+System -> Postman :6. Return Room (JSON)
+deactivate System
+Postman -> User :7. Show Room (JSON)
+deactivate Postman
+deactivate User
+
+
+@enduml
+```

@@ -1,0 +1,28 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant Postman as "Postman"
+participant System as "container"
+participant MongoDB as "MongoDB"
+
+activate User
+User -> Postman :1. Dar informação {type,designation,serialNumber,description,available}
+activate Postman
+Postman -> System :2. POST createRobot /{type,designation,serialNumber,description,available}
+activate System
+System -> System :3. Check verification
+
+System -> MongoDB :4. Save Robot
+activate MongoDB
+MongoDB -> System :5. Return Robot
+deactivate MongoDB
+System -> Postman :6. Return Robot (JSON)
+deactivate System
+Postman -> User :7. Show Robot (JSON)
+deactivate Postman
+deactivate User
+
+
+@enduml
+```

@@ -1,0 +1,64 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant RobotTypeRoute as "Route"
+participant IRobotTypeController as "IController"
+participant robottypeController as "Controller"
+participant IRobotTypeService as "IService"
+participant robotTypeService as "Service"
+participant robotTypeDTO as "robotTypeDTO"
+participant robotTypeMap as "Map"
+participant IRobotTypeRepository as "IRepository"
+database robotTypeRepository as "Repository"
+
+
+activate User
+User -> RobotTypeRoute : Request to create a robotType (POST)
+activate RobotTypeRoute
+RobotTypeRoute -> IRobotTypeController : createrobotType(robotType)
+IRobotTypeController -> robottypeController : createrobotType(robotType)
+
+activate robottypeController
+robottypeController -> IRobotTypeService : createrobotType(robotType)
+
+IRobotTypeService -> robotTypeService : createrobotType(robotType)
+activate robotTypeService
+
+robotTypeService -> robotTypeDTO : create(robotType)
+activate robotTypeDTO
+robotTypeDTO --> robotTypeService : Retrieve robotTypeDTO
+deactivate robotTypeDTO
+robotTypeService -> IRobotTypeRepository : save(robotTypeDTO)
+
+IRobotTypeRepository -> robotTypeRepository : save(robotTypeDTO)
+
+activate robotTypeRepository
+robotTypeRepository -> robotTypeRepository : save
+robotTypeRepository -> robotTypeMap : ToDTO(robotTypeDTO)
+deactivate robotTypeRepository
+
+
+activate robotTypeMap
+robotTypeMap --> robotTypeService : Retrieve robotTypeDTO
+deactivate robotTypeMap
+
+
+robotTypeService --> robottypeController : Retrieve robotTypeDTO
+deactivate robotTypeService
+robottypeController --> RobotTypeRoute : Retrieve robotTypeDTO
+deactivate robottypeController
+RobotTypeRoute --> User : 200 ok , JSON
+deactivate RobotTypeRoute
+deactivate User
+
+
+
+
+
+
+
+
+
+@enduml
+```
