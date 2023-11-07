@@ -31,6 +31,7 @@
   "author": "Santiago Quinteros",
   "license": "ISC",
   "dependencies": {
+    "@angular/cli": "^16.2.9",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
     "agenda": "^2.0.2",
