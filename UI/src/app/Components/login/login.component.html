@@ -1,7 +1,19 @@
 
-  <div class="container">
-    <p>
-      <button type="button">Login</button>
-      <button type="button" >Logout</button>
-    </p>
+  <div class="login-Container">
+      <form class="login-form">
+    
+          <input type="text" placeholder="Username" formControlName="username">
+          <input type="password" placeholder="Password" formControlName="password">
+        
+        <div class="login-button">
+          <button type="submit" >Login</button>
+          <a [routerLink]="['/signup']">
+          <button   type="button" >Sign-Up POR FAZER</button>
+        </a>
+        </div>
+
+        
+
+      </form>
+    
   </div>
