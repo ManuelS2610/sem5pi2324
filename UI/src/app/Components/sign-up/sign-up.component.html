@@ -1,1 +1,21 @@
-<p>sign-up works!</p>
+<div class="login-Container">
+  <form class="login-form">
+
+      <input type="text" placeholder="firstName" formControlName="firstName">
+      <input type="text" placeholder="lastName" formControlName="lastName">
+      <input type="text" placeholder="email" formControlName="email">
+      <input type="password" placeholder="Password" formControlName="password">
+      <select name="roles" id="roles" >
+
+        <option disabled selected value>select a role</option>
+        <option value="gestorDeFrota">Gestor de Frota</option>
+        <option value="gestorDeCampus">Gestor de Campus</option>
+        <option value="admin">Admin</option>
+        <option value="estudante">Estudante</option>
+      </select>
+    
+    <div class="login-button">        
+      <button type="button  ">Sign-Up</button>      
+    </div>
+  </form>  
+</div>

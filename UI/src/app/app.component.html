@@ -1,11 +1,16 @@
 <main>
-  <a [routerLink]="['/']">
+  
   <header  class="brand-name">
+    <a [routerLink]="['/']">
     <img class="brand-logo" src="/assets/logo.png" alt="logo" aria-hidden="true">
+  </a>
+   <h1>Stupid Simple Campus Simulator</h1>
   </header>
-</a>
+
+<hr>
+      
 <section class="content">
   <router-outlet></router-outlet>
 </section>
- <hr>
+
 </main>
