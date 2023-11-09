@@ -1,10 +1,23 @@
 <div class="login-Container">
   <form class="login-form">
 
+    <section>
+  <div class="example-label">Basic</div>
+  <div class="example-button-row">
+    <button mat-button>Basic</button>
+    <button mat-button color="primary">Primary</button>
+    <button mat-button color="accent">Accent</button>
+    <button mat-button color="warn">Warn</button>
+    <button mat-button disabled>Disabled</button>
+    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
+  </div>
+</section>
+
       <input type="text" placeholder="firstName" formControlName="firstName">
       <input type="text" placeholder="lastName" formControlName="lastName">
       <input type="text" placeholder="email" formControlName="email">
       <input type="password" placeholder="Password" formControlName="password">
+
       <select name="roles" id="roles" >
 
         <option disabled selected value>select a role</option>
@@ -12,10 +25,12 @@
         <option value="gestorDeCampus">Gestor de Campus</option>
         <option value="admin">Admin</option>
         <option value="estudante">Estudante</option>
+
       </select>
     
     <div class="login-button">        
       <button type="button  ">Sign-Up</button>      
     </div>
+
   </form>  
 </div>

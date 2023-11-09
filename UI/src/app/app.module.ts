@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { provideRouter } from '@angular/router';
 import routeConfig from 'src/routes';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialsModule } from './module/materials/materials.module';
 
 
 
@@ -24,6 +26,8 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     CommonModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialsModule,
     
 
 
