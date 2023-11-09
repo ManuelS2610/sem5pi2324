@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const RoleSchema = new mongoose.Schema(
   {
     domainId: { type: String, unique: true },
-    name: { type: String, unique: true }
+    name: { type: String,enum: ['admin', 'gestorDeFrota','gestorDeCampus','estudante']}
   },
   {
     timestamps: true
