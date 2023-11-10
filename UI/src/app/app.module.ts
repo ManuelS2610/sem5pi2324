@@ -11,6 +11,12 @@ import routeConfig from 'src/routes';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialsModule } from './module/materials/materials.module';
+import { MenuBarComponent } from './Components/menu-bar/menu-bar.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 
 
 
@@ -20,7 +26,8 @@ import { MaterialsModule } from './module/materials/materials.module';
     LoginComponent,
     SignUpComponent,
     HomeComponent,
-    
+    MenuBarComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -28,6 +35,9 @@ import { MaterialsModule } from './module/materials/materials.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
     
 
 

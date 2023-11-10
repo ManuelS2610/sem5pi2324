@@ -14,16 +14,10 @@ import { Users } from 'src/app/interfaces/users';
 })
 export class SignUpComponent {
 
-  user:Users={};
 
 constructor() {}
 
 ngOnInit(): void {
 }
 
-addUser():void {
-
-
-
-}
 }
