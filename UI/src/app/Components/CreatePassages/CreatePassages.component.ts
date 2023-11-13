@@ -10,31 +10,10 @@ import {PASSAGES} from 'src/app/mock-passages';
   styleUrls: ['./CreatePassages.component.css'],
 })
 export class CreatePassagesComponent {
-   passages:Passages[] =[{
-    id:"A1243",
-    building1: "A",
-    building2: "B",
-    pisobuilding1: "A1",
-    pisobuilding2: "A2",
-    positionBuilding1: [],
-    positionBuilding2: [],
-  },
-  {
-  id:"A1243",
-    building1: "A",
-    building2: "B",
-    pisobuilding1: "A1",
-    pisobuilding2: "A2",
-    positionBuilding1: [],
-    positionBuilding2: [],
-  },
-];
 displayedColumns: string[]= ['id','building1','building2','pisobuilding1','pisobuilding2'];
 constructor(private passageService:PassageService) { }
 data: Passages = {};
-passage = PASSAGES;
 ngOnInit(): void {
-  this.get();
 }
 building1:string="";
 building2:string="";
@@ -44,12 +23,9 @@ createPassage(){
 updatePassage(){
   this.passageService.updatePassage(this.data).subscribe();
 };
+pa: Passages[] = [];
 getPassage(){
  this.passageService.getPassage(this.building1,this.building2).subscribe(pa=> this.pa = pa);
 };
-pa: Passages[] = [];
-get(){
-  this.passageService.get().subscribe(pa=> this.pa = pa);
-} 
 }
 
