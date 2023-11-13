@@ -14,17 +14,8 @@ export class PassageService {
   };
   constructor(private http : HttpClient) { }
 
-  createPassage (passage: any): Observable<any> {
+  createPassage (passage: any): Observable<Passages> {
     // Assuming 'passage' is a form group or form control
-  const jsonPayload = JSON.stringify({
-  building1: passage.building1,
-  building2: passage.building2,
-  pisobuilding1: passage.pisobuilding1,
-  pisobuilding2: passage.pisobuilding2,
-  });
-
-    console.log(jsonPayload);
-    console.log(passage);
     return this.http.post(this.apiUrl, passage, this.HTTP_OPTIONS);
   }
 
@@ -32,7 +23,7 @@ export class PassageService {
     return this.http.put(this.apiUrl, passage, this.HTTP_OPTIONS);
   }
   getPassage (building1: any,building2:any): Observable<Passages[]> {
-    return this.http.get<Passages[]>(this.apiUrl+"/"+building1+"/"+building2,this.HTTP_OPTIONS);
+    return this.http.get<Passages[]>(this.apiUrl+"/"+building1+"/"+building2,{observe: 'body',responseType:"json"});
   }
   get(): Observable<Passages[]> {
     const passage= of(PASSAGES);

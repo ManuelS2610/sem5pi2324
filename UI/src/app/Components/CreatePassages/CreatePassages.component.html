@@ -23,7 +23,7 @@
         <input type="text" placeholder="Building1's Floor" id="pisobuilding1" name="pisobuilding1" [(ngModel)]="data.pisobuilding1" [ngModelOptions]="{ standalone: true }"><br><br>
         <input type="text" placeholder="Building2's Floor" id="pisobuilding2" name="pisobuilding2" [(ngModel)]="data.pisobuilding2" [ngModelOptions]="{ standalone: true }"><br>
         <br>
-        <input type="submit" value="Update">
+        <input (click)="updatePassage()" type="submit" value="Update">
     </form> </mat-tab>
   <mat-tab label="List Passages between 2 Buildings"> 
     <br> 
@@ -31,10 +31,10 @@
     <h3>Get list of passages between 2 buildings</h3>
     <br>
     <form>
-      <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="data.building1" [ngModelOptions]="{ standalone: true }"><br><br>
-      <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="data.building2" [ngModelOptions]="{ standalone: true }"><br><br>
+      <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="building1" [ngModelOptions]="{ standalone: true }"><br><br>
+      <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="building2" [ngModelOptions]="{ standalone: true }"><br><br>
         <br>
-        <input (click)="get()" type="submit" value="Get">
+        <input (click)="getPassage()" type="submit" value="Get">
         <table mat-table [dataSource]="pa" class="mat-elevation-z8" >
 
           <!--- Note that these columns can be defined in any order.

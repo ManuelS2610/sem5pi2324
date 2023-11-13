@@ -39,13 +39,13 @@ ngOnInit(): void {
 building1:string="";
 building2:string="";
 createPassage(){
-  this.passageService.createPassage(this.data);
+  this.passageService.createPassage(this.data).subscribe();
 };
 updatePassage(){
-  this.passageService.updatePassage(this.data);
+  this.passageService.updatePassage(this.data).subscribe();
 };
 getPassage(){
- this.passageService.getPassage(this.building1,this.building2);
+ this.passageService.getPassage(this.building1,this.building2).subscribe(pa=> this.pa = pa);
 };
 pa: Passages[] = [];
 get(){
