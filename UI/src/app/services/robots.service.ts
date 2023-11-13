@@ -26,6 +26,10 @@ HTTP_OPTIONS = {
   getRobot (): Observable<Robots[]> {
     return this.http.get<Robots[]>(this.apiUrl,{observe: 'body',responseType:"json"});
   }
+  inhibitRobot(robot: any): Observable<any> {
+    console.log(robot);
+    return this.http.patch(this.apiUrl+"/inibir", robot, this.HTTP_OPTIONS);
+  }
 
 
 }

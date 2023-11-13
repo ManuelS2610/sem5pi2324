@@ -76,4 +76,15 @@
         </table>
     </form>
     </mat-tab>
+    <mat-tab label="Inhibit Robot">
+      <br>
+      <br>
+      <h3>Update Robot</h3>
+      <br>
+      <form>
+          <input type="text" placeholder="Robot Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
+          <input type="text" placeholder="Available" id="available" name="available" [(ngModel)]="data.available" [ngModelOptions]="{ standalone: true }"><br>
+          <br>
+          <input (click)="inhibitRobot()" type="submit" value="Update">
+      </form> </mat-tab>
 </mat-tab-group>

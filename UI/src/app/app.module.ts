@@ -18,6 +18,7 @@ import { CreatePassagesComponent } from './Components/CreatePassages/CreatePassa
 import { RobotsComponent } from './Components/robots/robots.component';
 import { RobotTypeComponent } from './Components/robot-type/robot-type.component';
 import { BuildingsComponent } from './Components/buildings/buildings.component';
+import { LoadMapComponent } from './Components/load-map/load-map.component';
 
 
 
@@ -34,7 +35,8 @@ import { BuildingsComponent } from './Components/buildings/buildings.component';
     CreatePassagesComponent,
     RobotsComponent,
     RobotTypeComponent,
-    BuildingsComponent
+    BuildingsComponent,
+    LoadMapComponent
   ],
   imports: [
     BrowserModule,
@@ -45,8 +47,6 @@ import { BuildingsComponent } from './Components/buildings/buildings.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-
-
   ],
   providers: [
     provideRouter(routeConfig)

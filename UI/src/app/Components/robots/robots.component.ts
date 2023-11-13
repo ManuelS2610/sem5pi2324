@@ -29,5 +29,8 @@ export class RobotsComponent {
   get(){
     this.robotService.getRobot().subscribe(ListRobots=> this.ListRobots = ListRobots);
   } 
+  inhibitRobot(){
+    this.robotService.inhibitRobot(this.data).subscribe();
+  }
 
 }

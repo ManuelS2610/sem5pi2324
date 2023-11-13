@@ -23,7 +23,8 @@ import {MatDialogModule} from "@angular/material/dialog"
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -53,6 +54,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatProgressBarModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatGridListModule,
+    MatStepperModule
   ],
   exports:[
     MatButtonModule,
@@ -78,6 +81,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatProgressBarModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatGridListModule,
+    MatStepperModule
   ]
 })
 export class MaterialsModule { }
