@@ -15,9 +15,17 @@ import { Users } from 'src/app/interfaces/users';
 export class SignUpComponent {
 
 
-constructor() {}
+constructor(private userservice:UserService) { }
+data: Users = {};
+
 
 ngOnInit(): void {
 }
+
+createUser(){
+  console.log(this.data);
+  this.userservice.createUser(this.data).subscribe();
+};
+
 
 }
