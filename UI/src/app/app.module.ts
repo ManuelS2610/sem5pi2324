@@ -14,6 +14,7 @@ import { MaterialsModule } from './module/materials/materials.module';
 import { MenuBarComponent } from './Components/menu-bar/menu-bar.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CreatePassagesComponent } from './Components/CreatePassages/CreatePassages.component';
 
 
 
@@ -27,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     SignUpComponent,
     HomeComponent,
     MenuBarComponent,
-
+    CreatePassagesComponent
   ],
   imports: [
     BrowserModule,
@@ -37,8 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
-    
+    HttpClientModule,
 
 
   ],

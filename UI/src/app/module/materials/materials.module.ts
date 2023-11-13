@@ -22,8 +22,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox"
 import {MatDialogModule} from "@angular/material/dialog"
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -52,7 +51,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCheckboxModule,
     MatDialogModule,
     MatProgressBarModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTabsModule,
   ],
   exports:[
     MatButtonModule,
@@ -76,7 +76,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCheckboxModule,
     MatDialogModule,
     MatProgressBarModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTabsModule,
   ]
 })
 export class MaterialsModule { }

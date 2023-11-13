@@ -1,0 +1,77 @@
+<mat-tab-group>
+  <mat-tab label="Create Passage"><form>
+    <br>
+    <br>
+    <h3>Create Passages</h3>
+    <br>
+    <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="data.building1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="data.building2" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building1's Floor" id="pisobuilding1" name="pisobuilding1" [(ngModel)]="data.pisobuilding1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2's Floor" id="pisobuilding2" name="pisobuilding2" [(ngModel)]="data.pisobuilding2" [ngModelOptions]="{ standalone: true }"><br>
+    <br>
+    <input (click)="createPassage()" type="submit" value="Create">
+  </form></mat-tab>
+  <mat-tab label="Update Passage">
+    <br>
+    <br>
+    <h3>Update Passages</h3>
+    <br>
+    <form>
+        <input type="text" placeholder="Passage Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="data.building1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="data.building2" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building1's Floor" id="pisobuilding1" name="pisobuilding1" [(ngModel)]="data.pisobuilding1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2's Floor" id="pisobuilding2" name="pisobuilding2" [(ngModel)]="data.pisobuilding2" [ngModelOptions]="{ standalone: true }"><br>
+        <br>
+        <input type="submit" value="Update">
+    </form> </mat-tab>
+  <mat-tab label="List Passages between 2 Buildings"> 
+    <br> 
+    <br>
+    <h3>Get list of passages between 2 buildings</h3>
+    <br>
+    <form>
+      <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="data.building1" [ngModelOptions]="{ standalone: true }"><br><br>
+      <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="data.building2" [ngModelOptions]="{ standalone: true }"><br><br>
+        <br>
+        <input (click)="get()" type="submit" value="Get">
+        <table mat-table [dataSource]="pa" class="mat-elevation-z8" >
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="building1">
+            <th mat-header-cell *matHeaderCellDef> Building1 </th>
+            <td mat-cell *matCellDef="let element"> {{element.buidling1}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="building2">
+            <th mat-header-cell *matHeaderCellDef> Building2 </th>
+            <td mat-cell *matCellDef="let element"> {{element.building2}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="pisobuilding1">
+            <th mat-header-cell *matHeaderCellDef> Pisobuilding1 </th>
+            <td mat-cell *matCellDef="let element"> {{element.pisobuilding1}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="pisobuilding2">
+            <th mat-header-cell *matHeaderCellDef> Pisobuilding2 </th>
+            <td mat-cell *matCellDef="let element"> {{element.pisobuilding2}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </form>
+    </mat-tab>
+</mat-tab-group>
