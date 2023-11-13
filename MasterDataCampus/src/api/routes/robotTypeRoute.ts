@@ -16,7 +16,8 @@ export default (app: Router) => {
   route.post('',
     celebrate({
       body: Joi.object({
-        name: Joi.string().required()
+        name: Joi.string().required(),
+        robotDesignation: Joi.string().required()
       })
     }),
     (req, res, next) => ctrl.createType(req, res, next) );
@@ -25,7 +26,8 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),
-        name: Joi.string().required()
+        name: Joi.string().required(),
+        robotDesignation: Joi.string().required()
       }),
     }),
     (req, res, next) => ctrl.updateType(req, res, next) );

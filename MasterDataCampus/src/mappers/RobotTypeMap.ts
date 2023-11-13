@@ -14,6 +14,7 @@ export class RobotTypeMap extends Mapper<RobotType> {
     return {
       id: robotType.id.toString(),
       name: robotType.name,
+      robotDesignation: robotType.robotDesignation
     } as IRobotTypeDTO;
   }
 
@@ -31,7 +32,8 @@ export class RobotTypeMap extends Mapper<RobotType> {
   public static toPersistence (robotType: RobotType): any {
     return {
       domainId: robotType.id.toString(),
-      name: robotType.name
+      name: robotType.name,
+      robotDesignation: robotType.robotDesignation
     }
   }
 }

@@ -46,6 +46,7 @@ export default class RobotTypeRepo implements IRobotTypeRepo{
         return RobotTypeMap.toDomain(roleCreated);
       } else {
         robotTypeDocument.name = robotType.name;
+        robotTypeDocument.robotDesignation = robotType.robotDesignation;
         await robotTypeDocument.save();
 
         return robotType;

@@ -6,6 +6,7 @@ import { Result } from "../core/logic/Result";
 
 interface RobotTypeProps {
   name: string;
+  robotDesignation: string;
 }
 
 export class RobotType extends AggregateRoot<RobotTypeProps> {
@@ -18,6 +19,14 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
     return this.props.name;
   }
 
+  get robotDesignation (): string {
+    return this.props.robotDesignation;
+  }
+
+  set robotDesignation ( value: string) {
+    this.props.robotDesignation = value;
+  }
+
   set name ( value: string) {
     this.props.name = value;
   }
@@ -27,11 +36,12 @@ export class RobotType extends AggregateRoot<RobotTypeProps> {
 
   public static create (robotTypeDTO: RobotTypeProps, id?: UniqueEntityID): Result<RobotType> {
     const name = robotTypeDTO.name;
+    const robotDesignation = robotTypeDTO.robotDesignation;
 
     if (!!name === false || name.length === 0) {
       return Result.fail<RobotType>('Must provide a robotType name')
     } else {
-      const robotType = new RobotType({ name: name }, id);
+      const robotType = new RobotType({ name: name,robotDesignation: robotDesignation }, id);
       return Result.ok<RobotType>( robotType )
     }
   }
