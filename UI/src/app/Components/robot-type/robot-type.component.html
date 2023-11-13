@@ -1,0 +1,63 @@
+<mat-tab-group>
+  <mat-tab label="Create RobotType"><form>
+    <br>
+    <br>
+    <h3>Create RobotType</h3>
+    <br>
+    <input type="text" placeholder="Name" id="name" name="name" [(ngModel)]="data.name" [ngModelOptions]="{ standalone: true }"><br><br>
+    <input type="text" placeholder="RobotDesignation" id="robotDesignation" name="robotDesignation" [(ngModel)]="data.robotDesignation" [ngModelOptions]="{ standalone: true }"><br><br>
+        
+    <br>
+    <input (click)="createRobotType()" type="submit" value="Create">
+  </form></mat-tab>
+  <mat-tab label="Update RobotType">
+    <br>
+    <br>
+    <h3>Update RobotType</h3>
+    <br>
+    <form>
+        <input type="text" placeholder="RobotType Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Name" id="name" name="name" [(ngModel)]="data.name" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="RobotDesignation" id="robotDesignation" name="robotDesignation" [(ngModel)]="data.robotDesignation" [ngModelOptions]="{ standalone: true }"><br><br>
+        
+        <br>
+        <input (click)="updateRobotType()" type="submit" value="Update">
+    </form> </mat-tab>
+  <mat-tab label="See all RobotTypes"> 
+    <br> 
+    <br>
+    <br>
+    <form>
+     
+        <br>
+       
+        <table mat-table [dataSource]="ListRobotType" class="mat-elevation-z8" >
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Robot name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="robotDesignation">
+            <th mat-header-cell *matHeaderCellDef> Robot Designation </th>
+            <td mat-cell *matCellDef="let element"> {{element.robotDesignation}} </td>
+          </ng-container>
+      
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </form>
+    </mat-tab>
+</mat-tab-group>
