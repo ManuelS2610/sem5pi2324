@@ -32,6 +32,8 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.updateType(req, res, next) );
 
+  route.get('', (req, res, next) => ctrl.getAllTypes(req, res, next) );
+
 
 
 }

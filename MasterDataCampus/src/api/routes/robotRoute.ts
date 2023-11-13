@@ -42,7 +42,7 @@ export default (app: Router) => {
   }),
     (req, res, next) => ctrl.updateRobot(req, res, next));
 
-  // Define other routes for building operations here
+ 
   route.get('', (req, res, next) => ctrl.getallRobots(req, res, next));
 
 
