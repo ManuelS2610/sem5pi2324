@@ -8,6 +8,7 @@ import { LoadMapComponent } from './app/Components/load-map/load-map.component';
 import { RobotsComponent } from './app/Components/robots/robots.component';
 import { RobotTypeComponent } from './app/Components/robot-type/robot-type.component';
 import { BuildingsComponent } from './app/Components/buildings/buildings.component';
+import { FloorsComponent } from './app/Components/floor/floor.component';
 
 const routeConfig: Routes = [
   {
@@ -37,7 +38,7 @@ const routeConfig: Routes = [
   },
   {
     path: 'Floors',
-    component: LoadMapComponent,
+    component: FloorsComponent,
     title: 'Floors'
   },
   {

@@ -18,6 +18,7 @@ import { CreatePassagesComponent } from './Components/CreatePassages/CreatePassa
 import { RobotsComponent } from './Components/robots/robots.component';
 import { RobotTypeComponent } from './Components/robot-type/robot-type.component';
 import { BuildingsComponent } from './Components/buildings/buildings.component';
+import { FloorsComponent } from './Components/floor/floor.component';
 import { LoadMapComponent } from './Components/load-map/load-map.component';
 
 
@@ -36,6 +37,7 @@ import { LoadMapComponent } from './Components/load-map/load-map.component';
     RobotsComponent,
     RobotTypeComponent,
     BuildingsComponent,
+    FloorsComponent,
     LoadMapComponent
   ],
   imports: [
