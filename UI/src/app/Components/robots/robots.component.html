@@ -36,7 +36,8 @@
     <form>
      
         <br>
-       
+        <button  (click)="get()" mat-button><i class="fa-solid fa-rotate"></i></button>
+
         <table mat-table [dataSource]="ListRobots" class="mat-elevation-z8" >
 
           <!--- Note that these columns can be defined in any order.
@@ -79,7 +80,7 @@
     <mat-tab label="Inhibit Robot">
       <br>
       <br>
-      <h3>Update Robot</h3>
+      <h3>Inhibit Robot</h3>
       <br>
       <form>
           <input type="text" placeholder="Robot Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
