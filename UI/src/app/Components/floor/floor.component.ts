@@ -28,8 +28,19 @@ import { FloorService} from 'src/app/services/floor.service';
     updateFloor(){
       this.floorService.updateFloor(this.data).subscribe();
     };
-  
+
     get(){
       this.floorService.getFloors().subscribe(ListFloors=> this.ListFloors = ListFloors);
     }
+
+    findFloorsByBuildingName(){
+      if (this.data.buildingName) {
+        this.floorService.getFloorsByBuildingName(this.data.buildingName).subscribe(ListFloors=> this.ListFloors = ListFloors);
+      }
+    }
+
+    findFloorsWithPassages(){
+      this.floorService.getFloorsWithPassages().subscribe(ListFloors=> this.ListFloors = ListFloors);
+    }
+
   }

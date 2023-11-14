@@ -28,7 +28,15 @@ export class FloorService {
 
   // Objective: Define the method to get a building
   getFloors(): Observable<Floors[]> {
-    return this.http.get<Floors[]>(this.API_URL, { observe: 'body', responseType: 'json' });
+    return this.http.get<Floors[]>(this.API_URL + '/allFloors/', { observe: 'body', responseType: 'json' });
+  }
+
+  getFloorsByBuildingName(buildingName: string): Observable<Floors[]> {
+    return this.http.get<Floors[]>(this.API_URL + buildingName, { observe: 'body', responseType: 'json' });
+  }
+
+  getFloorsWithPassages(): Observable<Floors[]> {
+    return this.http.get<Floors[]>(this.API_URL + '/passages/', { observe: 'body', responseType: 'json' });
   }
 
 

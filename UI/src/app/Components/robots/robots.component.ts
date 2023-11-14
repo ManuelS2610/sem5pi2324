@@ -33,4 +33,16 @@ export class RobotsComponent {
     this.robotService.inhibitRobot(this.data).subscribe();
   }
 
+  findByTask(){
+    if (this.data.type) {
+      this.robotService.findByTask(this.data.type).subscribe(ListRobots=> this.ListRobots = ListRobots);
+    }
+  }
+
+  findByDesignation(){
+    if (this.data.designation) {
+      this.robotService.findByDesignation(this.data.designation).subscribe(ListRobots=> this.ListRobots = ListRobots);
+    }
+  }
+
 }
