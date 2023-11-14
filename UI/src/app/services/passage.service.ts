@@ -25,6 +25,7 @@ export class PassageService {
   getPassage (building1: any,building2:any): Observable<Passages[]> {
     return this.http.get<Passages[]>(this.apiUrl+"/"+building1+"/"+building2,{observe: 'body',responseType:"json"});
   }
+
   get(): Observable<Passages[]> {
     const passage= of(PASSAGES);
     return passage;

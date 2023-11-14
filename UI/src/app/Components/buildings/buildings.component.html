@@ -75,4 +75,33 @@
         </table>
     </form>
     </mat-tab>
+
+    <mat-tab label="Buildings with Min-Max Floors">
+      <br>
+      <br>
+      <h3>Get buildings with minimum and maximum floors</h3>
+      <br>
+      <form>
+        <input type="text" placeholder="Min Floors" id="minFloors" name="minFloors" [(ngModel)]="minFloors" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Max Floors" id="maxFloors" name="maxFloors" [(ngModel)]="maxFloors" [ngModelOptions]="{ standalone: true }"><br><br>
+        <br>
+        <button (click)="getMinMax()" type="button">Get</button>
+        <table mat-table [dataSource]="buildings" class="mat-elevation-z8">
+    
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Building Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+ 
+          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+      </form>
+    </mat-tab>
+    
 </mat-tab-group>

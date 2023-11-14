@@ -30,6 +30,9 @@ export class BuildingService {
   getBuilding(): Observable<Buildings[]> {
     return this.http.get<Buildings[]>(this.API_URL, { observe: 'body', responseType: 'json' });
   }
+  getBuilding2 (minFloors: any,maxFloors:any): Observable<Buildings[]> {
+    return this.http.get<Buildings[]>(this.API_URL+"/"+minFloors+"/"+maxFloors,{observe: 'body',responseType:"json"});
+  }
 
 
 }
