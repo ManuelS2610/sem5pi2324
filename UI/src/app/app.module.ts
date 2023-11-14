@@ -20,6 +20,7 @@ import { RobotTypeComponent } from './Components/robot-type/robot-type.component
 import { BuildingsComponent } from './Components/buildings/buildings.component';
 import { FloorsComponent } from './Components/floor/floor.component';
 import { ElevatorsComponent } from './Components/elevators/elevators.component';
+import { RoomsComponent } from './Components/rooms/rooms.component';
 import { LoadMapComponent } from './Components/load-map/load-map.component';
 
 
@@ -40,6 +41,7 @@ import { LoadMapComponent } from './Components/load-map/load-map.component';
     BuildingsComponent,
     FloorsComponent,
     ElevatorsComponent,
+    RoomsComponent,
     LoadMapComponent
   ],
   imports: [

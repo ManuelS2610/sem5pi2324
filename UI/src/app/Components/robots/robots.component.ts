@@ -9,8 +9,12 @@ import { RobotsService } from 'src/app/services/robots.service';
 })
 export class RobotsComponent {
   ListRobots: Robots[] = [];
+  ListRobotsType: Robots[] = [];
+  ListRobotsDesignation: Robots[] = [];
   data: Robots = {};
   displayedColumns: string[]= ['id','type','serialNumber','description','available'];
+  type:string="";
+  designation:string="";
   constructor(private robotService:RobotsService) { }
 
   ngOnInit(): void {
@@ -34,15 +38,12 @@ export class RobotsComponent {
   }
 
   findByTask(){
-    if (this.data.type) {
-      this.robotService.findByTask(this.data.type).subscribe(ListRobots=> this.ListRobots = ListRobots);
-    }
+      this.robotService.findByTask(this.type).subscribe(ListRobotsType=> this.ListRobotsType = ListRobotsType);
   }
 
   findByDesignation(){
-    if (this.data.designation) {
-      this.robotService.findByDesignation(this.data.designation).subscribe(ListRobots=> this.ListRobots = ListRobots);
-    }
+      this.robotService.findByDesignation(this.designation).subscribe(ListRobotsDesignation=> this.ListRobotsDesignation = ListRobotsDesignation);
+  
   }
 
 }

@@ -11,8 +11,11 @@ import { FloorService} from 'src/app/services/floor.service';
   })
   export class FloorsComponent {
     ListFloors: Floors[] = [];
+    ListFloorsBuilding: Floors[] = [];
+    ListFloorsPassages: Floors[] = [];
     data: Floors = {};
     displayedColumns: string[]= ['id','name','buildingName','description'];
+    building:string="";
   
     constructor(private floorService: FloorService) { }
   
@@ -34,13 +37,13 @@ import { FloorService} from 'src/app/services/floor.service';
     }
 
     findFloorsByBuildingName(){
-      if (this.data.buildingName) {
-        this.floorService.getFloorsByBuildingName(this.data.buildingName).subscribe(ListFloors=> this.ListFloors = ListFloors);
-      }
+  
+        this.floorService.getFloorsByBuildingName(this.building).subscribe(ListFloorsBuilding=> this.ListFloorsBuilding = ListFloorsBuilding);
+      
     }
 
     findFloorsWithPassages(){
-      this.floorService.getFloorsWithPassages().subscribe(ListFloors=> this.ListFloors = ListFloors);
+      this.floorService.getFloorsWithPassages().subscribe(ListFloorsPassages=> this.ListFloorsPassages = ListFloorsPassages);
     }
 
   }
