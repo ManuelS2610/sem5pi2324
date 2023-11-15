@@ -70,7 +70,7 @@
     <h3>Get all floors from a building</h3>
     <br>
     <form>
-      <input type="text" placeholder="Building" id="buildingName" name="buildingName" [(ngModel)]="data.buildingName" [ngModelOptions]="{ standalone: true }"><br><br>
+      <input type="text" placeholder="Building" id="buildingName" name="buildingName" [(ngModel)]="building" [ngModelOptions]="{ standalone: true }"><br><br>
         <br>
         <input (click)="findFloorsByBuildingName()" type="submit" value="Get">
       <table mat-table [dataSource]="ListFloorsBuilding" class="mat-elevation-z8">

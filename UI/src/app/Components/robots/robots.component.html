@@ -97,7 +97,7 @@
   <h3>Get robot by designation</h3>
   <br>
   <form>
-    <input type="text" placeholder="Robot Designation" id="designation" name="designation" [(ngModel)]="data.designation" [ngModelOptions]="{ standalone: true }"><br><br>
+    <input type="text" placeholder="Robot Designation" id="designation" name="designation" [(ngModel)]="designation" [ngModelOptions]="{ standalone: true }"><br><br>
       <br>
       <input (click)="findByDesignation()" type="submit" value="Get">
     <table mat-table [dataSource]="ListRobotsDesignation" class="mat-elevation-z8">
@@ -144,7 +144,7 @@
   <h3>Get robot by type</h3>
   <br>
   <form>
-    <input type="text" placeholder="RobotType" id="type" name="type" [(ngModel)]="data.type" [ngModelOptions]="{ standalone: true }"><br><br>
+    <input type="text" placeholder="RobotType" id="type" name="type" [(ngModel)]="type" [ngModelOptions]="{ standalone: true }"><br><br>
       <br>
       <input (click)="findByTask()" type="submit" value="Get">
     <table mat-table [dataSource]="ListRobotsType" class="mat-elevation-z8">

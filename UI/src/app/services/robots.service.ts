@@ -32,11 +32,11 @@ HTTP_OPTIONS = {
   }
 
   findByTask(type: string): Observable<Robots[]> {
-    return this.http.get<Robots[]>(this.apiUrl + type, { observe: 'body', responseType: 'json' });
+    return this.http.get<Robots[]>(this.apiUrl +'/'+ type, { observe: 'body', responseType: 'json' });
   }
 
   findByDesignation(designation: string): Observable<Robots[]> {
-    return this.http.get<Robots[]>(this.apiUrl + designation, { observe: 'body', responseType: 'json' });
+    return this.http.get<Robots[]>(this.apiUrl +'/'+designation, { observe: 'body', responseType: 'json' });
   }
 
 
