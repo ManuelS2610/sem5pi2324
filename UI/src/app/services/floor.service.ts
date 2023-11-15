@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable, catchError, tap } from 'rxjs';
 import {Floors}  from '../interfaces/floors';
+import { Passages } from '../interfaces/passages';
+import { Elevator } from '../interfaces/elevator';
+import { Rooms } from '../interfaces/rooms';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +42,22 @@ export class FloorService {
     return this.http.get<Floors[]>(this.API_URL + '/passages/', { observe: 'body', responseType: 'json' });
   }
 
-
+  loadMap(floor: Floors,passage: Passages[], elevator:Elevator, room: Rooms[] ): Observable<any> {
+    const body:
+    {
+      id: any,
+      map: any,
+      passages: Passages[],
+      elevator: Elevator,
+      rooms: Rooms[]
+    } = {
+      id: floor.id,
+      map: floor.map,
+      passages: passage,
+      elevator: elevator,
+      rooms: room
+    };
+    console.log(body);
+    return this.http.patch(this.API_URL, body, this.HTTP_OPTIONS);
+  }
 }

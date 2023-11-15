@@ -139,4 +139,130 @@
       </table>
     </form>
   </mat-tab>
+  <mat-tab label="Load Map">
+    <mat-stepper orientation="vertical" #stepper>
+      <mat-step [stepControl]="floorGroup">
+        <form [formGroup]="floorGroup">
+          <ng-template matStepLabel>Floor Details</ng-template>
+          <br>
+          <mat-form-field>
+            <mat-label>Id</mat-label>
+            <input matInput placeholder="Floor Id" formControlName="floorId" required>
+            <br>
+          </mat-form-field>
+          <br>
+            <button mat-button matStepperNext>Next</button>
+        </form>
+        <div>
+          <label>Number of Rows: </label>
+          <input type="number" [(ngModel)]="numRows" (change)="initializeMatrix()">
+        </div>
+        <div>
+          <label>Number of Columns: </label>
+          <input type="number" [(ngModel)]="numCols" (change)="initializeMatrix()">
+        </div>
+        <table>
+          <tr *ngFor="let row of matrix; let i = index">
+            <td *ngFor="let col of row; let j = index">
+              <input type="number" [(ngModel)]="matrix[i][j]" (input)="addOrUpdateValue(i, j, matrix[i][j])">
+            </td>
+          </tr>
+        </table>
+      </mat-step>
+      <mat-step [stepControl]="passageGroup">
+          <form [formGroup]="passageGroup">
+            <ng-template matStepLabel>Passages Details</ng-template>
+            <br>
+            <mat-form-field>
+              <mat-label>Passage Id</mat-label>
+              <input matInput formControlName="passageId" placeholder="Passage Id" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Passage X Position Building1 </mat-label>
+              <input matInput formControlName="positionX1" placeholder="X Position Building1" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Passage Y Position Building1 </mat-label>
+              <input matInput formControlName="positionY1" placeholder="Y Position Building1" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Passage X Position Building2 </mat-label>
+              <input matInput formControlName="positionX2" placeholder="X Position Building2" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Passage Y Position Building2 </mat-label>
+              <input matInput formControlName="positionY2" placeholder="Y Position Building2" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+              <button mat-button (click)="passage()">Add</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="elevatorGroup">
+          <form [formGroup]="elevatorGroup">
+            <ng-template matStepLabel>Elevator Details</ng-template>
+            <br>
+            <mat-form-field>
+              <mat-label>Elevator Id</mat-label>
+              <input matInput formControlName="elevatorId" placeholder="Elevator Id" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Elevator X Position </mat-label>
+              <input matInput formControlName="positionX" placeholder="X Position Elevator" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Elevator Y Position  </mat-label>
+              <input matInput formControlName="positionY" placeholder="Y Position Elevator" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="roomGroup">
+          <form [formGroup]="roomGroup">
+            <ng-template matStepLabel>Room Details</ng-template>
+            <br>
+            <mat-form-field>
+              <mat-label>Room Id</mat-label>
+              <input matInput formControlName="roomId" placeholder="Room Id" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Room X Position </mat-label>
+              <input matInput formControlName="positionX" placeholder="X Position Room" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Room Y Position </mat-label>
+              <input matInput formControlName="positionY" placeholder="Y Position Room" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Room X Dist </mat-label>
+              <input matInput formControlName="distX" placeholder="X Dist Room" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Room Y Dist </mat-label>
+              <input matInput formControlName="distY" placeholder="Y Dist Room" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="room()">Add</button>
+              <button mat-button (click)="submit()" matStepperNext>Submit</button>
+            </div>
+          </form>
+        </mat-step>
+    </mat-stepper>
+  </mat-tab>
 </mat-tab-group>
