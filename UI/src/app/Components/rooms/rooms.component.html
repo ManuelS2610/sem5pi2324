@@ -7,9 +7,6 @@
       <input type="text" placeholder="Category" id="category" name="category" [(ngModel)]="data.category" [ngModelOptions]="{ standalone: true }"><br><br>
       <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="data.description" [ngModelOptions]="{ standalone: true }"><br><br>
       <input type="text" placeholder="Floor" id="floor" name="floor" [(ngModel)]="data.floor" [ngModelOptions]="{ standalone: true }"><br><br>
-      <input type="text" placeholder="Position" id="position" name="position" [(ngModel)]="data.position" [ngModelOptions]="{ standalone: true }"><br><br>
-      <input type="text" placeholder="Distance X" id="distX" name="distX" [(ngModel)]="data.distX" [ngModelOptions]="{ standalone: true }"><br><br>
-      <input type="text" placeholder="Distance Y" id="distY" name="distY" [(ngModel)]="data.distY" [ngModelOptions]="{ standalone: true }"><br><br>
       <br>
       <input (click)="createRoom()" type="submit" value="Create">
     </form></mat-tab>
@@ -22,74 +19,8 @@
         <input type="text" placeholder="ID" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
         <input type="text" placeholder="Category" id="category" name="category" [(ngModel)]="data.category" [ngModelOptions]="{ standalone: true }"><br><br>
         <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="data.description" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Floor" id="floor" name="floor" [(ngModel)]="data.floor" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Position" id="position" name="position" [(ngModel)]="data.position" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Distance X" id="distX" name="distX" [(ngModel)]="data.distX" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Distance Y" id="distY" name="distY" [(ngModel)]="data.distY" [ngModelOptions]="{ standalone: true }"><br><br>
-          
+        <input type="text" placeholder="Floor" id="floor" name="floor" [(ngModel)]="data.floor" [ngModelOptions]="{ standalone: true }"><br><br>   
           <br>
           <input (click)="updateRoom()" type="submit" value="Update">
       </form> </mat-tab>
-    <mat-tab label="See all Rooms"> 
-      <br> 
-      <br>
-      <br>
-      <form>
-       
-          <br>
-          <button  (click)="get()" mat-button><i class="fa-solid fa-rotate"></i></button>
-         
-          <table mat-table [dataSource]="ListRooms" class="mat-elevation-z8" >
   
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-          
-            <!-- Position Column -->
-            <!-- ID Column -->
- <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> ID. </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
-
-  <!-- Category Column -->
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef> Category </th>
-    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-  </ng-container>
-
-  <!-- Description Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
-
-  <!-- Floor Column -->
-  <ng-container matColumnDef="floor">
-    <th mat-header-cell *matHeaderCellDef> Floor </th>
-    <td mat-cell *matCellDef="let element"> {{element.floor}} </td>
-  </ng-container>
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> Position </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container>
-
-  <!-- Distance X Column -->
-  <ng-container matColumnDef="distX">
-    <th mat-header-cell *matHeaderCellDef> Distance X </th>
-    <td mat-cell *matCellDef="let element"> {{element.distX}} </td>
-  </ng-container>
-
-  <!-- Distance Y Column -->
-  <ng-container matColumnDef="distY">
-    <th mat-header-cell *matHeaderCellDef> Distance Y </th>
-    <td mat-cell *matCellDef="let element"> {{element.distY}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-      </form>
-      </mat-tab>
-  </mat-tab-group>

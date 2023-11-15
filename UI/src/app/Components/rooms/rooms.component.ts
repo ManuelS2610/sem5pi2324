@@ -10,7 +10,7 @@ import { RoomsService} from 'src/app/services/room.service';
 export class RoomsComponent {
     ListRooms: Rooms[] = [];
     data: Rooms = {};
-    displayedColumns: string[] = ['id', 'category', 'description', 'floor', 'position', 'distX', 'distY'];
+    displayedColumns: string[] = ['id', 'category', 'description', 'floor'];
 
     constructor(private roomService: RoomsService) { }
   
