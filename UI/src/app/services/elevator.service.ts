@@ -17,7 +17,8 @@ export class ElevatorService {
   constructor(private http: HttpClient) { }
 
   // Objective: Define the method to create a new elevator
-  createElevator(elevator: any): Observable<any> {
+  createElevator(elevator: Elevator): Observable<any> {
+    console.log(elevator);
     return this.http.post(this.API_URL, elevator, this.HTTP_OPTIONS);
   }
 
