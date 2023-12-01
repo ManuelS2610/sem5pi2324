@@ -47,10 +47,10 @@ export default (app: Router) => {
 
 
 
-  route.get('/:type', (req, res, next) => { ctrl.findByTask(req, res, next); req.params.type; } );
-
   route.get('/:designation', (req, res, next) => { ctrl.findByDesignation(req, res, next); req.params.designation; } );
 
+  route.get('/:type', (req, res, next) => { ctrl.findByTask(req, res, next); req.params.type; } );
+  
   route.patch('/inibir',
   
   celebrate({

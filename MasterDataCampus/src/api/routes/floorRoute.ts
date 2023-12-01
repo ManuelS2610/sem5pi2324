@@ -41,9 +41,11 @@ export default (app: Router) => {
   // Define other routes for building operations here
   route.get('/allFloors', (req, res, next) => ctrl.getallFloors(req, res, next));
 
+  route.get('/passages', (req, res, next) => ctrl.findFloorsWithPassages(req, res, next));
+
   route.get('/:buildingName', (req, res, next) => { ctrl.findFloorsByBuildingName(req, res, next); req.params.buildingName; } );
 
-  route.get('/passages', (req, res, next) => ctrl.findFloorsWithPassages(req, res, next));
+
 
   route.patch('',
   celebrate({

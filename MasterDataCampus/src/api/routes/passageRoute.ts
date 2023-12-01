@@ -41,4 +41,6 @@ export default (app: Router) => {
 
   route.get('/:building1/:building2', (req, res, next) => {ctrl.getPassagesBetween2Buildings(req, res, next); req.params.building1, req.params.building2; } );
 
+  route.get('/all', (req, res, next) => ctrl.getAllPassages(req, res, next));
+
 };

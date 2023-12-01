@@ -109,4 +109,14 @@ export default class PassageRepo implements IPassageRepo {
     }
     return null;
   }
+  public async getAll (): Promise<Passage[]> {
+    const passageRecord = await this.passageSchema.find();
+
+    if (passageRecord != null) {
+      return passageRecord.map((item) => {
+        return PassageMap.toDomain(item);
+      });
+    }
+    return null;
+  }
 }

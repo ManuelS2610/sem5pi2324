@@ -1,0 +1,33 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor GestorDeCampus
+participant l as "<<System (C4)>> uI : UI"
+participant md as "<<System (C4)>> mD : MD"
+
+
+activate GestorDeCampus
+GestorDeCampus -> l : 1:Criar elevador
+activate l
+l --> GestorDeCampus : 1.1 Introduz Dados
+deactivate l
+GestorDeCampus -> l : 2:Dados do elevador
+activate l
+l -> md :  2.1:Post /elevators
+activate md
+group alt
+md --> l : 2.2: status:200
+l--> GestorDeCampus: Elevador criado
+deactivate md
+deactivate l
+
+md--> l : 3.1:status :404/422
+activate md
+activate l
+l-->GestorDeCampus: 3.1.1: Erro nos dados
+
+
+
+
+@enduml
+```

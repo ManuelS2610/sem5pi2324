@@ -1,0 +1,64 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant RoomRoute as "Route"
+participant IRoomController as "IController"
+participant roomController as "Controller"
+participant IRoomService as "IService"
+participant roomService as "Service"
+participant roomDTO as "RoomDTO"
+participant roomMap as "Map"
+participant IRoomRepository as "IRepository"
+database roomRepository as "Repository"
+
+
+activate User
+User -> RoomRoute : Request to create a room (POST)
+activate RoomRoute
+RoomRoute -> IRoomController : createRoom(room)
+IRoomController -> roomController : createRoom(room)
+
+activate roomController
+roomController -> IRoomService : createRoom(room)
+
+IRoomService -> roomService : createRoom(room)
+activate roomService
+
+roomService -> roomDTO : create(room)
+activate roomDTO
+roomDTO --> roomService : Retrieve roomDTO
+deactivate roomDTO
+roomService -> IRoomRepository : save(roomDTO)
+
+IRoomRepository -> roomRepository : save(roomDTO)
+
+activate roomRepository
+roomRepository -> roomRepository : save
+roomRepository -> roomMap : ToDTO(roomDTO)
+deactivate roomRepository
+
+
+activate roomMap
+roomMap --> roomService : Retrieve roomDTO
+deactivate roomMap
+
+
+roomService --> roomController : Retrieve roomDTO
+deactivate roomService
+roomController --> RoomRoute : Retrieve roomDTO
+deactivate roomController
+RoomRoute --> User : 200 ok , JSON
+deactivate RoomRoute
+deactivate User
+
+
+
+
+
+
+
+
+
+@enduml
+```

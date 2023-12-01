@@ -171,4 +171,19 @@ export default class PassageService implements IPassageService {
     }
 
   }
+  public async getAllPassages(): Promise<Result<Array<IPassageDTO>>> {
+    try {
+      const passages = await this.passageRepo.getAll();
+
+      if (passages === null) {
+        return Result.fail<Array<IPassageDTO>>("Passages not found");
+      } else {
+        const passagesDTO = passages.map((passage) => PassageMap.toDTO(passage) as IPassageDTO);
+        return Result.ok<Array<IPassageDTO>>(passagesDTO);
+      }
+
+    } catch (e) {
+      throw e;
+    }
+  }
 }

@@ -9,4 +9,5 @@ export default interface IPassageRepo extends Repo<Passage> {
   findByPisos (pisobuilding1: string,pisobuilding2: string): Promise<boolean>;
   findByPisosReverse (pisobuilding1: string,pisobuilding2: string): Promise<boolean>;
   findByBuildings (building1: string,building2: string): Promise<Passage[]>;
+  getAll(): Promise<Passage[]>;
 }

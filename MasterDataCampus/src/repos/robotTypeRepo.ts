@@ -41,9 +41,9 @@ export default class RobotTypeRepo implements IRobotTypeRepo{
       if (robotTypeDocument === null ) {
         const rawRobotType: any = RobotTypeMap.toPersistence(robotType);
 
-        const roleCreated = await this.robotTypeSchema.create(rawRobotType);
+        const RobotTypeCreated = await this.robotTypeSchema.create(rawRobotType);
 
-        return RobotTypeMap.toDomain(roleCreated);
+        return RobotTypeMap.toDomain(RobotTypeCreated);
       } else {
         robotTypeDocument.name = robotType.name;
         robotTypeDocument.robotDesignation = robotType.robotDesignation;

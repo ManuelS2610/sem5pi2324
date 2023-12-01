@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group #tabGroup>
   <mat-tab label="Create Building"><form>
     <br>
     <br>
@@ -18,15 +18,16 @@
     <h3>Update Building</h3>
     <br>
     <form>
-        <input type="text" placeholder="Building Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Name" id="name" name="name" [(ngModel)]="data.name" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="data.description" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Depth" id="depth" name="depth" [(ngModel)]="data.depth" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Width" id="width" name="width" [(ngModel)]="data.width" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Name" id="name" name="name"  [(ngModel)]="clickedRow.name" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="clickedRow.description" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Depth" id="depth" name="depth" [(ngModel)]="clickedRow.depth" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Width" id="width" name="width" [(ngModel)]="clickedRow.width" [ngModelOptions]="{ standalone: true }"><br><br>
         
         <br>
         <input (click)="updateBuilding()" type="submit" value="Update">
-    </form> </mat-tab>
+    </form> 
+  
+  </mat-tab>
   <mat-tab label="See all Buildings"> 
     <br> 
     <br>
@@ -41,11 +42,6 @@
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
         
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
         
           <!-- Name Column -->
           <ng-container matColumnDef="name">
@@ -71,7 +67,7 @@
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row (click)="clickedRow=row" (click)="openUpdateTab(row,tabGroup)" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </form>
     </mat-tab>
@@ -88,18 +84,13 @@
         <button (click)="getMinMax()" type="button">Get</button>
         <table mat-table [dataSource]="buildings" class="mat-elevation-z8">
     
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
-    
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Building Name </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
  
           <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          <tr mat-row (click)="clickedRow=row" (click)="openUpdateTab(row,tabGroup)" *matRowDef="let row; columns: displayedColumns2;"></tr>
         </table>
       </form>
     </mat-tab>

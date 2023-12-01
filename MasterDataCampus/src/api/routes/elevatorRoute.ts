@@ -53,4 +53,6 @@ export default (app: Router) => {
   route.get('/:buildingName', (req, res, next) => { ctrl.getElevatorsInBuilding(req, res, next); req.params.buildingName; } );
   route.get('/:buildingName', (req, res, next) => { ctrl.getFloorsServedByElevatorsInBuilding(req, res, next); req.params.buildingName; } );
 
+  route.get('', (req, res, next) => ctrl.getAllElevators(req, res, next));
+
 };

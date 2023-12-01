@@ -27,8 +27,13 @@ export class RoomsService {
   }
 
   
-  getRoom(): Observable<Rooms[]> {
-    return this.http.get<Rooms[]>(this.API_URL, { observe: 'body', responseType: 'json' });
+  getRoomByFloor(floor:any ): Observable<Rooms[]> {
+    
+    return this.http.get<Rooms[]>(this.API_URL+"/"+floor, { observe: 'body', responseType: 'json' });
+  }
+
+  getRooms(): Observable<Rooms[]> {
+    return this.http.get<Rooms[]>(this.API_URL+"/allRooms/", { observe: 'body', responseType: 'json' });
   }
 
 

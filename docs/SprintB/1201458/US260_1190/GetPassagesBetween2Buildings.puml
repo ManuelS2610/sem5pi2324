@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant SPA
+participant MD
+participant passageRoute
+participant IPassageController
+participant passageController
+participant IPassageService
+participant passageService
+participant IPassageRepo
+participant passageRepo
+participant PassageMap
+participant IPassageDTO
+
+activate User
+User -> SPA : Get Passage
+activate SPA
+SPA --> User: Requests data
+deactivate SPA
+User -> SPA : data {builidng1, building2}
+activate SPA
+SPA -> MD : GET /:building1/:building2
+activate MD
+deactivate SPA
+MD -> passageRoute : GET /:building1/:building2
+activate passageRoute
+passageRoute -> IPassageController : getPassagesBetween2Buildings()
+activate IPassageController
+IPassageController -> passageController : getPassagesBetween2Buildings()
+deactivate IPassageController
+activate passageController
+passageController -> IPassageService : getPassagesBetween2Buildings()
+activate IPassageService
+IPassageService -> passageService : getPassagesBetween2Buildings()
+deactivate IPassageService
+activate passageService
+passageService -> IPassageRepo : findByBuildings()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByBuildings()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : passage[]
+deactivate passageRepo
+passageService -> PassageMap : toDTO()
+activate PassageMap
+PassageMap -> IPassageDTO
+PassageMap --> passageService : passageDTO[]
+deactivate PassageMap
+passageService -->passageController: passageDTO[]
+deactivate passageService
+passageController --> passageRoute: passageController -> passageRoute : res.json(passageDTO).status()
+deactivate passageController
+passageRoute --> MD : status()
+deactivate passageRoute
+MD--> SPA: status()
+deactivate MD
+activate SPA
+SPA --> User : Shows list/Error
+deactivate SPA
+@enduml

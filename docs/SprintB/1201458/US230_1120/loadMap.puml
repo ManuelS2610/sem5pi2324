@@ -1,0 +1,203 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant SPA
+participant MD
+participant floorRoute
+participant IFloorController
+participant floorController
+participant IPassageService
+participant passageService
+participant IElevatorService
+participant elevatorService
+participant IRoomService
+participant roomService
+participant IFloorService
+participant floorService
+participant IPassageRepo
+participant passageRepo
+participant IFloorRepo
+participant floorRepo
+participant IBuildingRepo
+participant buildingRepo
+participant IElevatorRepo
+participant elevatorRepo
+participant IRoomRepo
+participant roomRepo
+
+activate User
+User ->SPA : Load Map
+activate SPA
+SPA -> User : Requests data
+deactivate SPA
+User-> SPA : gives data{id,map,passages:[{id,positionBuilding1,positionBuilding2}],elevator:{id,position},rooms:[{ id,position,distX,distY}]}
+activate SPA
+SPA -> MD: PATCH {id,map,passages:[{id,positionBuilding1,positionBuilding2}],elevator:{id,position},rooms:[{ id,position,distX,distY}]}
+activate MD
+deactivate SPA
+MD -> floorRoute : PATCH {id,map,passages:[{id,positionBuilding1,positionBuilding2}],elevator:{id,position},rooms:[{ id,position,distX,distY}]}
+activate floorRoute
+floorRoute -> IFloorController: loadMap()
+activate IFloorController
+IFloorController -> floorController : loadMap()
+deactivate IFloorController
+activate floorController
+floorController -> IPassageService : updatePassagePosition()
+activate IPassageService
+IPassageService -> passageService : updatePassagePosition()
+activate passageService
+deactivate IPassageService
+passageService -> IPassageRepo : findByDomainId()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByDomainId()
+deactivate IPassageRepo
+activate passageRepo
+passageRepo --> passageService : passage
+deactivate passageRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo : findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo : findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IPassageRepo : save()
+activate IPassageRepo
+IPassageRepo -> passageRepo : save()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : passage
+deactivate passageRepo
+passageService --> floorController : passageDTO
+deactivate passageService
+floorController -> IElevatorService : updatePosition()
+activate IElevatorService
+IElevatorService -> elevatorService : updatePosition()
+activate elevatorService
+deactivate IElevatorService
+elevatorService -> IElevatorRepo: findByDomainId()
+activate IElevatorRepo
+IElevatorRepo -> elevatorRepo : findByDomainId()
+activate elevatorRepo
+deactivate IElevatorRepo
+elevatorRepo --> elevatorService : elevator
+deactivate elevatorRepo
+loop
+elevatorService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> elevatorService : floor
+deactivate floorRepo
+end loop
+elevatorService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> elevatorService : building
+deactivate buildingRepo
+elevatorService -> IElevatorRepo : save()
+activate IElevatorRepo
+IElevatorRepo -> elevatorRepo : save()
+activate elevatorRepo
+deactivate IElevatorRepo
+elevatorRepo --> elevatorService : elevator
+deactivate elevatorRepo
+elevatorService --> floorController : elevatorDTO
+deactivate elevatorService
+floorController -> IRoomService : updatePosition()
+activate IRoomService
+IRoomService -> roomService : updatePosition()
+activate roomService
+deactivate IRoomService
+roomService -> IRoomRepo : findByDomainId()
+activate IRoomRepo
+IRoomRepo -> roomRepo : findByDomainId()
+deactivate IRoomRepo
+activate roomRepo
+roomRepo --> roomService : room
+deactivate roomRepo
+roomService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> roomService : floor
+deactivate floorRepo
+roomService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> roomService : building
+deactivate buildingRepo
+roomService -> IRoomRepo : save()
+activate IRoomRepo
+IRoomRepo -> roomRepo : save()
+activate roomRepo
+deactivate IRoomRepo
+roomRepo --> roomService : room
+deactivate roomRepo
+roomService --> floorController : roomDTO
+deactivate roomService
+floorController -> IFloorService : loadMap()
+activate IFloorService
+IFloorService -> floorService : loadMap()
+activate floorService
+deactivate IFloorService
+floorService -> IFloorRepo : findByDomainId()
+activate IFloorRepo
+IFloorRepo -> floorRepo : findByDomainId()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> floorService : floor
+deactivate floorRepo
+floorService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> floorService : building
+deactivate buildingRepo
+floorService -> IFloorRepo : save()
+activate IFloorRepo
+IFloorRepo -> floorRepo : save()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> floorService : floor
+deactivate floorRepo
+floorService --> floorController : floorDTO
+deactivate floorService
+floorController --> floorRoute : res.json(floorDTO).status()
+deactivate floorController
+floorRoute ->MD : status()
+deactivate floorRoute
+MD -> SPA : status()
+activate SPA
+deactivate MD
+SPA -> User : Confirmation/Error
+@enduml

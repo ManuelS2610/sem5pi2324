@@ -62,5 +62,17 @@ public async getPassagesBetween2Buildings(req:Request, res:Response , next: Next
         return next(e);
     }   
 }
+public async getAllPassages(req:Request, res:Response , next: NextFunction){
+    try{
+        const passagesOrError = await this.passageServiceInstance.getAllPassages() as Result<Array<IPassageDTO>>;
+        if(passagesOrError.isFailure){
+            return res.status(404).send();
+        }
+        const passagesDTO = passagesOrError.getValue();
+        return res.json(passagesDTO).status(201);
+    }catch(e){
+        return next(e);
+    }   
+}
 
 }

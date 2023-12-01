@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as "Gestor de Campus"
+participant SC as "<<System (C4)>> sSCS:SSCS"
+activate User
+User -> SC : Criar Elevator
+activate SC
+SC-->User : Introduz Dados
+deactivate SC
+User -> SC : Dados do Elevator
+activate SC
+SC --> User : Elevator criado / erro nos dados
+
+
+
+deactivate User
+@enduml
+

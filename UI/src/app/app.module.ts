@@ -21,6 +21,7 @@ import { BuildingsComponent } from './Components/buildings/buildings.component';
 import { FloorsComponent } from './Components/floor/floor.component';
 import { ElevatorsComponent } from './Components/elevators/elevators.component';
 import { RoomsComponent } from './Components/rooms/rooms.component';
+import { FloorStructureComponent } from './Components/floor-structure/floor-structure.component';
 
 
 
@@ -41,6 +42,7 @@ import { RoomsComponent } from './Components/rooms/rooms.component';
     FloorsComponent,
     ElevatorsComponent,
     RoomsComponent,
+    FloorStructureComponent,
   ],
   imports: [
     BrowserModule,

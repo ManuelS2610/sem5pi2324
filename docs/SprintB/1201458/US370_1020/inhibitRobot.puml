@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant SPA
+participant MD
+participant robotRoute
+participant IRobotController
+participant robotController
+participant IRobotService
+participant robotService
+participant IRobotRepo
+participant robotRepo
+participant RobotMap
+participant IRobotDTO
+participant IRobotPersistence
+participant robotSchema
+
+activate User
+User -> SPA: Inhibit Robot
+activate SPA
+SPA --> User : Requests data
+deactivate SPA
+User ->SPA : data
+activate SPA
+SPA-> MD: PATCH/ {id,availability}
+activate MD
+deactivate SPA
+MD -> robotRoute : PATCH/ {id,availability}
+activate robotRoute
+robotRoute -> IRobotController : inhibitRobot()
+activate IRobotController
+IRobotController -> robotController : inhibitRobot()
+deactivate IRobotController
+activate robotController
+robotController -> IRobotService : inhibitRobot()
+activate IRobotService
+IRobotService -> robotService : inhibitRobot()
+deactivate IRobotService
+activate robotService
+robotService -> IRobotRepo : findByDomainId()
+activate IRobotRepo
+IRobotRepo -> robotRepo : findByDomainId()
+activate robotRepo
+deactivate IRobotRepo
+robotRepo --> robotService : robot
+deactivate robotRepo
+robotService -> IRobotRepo : save()
+activate IRobotRepo
+IRobotRepo -> robotRepo : save()
+deactivate IRobotRepo
+activate robotRepo
+robotRepo -> robotSchema : findOne()
+robotRepo -> RobotMap : toPersistence()
+activate RobotMap
+RobotMap --> robotRepo : robot
+deactivate RobotMap
+robotRepo -> robotSchema : create()
+robotRepo --> robotService : boolean
+robotRepo -> RobotMap : toDTO()
+activate RobotMap
+RobotMap -> IRobotDTO
+RobotMap --> robotRepo : robotDTO
+deactivate RobotMap
+robotRepo --> robotService : robotDTO
+deactivate robotRepo
+robotService --> robotController : robotDTO
+deactivate robotService
+robotController -> robotRoute : res.json(robotDTO).status()
+deactivate robotController
+robotRoute -> MD: status()
+deactivate robotRoute
+MD--> SPA: status()
+activate SPA
+deactivate MD
+SPA--> User: Confirmation/Error
+
+
+
+
+
+
+
+
+@enduml

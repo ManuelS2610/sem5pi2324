@@ -1,0 +1,72 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User as "GestorDeCampus"
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant FloorRoute as "Route"
+participant IFloorController as "IController"
+participant floorController as "Controller"
+participant IFloorService as "IService"
+participant floorService as "Service"
+participant floor as "Floor"
+participant floorDTO as "FloorDTO"
+participant floorMap as "Map"
+participant IFloorMap as "IMap"
+participant IFloorRepository as "IRepository"
+database floorRepository as "Repository"
+
+
+
+activate User
+User->UI : Procura um robot
+activate UI
+UI-> User : Solicitação de dados da lista de robots
+deactivate UI
+User -> UI: Recebe a lista de robots
+activate UI
+UI->MD : Get /robots/:type ou /robots/:designation
+activate MD
+MD->FloorRoute : Get /robots/:type ou /robots/:designation
+
+deactivate UI
+
+activate FloorRoute
+FloorRoute -> IFloorController : findByType(type) ou findByDesignation(designation)
+IFloorController -> floorController : findByType(type) ou findByDesignation(designation)
+
+activate floorController
+floorController -> IFloorService : findByType(type) ou findByDesignation(designation)
+
+IFloorService -> floorService : findByType(type) ou findByDesignation(designation)
+activate floorService
+
+
+deactivate floorDTO
+floorService -> IFloorRepository : findByType(type) ou findByDesignation(designation)
+
+IFloorRepository -> floorRepository : findByType(type) ou findByDesignation(designation)
+
+activate floorRepository
+floorRepository -> floorRepository : get
+floorRepository -> floorMap : ToDTO(floorDTO)
+deactivate floorRepository
+
+
+activate floorMap
+floorMap --> floorService : Retrieve floorDTO
+deactivate floorMap
+
+
+floorService --> floorController : Retrieve floorDTO
+deactivate floorService
+floorController --> FloorRoute : Retrieve floorDTO
+deactivate floorController
+FloorRoute --> MD : Retrieve floorDTO
+MD->UI: 200 ok , JSON or 400 bad request
+activate UI
+UI->User: 200 ok , JSON or 400 bad request
+deactivate UI
+deactivate FloorRoute
+deactivate User
+@enduml

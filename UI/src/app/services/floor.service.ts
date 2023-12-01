@@ -31,7 +31,7 @@ export class FloorService {
 
   // Objective: Define the method to get a building
   getFloors(): Observable<Floors[]> {
-    return this.http.get<Floors[]>(this.API_URL + '/allFloors/', { observe: 'body', responseType: 'json' });
+    return this.http.get<Floors[]>(this.API_URL + '/allFloors', { observe: 'body', responseType: 'json' });
   }
 
   getFloorsByBuildingName(buildingName: string): Observable<Floors[]> {
@@ -39,7 +39,7 @@ export class FloorService {
   }
 
   getFloorsWithPassages(): Observable<Floors[]> {
-    return this.http.get<Floors[]>(this.API_URL + '/passages/', { observe: 'body', responseType: 'json' });
+    return this.http.get<Floors[]>(this.API_URL + '/passages', { observe: 'body', responseType: 'json' });
   }
 
   loadMap(floor: Floors,passage: Passages[], elevator:Elevator, room: Rooms[] ): Observable<any> {

@@ -38,7 +38,8 @@ export default (app: Router) => {
   }),
     (req, res, next) => ctrl.updateRoom(req, res, next));
 
-  // Define other routes for building operations here
-  //route.get('', (req, res, next) => ctrl.getallRooms(req, res, next));
+
+  route.get('/allRooms', (req, res, next) => ctrl.getAllRooms(req, res, next));
+  route.get('/:floor', (req, res, next) => {ctrl.getRoomsByFloor(req, res, next); req.params.floor; } );
 
 };

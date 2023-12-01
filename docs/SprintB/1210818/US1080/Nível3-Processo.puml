@@ -1,0 +1,67 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant BuildingRoute
+participant IBuildingController
+participant BuildingController
+participant IBuildingService
+participant BuildingService
+participant IBuildingRepo
+participant BuildingRepo
+participant BuildingMap
+participant IBuildingPersistence
+participant BuildingSchema
+participant Building
+participant IBuildingDTO
+
+User -> UI: Lista de Edifícios com Nº Mín/Máx de Andares
+activate UI
+UI -> User: Solicitação de dados da lista de edifícios com Nº Mín/Máx de Andares
+deactivate UI
+User -> UI: Recebe a lista de edifícios
+activate UI
+UI -> MD: Get /buildings/min-max-floors
+activate MD
+MD -> BuildingRoute: Get /buildings/min-max-floors
+deactivate MD
+deactivate UI
+
+activate BuildingRoute
+BuildingRoute -> IBuildingController: getBuildingsWithMinMaxFloors()
+activate IBuildingController
+IBuildingController -> BuildingController: getBuildingsWithMinMaxFloors()
+deactivate IBuildingController
+activate BuildingController
+BuildingController -> IBuildingService: getBuildingsWithMinMaxFloors()
+activate IBuildingService
+IBuildingService -> BuildingService: getBuildingsWithMinMaxFloors()
+deactivate IBuildingService
+activate BuildingService
+BuildingService -> BuildingRepo: getBuildingsWithMinMaxFloors()
+activate BuildingRepo
+BuildingRepo -> Building: findBuildingsWithMinMaxFloors()
+activate Building
+Building -> BuildingRepo: Edifícios
+deactivate Building
+BuildingRepo -> IBuildingDTO: Edifícios
+activate IBuildingDTO
+IBuildingDTO -> BuildingRepo: BuildingDTO
+deactivate IBuildingDTO
+BuildingRepo -> BuildingService: BuildingDTO
+deactivate BuildingRepo
+BuildingService -> BuildingController: BuildingDTO
+deactivate BuildingService
+BuildingController -> BuildingRoute: res.json(BuildingDTO).status()
+deactivate BuildingController
+BuildingRoute -> MD: Dados do Edifício
+MD->UI: 200 ok , JSON or 400 bad request
+activate UI
+UI->User: 200 ok , JSON or 400 bad request
+deactivate UI
+deactivate BuildingRoute
+deactivate User
+@enduml

@@ -1,0 +1,51 @@
+- use_module(library(http/thread_httpd)).
+:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_open)).
+:- use_module(library(http/json)).
+:- use_module(library(http/http_cors)).
+:- use_module(library(settings)).
+:- use_module(library(http/http_parameters)).
+:- dynamic corredor/4.
+:- dynamic liga/2.
+:- dynamic elevador/2.
+:- dynamic pisos/2.
+:- dynamic building/1.
+
+floors_building_url("http://localhost:4000/api/floors/").
+
+get_floors_building(X, Res) :-
+    string_concat('http://localhost:4000/api/floors/', X, URL),
+    http_open(URL, In, []),
+    json_read_dict(In, JSON),
+    close(In),
+    parse_floors(JSON,Res),
+    assertz(pisos(X,Res)).
+
+parse_corredor([],[]).
+parse_corredor([H|T],[H.building1,H.building2|R]):-
+    assertz(corredor(H.building1,H.building2,H.pisobuilding1,H.pisobuilding2)),
+    assertz(liga(H.building1,H.building2)),
+    write(corredor(H.building1,H.building2,H.pisobuilding1,H.pisobuilding2)),
+    write(liga(H.building1,H.building2)),
+    parse_corredor(T,R).
+
+parse_elevador([],[]).
+parse_elevador([H|T],[H.buildingName,H.floors|R]):-
+    assertz(elevador(H.buildingName,H.floors)),
+    write(elevador(H.buildingName,H.floors)),
+    parse_elevador(T,R).
+
+parse_building([],[]).
+parse_building([H|T],[H.name|R]):-
+    get_floors_building(H.name,Res),
+        parse_building(T,R).
+
+
+
+parse_floors([],[]).
+parse_floors([H|T],[H.name|R]):-
+     parse_floors(T,R).
+
+

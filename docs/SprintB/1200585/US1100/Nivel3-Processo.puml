@@ -1,0 +1,72 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User as "GestorDeCampus"
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant FloorRoute as "Route"
+participant IFloorController as "IController"
+participant floorController as "Controller"
+participant IFloorService as "IService"
+participant floorService as "Service"
+participant floor as "Floor"
+participant floorDTO as "FloorDTO"
+participant floorMap as "Map"
+participant IFloorMap as "IMap"
+participant IFloorRepository as "IRepository"
+database floorRepository as "Repository"
+
+
+
+activate User
+User->UI : Procura um piso
+activate UI
+UI-> User : Solicitação de dados da lista de pisos
+deactivate UI
+User -> UI: Recebe a lista de pisos
+activate UI
+UI->MD : Get /floors/:buildingName
+activate MD
+MD->FloorRoute : Get /floors/:buildingName
+
+deactivate UI
+
+activate FloorRoute
+FloorRoute -> IFloorController : findFloorsByBuildingName(buildingName)
+IFloorController -> floorController : findFloorsByBuildingName(buildingName)
+
+activate floorController
+floorController -> IFloorService : findFloorsByBuildingName(buildingName)
+
+IFloorService -> floorService : findFloorsByBuildingName(buildingName)
+activate floorService
+
+
+deactivate floorDTO
+floorService -> IFloorRepository : findFloorsByBuildingName(buildingName)
+
+IFloorRepository -> floorRepository : findFloorsByBuildingName(buildingName)
+
+activate floorRepository
+floorRepository -> floorRepository : get
+floorRepository -> floorMap : ToDTO(floorDTO)
+deactivate floorRepository
+
+
+activate floorMap
+floorMap --> floorService : Retrieve floorDTO
+deactivate floorMap
+
+
+floorService --> floorController : Retrieve floorDTO
+deactivate floorService
+floorController --> FloorRoute : Retrieve floorDTO
+deactivate floorController
+FloorRoute --> MD : Retrieve floorDTO
+MD->UI: 200 ok , JSON or 400 bad request
+activate UI
+UI->User: 200 ok , JSON or 400 bad request
+deactivate UI
+deactivate FloorRoute
+deactivate User
+@enduml

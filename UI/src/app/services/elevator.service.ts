@@ -18,7 +18,6 @@ export class ElevatorService {
 
   // Objective: Define the method to create a new elevator
   createElevator(elevator: Elevator): Observable<any> {
-    console.log(elevator);
     return this.http.post(this.API_URL, elevator, this.HTTP_OPTIONS);
   }
 
@@ -29,6 +28,10 @@ export class ElevatorService {
 
   // Objective: Define the method to get a elevator
   getElevator(buildingName: any): Observable<Elevator[]> {
+    return this.http.get<Elevator[]>(this.API_URL+"/"+buildingName, { observe: 'body', responseType: 'json' });
+  }
+
+  getElevator2(buildingName: any): Observable<Elevator[]> {
     return this.http.get<Elevator[]>(this.API_URL+"/"+buildingName, { observe: 'body', responseType: 'json' });
   }
 

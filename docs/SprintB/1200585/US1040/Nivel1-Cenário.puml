@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+
+User -> (Procurar robot por task ou por designation)
+@enduml
+

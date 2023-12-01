@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as "Gestor de Campus"
+participant SC as "<<System (C4)>> sSCS:SSCS"
+activate User
+User -> SC : Lista Floors
+activate SC
+SC --> User : Floors listados / erro nos dados
+
+
+
+deactivate User
+@enduml
+

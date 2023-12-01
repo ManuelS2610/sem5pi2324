@@ -146,5 +146,31 @@ export default class RoomService implements IRoomService{
     }
   }
 
+  public async getRoomsByFloor(floor: string): Promise<Result<Array<IRoomDTO>>> {
+    try {
+      const rooms = await this.roomRepo.findByFloor(floor);
+      if (rooms == null) {
+        return Result.fail<Array<IRoomDTO>>('Rooms not found');
+      }else {
+        const roomDTO = rooms.map((room) => RoomMap.toDTO(room)) as Array<IRoomDTO>;
+        return Result.ok<Array<IRoomDTO>>(roomDTO);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+  public async getAllRooms (): Promise<Result<Array<IRoomDTO>>> {
+    try {
+      const rooms = await this.roomRepo.findAll();
+      if (rooms == null) {
+        return Result.fail<Array<IRoomDTO>>('Rooms not found');
+      }else {
+        const roomDTO = rooms.map((room) => RoomMap.toDTO(room)) as Array<IRoomDTO>;
+        return Result.ok<Array<IRoomDTO>>(roomDTO);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 
 }

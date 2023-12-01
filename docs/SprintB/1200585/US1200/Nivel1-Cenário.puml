@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+
+User -> (Listar pisos com passagens)
+@enduml
+

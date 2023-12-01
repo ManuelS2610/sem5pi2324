@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant SPA
+participant MD <<Container>>
+participant MongoDB
+
+activate User
+User -> SPA : Listar passagens entre edificios
+activate SPA
+SPA --> User : Pedido de dados
+deactivate SPA
+User -> SPA : Dar informaçao /:building1/:building2
+activate SPA
+SPA -> MD : GET /:building1/:building2
+activate MD
+MD -> MD : check request
+MD -> MongoDB : Search
+activate MongoDB
+MongoDB --> MD : Return passages
+deactivate MongoDB
+MD --> SPA : status()
+deactivate MD
+SPA --> User : Confirmaçao/Erro
+deactivate SPA
+deactivate User
+@enduml

@@ -1,0 +1,66 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor User
+participant BuildingRoute as "Route"
+participant IBuildingController as "IController"
+participant buildingController as "Controller"
+participant IBuildingService as "IService"
+participant buildingService as "Service"
+participant building as "Building"
+participant buildingDTO as "BuildingDTO"
+participant buildingMap as "Map"
+participant IBuildingMap as "IMap"
+participant IBuildingRepository as "IRepository"
+database buildingRepository as "Repository"
+
+
+activate User
+User -> BuildingRoute : Request to create a building (POST)
+activate BuildingRoute
+BuildingRoute -> IBuildingController : createBuilding(building)
+IBuildingController -> buildingController : createBuilding(building)
+
+activate buildingController
+buildingController -> IBuildingService : createBuilding(building)
+
+IBuildingService -> buildingService : createBuilding(building)
+activate buildingService
+
+buildingService -> buildingDTO : create(building)
+activate buildingDTO
+buildingDTO --> buildingService : Retrieve buildingDTO
+deactivate buildingDTO
+buildingService -> IBuildingRepository : save(buildingDTO)
+
+IBuildingRepository -> buildingRepository : save(buildingDTO)
+
+activate buildingRepository
+buildingRepository -> buildingRepository : save
+buildingRepository -> buildingMap : ToDTO(buildingDTO)
+deactivate buildingRepository
+
+
+activate buildingMap
+buildingMap --> buildingService : Retrieve buildingDTO
+deactivate buildingMap
+
+
+buildingService --> buildingController : Retrieve buildingDTO
+deactivate buildingService
+buildingController --> BuildingRoute : Retrieve buildingDTO
+deactivate buildingController
+BuildingRoute --> User : 200 ok , JSON
+deactivate BuildingRoute
+deactivate User
+
+
+
+
+
+
+
+
+
+@enduml
+```

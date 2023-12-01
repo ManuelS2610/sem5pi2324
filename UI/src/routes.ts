@@ -10,6 +10,7 @@ import { BuildingsComponent } from './app/Components/buildings/buildings.compone
 import { FloorsComponent } from './app/Components/floor/floor.component';
 import { RoomsComponent } from './app/Components/rooms/rooms.component';
 import { ElevatorsComponent } from './app/Components/elevators/elevators.component';
+import { FloorStructureComponent } from './app/Components/floor-structure/floor-structure.component';
 
 
 const routeConfig: Routes = [
@@ -68,6 +69,11 @@ const routeConfig: Routes = [
     path:'Elevators',
     component:ElevatorsComponent,
     title:'Elevators'
+  },
+  {
+    path:'FloorSimulation',
+    component:FloorStructureComponent,
+    title:'FloorSimulation'
   }
 ];
 

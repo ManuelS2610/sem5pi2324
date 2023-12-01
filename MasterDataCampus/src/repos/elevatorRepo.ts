@@ -112,4 +112,14 @@ export default class ElevatorRepo implements IElevatorRepo {
     }
   }
 
+  public async findAll (): Promise<Elevator[]> {
+    const elevatorRecord = await this.elevatorSchema.find();
+
+    if (elevatorRecord != null) {
+      return elevatorRecord.map((item) => {
+        return ElevatorMap.toDomain(item);
+      });
+    }
+    return null;
+  }
 }

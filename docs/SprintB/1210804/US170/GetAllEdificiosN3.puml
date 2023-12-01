@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant buildingRoute
+participant IBuildingController
+participant buildingController
+participant IBuildingService
+participant buildingService
+participant IBuildingRepo
+participant buildingRepo
+participant BuildingMap
+participant IBuildingDTO
+
+User -> buildingRoute : GET
+activate buildingRoute
+buildingRoute -> IBuildingController : getallBuildings()
+activate IBuildingController
+IBuildingController -> buildingController : getallBuildings()
+deactivate IBuildingController
+activate buildingController
+buildingController -> IBuildingService : getallBuildings()
+activate IBuildingService
+IBuildingService -> buildingService : getallBuildings()
+deactivate IBuildingService
+activate buildingService
+buildingService -> IBuildingRepo : findAll()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findAll()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> buildingService : buildings[]
+deactivate buildingRepo
+buildingService -> BuildingMap : toDTO()
+activate BuildingMap
+BuildingMap -> IBuildingDTO
+BuildingMap --> buildingService : buildingDTO[]
+deactivate BuildingMap
+buildingService -->buildingController: buildingDTO[]
+deactivate buildingService
+buildingController -> buildingRoute : res.json(passageDTO).status()
+deactivate buildingController
+buildingRoute --> User
+
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+!define ACTOR class
+
+actor User as "GestorDeCampus"
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant ElevatorRepo
+participant Elevator
+participant IElevatorDTO
+
+activate User
+User -> UI: Cria um novo elevador (POST)
+activate UI
+UI -> User: Introduz os dados do elevador
+deactivate UI
+User -> UI: envia os dados do elevador
+activate UI
+UI -> MD: Post /elevators dados
+activate MD
+MD -> ElevatorRoute: Post /elevators dados
+deactivate MD
+deactivate UI
+
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController: createElevator(elevator)
+IElevatorController -> ElevatorController: createElevator(elevator)
+activate ElevatorController
+ElevatorController -> IElevatorService: createElevator(elevator)
+activate IElevatorService
+IElevatorService -> ElevatorService: createElevator(elevator)
+activate ElevatorService
+ElevatorService -> ElevatorRepo: createElevator(elevator)
+activate ElevatorRepo
+ElevatorRepo -> Elevator: create(elevator)
+activate Elevator
+Elevator -> ElevatorRepo: Elevador criado
+deactivate Elevator
+ElevatorRepo -> ElevatorService: Elevador criado
+deactivate ElevatorRepo
+ElevatorService -> IElevatorDTO: Elevador criado
+activate IElevatorDTO
+IElevatorDTO --> ElevatorService: Dados do Elevador
+deactivate IElevatorDTO
+ElevatorService --> ElevatorController: Dados do Elevador
+deactivate ElevatorService
+ElevatorController --> ElevatorRoute: Dados do Elevador
+deactivate ElevatorController
+ElevatorRoute --> MD: Dados do Elevador
+deactivate ElevatorRoute
+MD --> UI: 200 OK, JSON ou 400 Bad Request
+activate UI
+UI --> User: 200 OK, JSON ou 400 Bad Request
+deactivate UI
+deactivate User
+@enduml

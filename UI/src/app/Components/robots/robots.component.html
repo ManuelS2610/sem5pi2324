@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group #tabGroup>
   <mat-tab label="Create Robot"><form>
     <br>
     <br>
@@ -19,12 +19,11 @@
     <h3>Update Robot</h3>
     <br>
     <form>
-        <input type="text" placeholder="Robot Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Type" id="type" name="type" [(ngModel)]="data.type" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Designation" id="designation" name="designation" [(ngModel)]="data.designation" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="SerialNumber" id="serialNumber" name="serialNumber" [(ngModel)]="data.serialNumber" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="data.description" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Available" id="available" name="available" [(ngModel)]="data.available" [ngModelOptions]="{ standalone: true }"><br>
+        <input type="text" placeholder="Type" id="type" name="type" [(ngModel)]="clickedRow.type" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Designation" id="designation" name="designation" [(ngModel)]="clickedRow.designation" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="SerialNumber" id="serialNumber" name="serialNumber" [(ngModel)]="clickedRow.serialNumber" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Description" id="description" name="description" [(ngModel)]="clickedRow.description" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Available" id="available" name="available" [(ngModel)]="clickedRow.available" [ngModelOptions]="{ standalone: true }"><br>
         
         <br>
         <input (click)="updateRobot()" type="submit" value="Update">
@@ -43,11 +42,7 @@
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
         
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
+        
         
           <!-- Name Column -->
           <ng-container matColumnDef="type">
@@ -73,7 +68,7 @@
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row (click)="clickedRow=row" (click)="openUpdateTab(row,tabGroup)" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </form>
     </mat-tab>
@@ -83,7 +78,14 @@
       <h3>Inhibit Robot</h3>
       <br>
       <form>
-          <input type="text" placeholder="Robot Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
+        <mat-form-field>
+        <mat-label>Select a Robot</mat-label>
+        <mat-select [formControl]="robotControl" name="robot" (selectionChange)="onRobotSelectionChange()">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let robot of ListRobots" [value]="robot.serialNumber">{{ robot.serialNumber }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
           <input type="text" placeholder="Available" id="available" name="available" [(ngModel)]="data.available" [ngModelOptions]="{ standalone: true }"><br>
           <br>
           <input (click)="inhibitRobot()" type="submit" value="Update">
@@ -101,10 +103,7 @@
       <br>
       <input (click)="findByDesignation()" type="submit" value="Get">
     <table mat-table [dataSource]="ListRobotsDesignation" class="mat-elevation-z8">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+   
     
       <!-- Name Column -->
       <ng-container matColumnDef="type">
@@ -148,10 +147,7 @@
       <br>
       <input (click)="findByTask()" type="submit" value="Get">
     <table mat-table [dataSource]="ListRobotsType" class="mat-elevation-z8">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+     
     
       <!-- Name Column -->
       <ng-container matColumnDef="type">
@@ -181,4 +177,11 @@
     </table>
   </form>
 </mat-tab>
+<mat-tab label="Best Path"><form>
+  <br>
+  <br>
+  <input type="text" placeholder="Floor1" id="Floor1" name="Floor1" [(ngModel)]="piso1" [ngModelOptions]="{ standalone: true }"><br><br>
+  <input type="text" placeholder="Floor2" id="Floor2" name="Floor2" [(ngModel)]="piso2" [ngModelOptions]="{ standalone: true }"><br><br>
+  <button (click)="getPath()" mat-button>Get Path</button>
+</form> </mat-tab>
 </mat-tab-group>

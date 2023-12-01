@@ -76,6 +76,17 @@ public async getFloorsServedByElevatorsInBuilding(req: Request, res: Response, n
       return next(e);
     }
   }
-  
+  public async getAllElevators(req:Request, res:Response , next: NextFunction){
+    try{
+        const elevatorsOrError = await this.elevatorServiceInstance.getAllElevators() as Result<Array<IElevatorDTO>>;
+        if(elevatorsOrError.isFailure){
+            return res.status(404).send();
+        }
+        const elevatorDTO = elevatorsOrError.getValue();
+        return res.json(elevatorDTO).status(201);
+    }catch(e){
+        return next(e);
+    }
+}
 
 }

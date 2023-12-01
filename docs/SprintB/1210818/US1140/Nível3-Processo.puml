@@ -1,0 +1,63 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant ElevatorRepo
+participant Elevator
+participant IElevatorDTO
+
+User -> UI: Procura Elevadores no Edifício
+activate UI
+UI -> User: Solicitação de dados da lista de elevadores
+deactivate UI
+User -> UI: Recebe a lista de elevadores
+activate UI
+UI -> MD: Get /elevators/:buildingName
+activate MD
+MD -> ElevatorRoute: Get /elevators/:buildingName
+
+deactivate UI
+
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController : getElevatorsInBuilding()
+activate IElevatorController
+IElevatorController -> ElevatorController : getElevatorsInBuilding()
+deactivate IElevatorController
+activate ElevatorController
+ElevatorController -> IElevatorService : getElevatorsInBuilding()
+activate IElevatorService
+IElevatorService -> ElevatorService : getElevatorsInBuilding()
+deactivate IElevatorService
+activate ElevatorService
+ElevatorService -> ElevatorRepo : getElevatorsInBuilding()
+activate ElevatorRepo
+ElevatorRepo -> Elevator : findElevatorsInBuilding()
+activate Elevator
+Elevator -> ElevatorRepo : Elevadores
+deactivate Elevator
+ElevatorRepo -> ElevatorService : Elevadores
+deactivate ElevatorRepo
+ElevatorService -> IElevatorDTO : Elevadores
+activate IElevatorDTO
+IElevatorDTO -> ElevatorService : ElevatorDTO
+deactivate IElevatorDTO
+ElevatorService -> ElevatorController : ElevatorDTO
+deactivate ElevatorService
+ElevatorController -> ElevatorRoute : res.json(ElevatorDTO).status()
+deactivate ElevatorController
+ElevatorRoute -> MD : Dados do Elevador
+MD->UI: 200 ok , JSON or 400 bad request
+activate UI
+UI->User: 200 ok , JSON or 400 bad request
+deactivate UI
+deactivate ElevatorRoute
+deactivate User
+@enduml

@@ -46,4 +46,32 @@ public async updateRoom(req:Request, res:Response , next: NextFunction){
         return next(e);
     }
 };
+public async getRoomsByFloor(req:Request, res:Response , next: NextFunction){
+    try{
+        let aux = req.url.substring(1,4);
+        const roomsOrError = await this.roomServiceInstance.getRoomsByFloor(aux) as Result<Array<IRoomDTO>>;
+        if(roomsOrError.isFailure){
+            return res.status(404).send();
+        }
+        const roomsDTO = roomsOrError.getValue();
+        return res.json(roomsDTO).status(201);
+    }
+    catch(e){
+        return next(e);
+    }
+};
+public async getAllRooms(req:Request, res:Response , next: NextFunction){
+    try{
+        const roomsOrError = await this.roomServiceInstance.getallRooms() as Result<Array<IRoomDTO>>;
+        if(roomsOrError.isFailure){
+            return res.status(404).send();
+        }
+        const roomsDTO = roomsOrError.getValue();
+        return res.json(roomsDTO).status(201);
+    }
+    catch(e){
+        return next(e);
+    }
+
+};
 }

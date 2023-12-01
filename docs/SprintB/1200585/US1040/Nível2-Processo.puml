@@ -1,0 +1,33 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor GestorDeFrota
+participant l as "<<System (C4)>> uI : UI"
+participant md as "<<System (C4)>> mD : MD"
+
+
+activate GestorDeFrota
+GestorDeFrota -> l : 1:Procura Robots por type ou designation
+activate l
+l --> GestorDeFrota : 1.1 Introduz Dados
+deactivate l
+GestorDeFrota -> l : 2: Insere type ou designation
+activate l
+l -> md :  2.1:Get /robots/:type ou /robots/:designation
+activate md
+group alt
+md --> l : 2.2: status:200
+l--> GestorDeFrota: Lista de robots
+deactivate md
+deactivate l
+
+md--> l : 3.1:status :404/422
+activate md
+activate l
+l-->GestorDeFrota: 3.1.1: Erro nos dados
+
+
+
+
+@enduml
+```

@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as "Gestor de Frota"
+participant SC as "<<System (C4)>> sSCS:SSCS"
+activate User
+User -> SC : Lista Robots
+activate SC
+SC-->User : Introduz Dados
+deactivate SC
+User -> SC : Dados do RobotType ou RobotDesignation
+activate SC
+SC --> User : Robots Listados / erro nos dados
+
+
+
+deactivate User
+@enduml
+

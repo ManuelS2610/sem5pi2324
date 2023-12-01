@@ -1,0 +1,21 @@
+.home-section {
+  background-image: url('../../assets/a.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+  color: white; /* Set the color for text to ensure readability */
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+

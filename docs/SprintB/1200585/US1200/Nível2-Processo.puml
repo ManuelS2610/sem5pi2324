@@ -1,0 +1,30 @@
+@startuml
+'http://plantuml.com/skinparam.html
+
+actor GestorDeCampus
+participant l as "<<System (C4)>> uI : UI"
+participant md as "<<System (C4)>> mD : MD"
+
+
+activate GestorDeCampus
+GestorDeCampus -> l : 1:Listar Floors
+activate l
+
+l -> md :  2.1:Get /floors/passages
+activate md
+group alt
+md --> l : 2.2: status:200
+l--> GestorDeCampus: Lista de Floors
+deactivate md
+deactivate l
+
+md--> l : 3.1:status :404/422
+activate md
+activate l
+l-->GestorDeCampus: 3.1.1: Erro nos dados
+
+
+
+
+@enduml
+```

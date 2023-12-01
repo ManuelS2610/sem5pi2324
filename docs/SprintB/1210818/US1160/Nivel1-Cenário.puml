@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+
+User -> (Listar pisos de edifício servidos por elevador)
+@enduml
+

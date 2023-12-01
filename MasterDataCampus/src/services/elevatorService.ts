@@ -14,6 +14,7 @@ import IFloorRepo from './IRepos/IFloorRepo';
 
 import { Result } from "../core/logic/Result";
 import IBuildingRepo from './IRepos/IBuildingRepo';
+import e from 'express';
 
 @Service()
 export default class ElevatorService implements IElevatorService {
@@ -197,6 +198,19 @@ export default class ElevatorService implements IElevatorService {
     }
   }
 
+  public async getAllElevators(): Promise<Result<Array<IElevatorDTO>>> {
+    try {
+      const elevators = await this.elevatorRepo.findAll();
+      if (!elevators || elevators.length === 0) {
+        return Result.fail<Array<IElevatorDTO>>("No elevators found");
+      } else {
+        const elevatorsDTO = elevators.map((elevator) => ElevatorMap.toDTO(elevator) as IElevatorDTO);
+        return Result.ok<Array<IElevatorDTO>>(elevatorsDTO);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 
 }
 

@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant SPA
+participant MD <<Container>>
+participant MongoDB
+
+activate User
+User -> SPA : Inibir robot
+activate SPA
+SPA --> User : Pedido de dados
+deactivate SPA
+User -> SPA : Dar informaçao {id,available}
+activate SPA
+SPA -> MD : PATCH {id,available}
+activate MD
+MD -> MD : check verifications
+MD -> MongoDB : Save robot
+activate MongoDB
+MongoDB --> MD : Return robot
+deactivate MongoDB
+MD --> SPA : status()
+deactivate MD
+SPA --> User : Confirmaçao/Erro
+deactivate SPA
+deactivate User
+@enduml

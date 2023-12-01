@@ -1,0 +1,64 @@
+@startuml
+!define ACTOR class
+
+actor User
+
+participant UI as "<<System>> UI"
+participant MD as "<<System>> MD"
+participant ElevatorRoute
+participant IElevatorController
+participant ElevatorController
+participant IElevatorService
+participant ElevatorService
+participant ElevatorRepo
+participant Elevator
+participant IFloorDTO
+
+User -> UI: Lista de Andares Servidos pelo Elevador
+activate UI
+UI -> User: Solicitação de dados da lista de andares
+deactivate UI
+User -> UI: Recebe a lista de andares
+activate UI
+UI -> MD: Get /floors-served/:buildingName
+activate MD
+MD -> ElevatorRoute: Get /floors-served/:buildingName
+deactivate MD
+deactivate UI
+
+activate ElevatorRoute
+ElevatorRoute -> IElevatorController: getFloorsServedByElevatorsInBuilding()
+activate IElevatorController
+IElevatorController -> ElevatorController: getFloorsServedByElevatorsInBuilding()
+deactivate IElevatorController
+activate ElevatorController
+ElevatorController -> IElevatorService: getFloorsServedByElevatorsInBuilding()
+activate IElevatorService
+IElevatorService -> ElevatorService: getFloorsServedByElevatorsInBuilding()
+deactivate IElevatorService
+activate ElevatorService
+ElevatorService -> ElevatorRepo: getFloorsServedByElevatorsInBuilding()
+activate ElevatorRepo
+ElevatorRepo -> Elevator: findFloorsServedByElevatorsInBuilding()
+activate Elevator
+Elevator -> ElevatorRepo: Floors
+deactivate Elevator
+ElevatorRepo -> IFloorDTO: Floors
+activate IFloorDTO
+IFloorDTO -> ElevatorRepo: FloorDTO
+deactivate IFloorDTO
+ElevatorRepo -> ElevatorService: FloorDTO
+deactivate ElevatorRepo
+ElevatorService -> ElevatorController: FloorDTO
+deactivate ElevatorService
+ElevatorController -> ElevatorRoute: res.json(FloorDTO).status()
+deactivate ElevatorController
+ElevatorRoute -> MD: Dados do Andar
+MD->UI: 200 ok , JSON or 400 bad request
+activate UI
+UI->User: 200 ok , JSON or 400 bad request
+deactivate UI
+deactivate ElevatorRoute
+deactivate User
+@enduml
+

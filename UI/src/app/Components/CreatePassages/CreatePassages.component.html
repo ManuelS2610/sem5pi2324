@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group #tabGroup>
   <mat-tab label="Create Passage"><form>
     <br>
     <br>
@@ -17,11 +17,10 @@
     <h3>Update Passages</h3>
     <br>
     <form>
-        <input type="text" placeholder="Passage Id" id="id" name="id" [(ngModel)]="data.id" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="data.building1" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="data.building2" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Building1's Floor" id="pisobuilding1" name="pisobuilding1" [(ngModel)]="data.pisobuilding1" [ngModelOptions]="{ standalone: true }"><br><br>
-        <input type="text" placeholder="Building2's Floor" id="pisobuilding2" name="pisobuilding2" [(ngModel)]="data.pisobuilding2" [ngModelOptions]="{ standalone: true }"><br>
+        <input type="text" placeholder="Building1" id="building1" name="building1" [(ngModel)]="clickedRow.building1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="clickedRow.building2" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building1's Floor" id="pisobuilding1" name="pisobuilding1" [(ngModel)]="clickedRow.pisobuilding1" [ngModelOptions]="{ standalone: true }"><br><br>
+        <input type="text" placeholder="Building2's Floor" id="pisobuilding2" name="pisobuilding2" [(ngModel)]="clickedRow.pisobuilding2" [ngModelOptions]="{ standalone: true }"><br>
         <br>
         <input (click)="updatePassage()" type="submit" value="Update">
     </form> </mat-tab>
@@ -35,16 +34,14 @@
       <input type="text" placeholder="Building2" id="building2" name="building2" [(ngModel)]="building2" [ngModelOptions]="{ standalone: true }"><br><br>
         <br>
         <input (click)="getPassage()" type="submit" value="Get">
+        
         <table mat-table [dataSource]="pa" class="mat-elevation-z8" >
 
           <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
         
           <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID. </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
+          
         
           <!-- Name Column -->
           <ng-container matColumnDef="building1">
@@ -70,8 +67,12 @@
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row 
+          (click)="clickedRow=row"
+          (click)="openUpdateTab(row,tabGroup)"
+          *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+          <!-- Add more details as needed -->
     </form>
     </mat-tab>
 </mat-tab-group>

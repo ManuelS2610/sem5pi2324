@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as "Gestor de Campus"
+participant SC as "<<System (C4)>> sSCS:SSCS"
+activate User
+User -> SC : Lista edificios com min e max de pisos
+activate SC
+SC-->User : Introduz Dados
+deactivate SC
+User -> SC : Dados do min e max Piso
+activate SC
+SC --> User : Edificios com min e max de pisos Listados / erro nos dados
+
+
+
+deactivate User
+@enduml
+

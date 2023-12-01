@@ -58,18 +58,13 @@ export default class RobotTypeService implements IRobotTypeService {
         return Result.fail<IRobotTypeDTO>("RobotType not found");
       }
       else {
-        const robotTypeOrError = await RobotType.create( robotTypeDTO );
+        robotType.name = robotTypeDTO.name;
+        robotType.robotDesignation = robotTypeDTO.robotDesignation;
 
-        if (robotTypeOrError.isFailure) {
-          return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
-        }
+        await this.robotTypeRepo.save(robotType);
 
-        const robotTypeResult = robotTypeOrError.getValue();
-
-        await this.robotTypeRepo.save(robotTypeResult);
-
-        const robotTypeDTOResult = RobotTypeMap.toDTO( robotTypeResult ) as IRobotTypeDTO;
-        return Result.ok<IRobotTypeDTO>( robotTypeDTOResult )
+        const robotTypeDTOResult = RobotTypeMap.toDTO( robotType ) as IRobotTypeDTO;
+        return Result.ok<IRobotTypeDTO>( robotTypeDTOResult );
       }
     } catch (e) {
       throw e;

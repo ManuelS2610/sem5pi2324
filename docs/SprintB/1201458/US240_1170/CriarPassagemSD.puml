@@ -1,0 +1,118 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant SPA
+participant MD
+participant passageRoute
+participant IPassageController
+participant passageController
+participant IPassageService
+participant passageService
+participant IPassageRepo
+participant passageRepo
+participant PassageMap
+participant IPassagePersistence
+participant passageSchema
+participant passage
+participant IPassageDTO
+participant buildingRepo
+participant floorRepo
+
+activate User
+User ->SPA : Create Passage
+activate SPA
+SPA --> User : Requests data
+deactivate SPA
+User -> SPA : Gives data {}building1,building2,pisobuilding1,pisobuilding2}
+activate SPA
+SPA -> MD :POST /{ building1,building2,pisobuilding1,pisobuilding2}
+activate MD
+deactivate SPA
+MD -> passageRoute: POST /{ building1,building2,pisobuilding1,pisobuilding2}
+activate passageRoute
+passageRoute -> IPassageController : createPassage()
+activate IPassageController
+IPassageController -> passageController :  createPassage()
+deactivate IPassageController
+activate passageController
+passageController -> IPassageService : createPassage()
+activate IPassageService
+IPassageService -> passageService : createPassage()
+deactivate IPassageService
+activate passageService
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IBuildingRepo : findByName()
+activate IBuildingRepo
+IBuildingRepo -> buildingRepo : findByName()
+activate buildingRepo
+deactivate IBuildingRepo
+buildingRepo --> passageService : building
+deactivate buildingRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IFloorRepo : findByName()
+activate IFloorRepo
+IFloorRepo -> floorRepo: findByName()
+activate floorRepo
+deactivate IFloorRepo
+floorRepo --> passageService : floor
+deactivate floorRepo
+passageService -> IPassageRepo : findByPisos()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisos()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
+passageService -> IPassageRepo : findByPisosReverse()
+activate IPassageRepo
+IPassageRepo -> passageRepo : findByPisosReverse()
+activate passageRepo
+deactivate IPassageRepo
+passageRepo --> passageService : boolean
+deactivate passageRepo
+passageService -> passage : create()
+activate passage
+passage -> passageService : passage
+deactivate passage
+passageService -> IPassageRepo: save()
+activate IPassageRepo
+IPassageRepo -> passageRepo : save()
+deactivate IPassageRepo
+activate passageRepo
+passageRepo -> passageSchema : findOne()
+passageRepo -> PassageMap : toPersistence()
+activate PassageMap
+PassageMap -> passageRepo : passage
+deactivate PassageMap
+passageRepo -> passageSchema: create()
+deactivate passageRepo
+passageService -> PassageMap : toDTO()
+activate PassageMap
+PassageMap -> IPassageDTO
+PassageMap -> passageService : passageDTO
+deactivate PassageMap
+passageService -> passageController : passageDTO
+deactivate passageService
+passageController -> passageRoute : res.json(passageDTO).status()
+deactivate passageController
+passageRoute -> MD : status()
+deactivate passageRoute
+MD -> SPA: status()
+activate SPA
+deactivate MD
+SPA -> User : Confirmation/Error
+deactivate SPA
+@enduml
